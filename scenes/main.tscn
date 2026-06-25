@@ -9,4 +9,4 @@
 [node name="Camera2D" type="Camera2D" parent="." unique_id=829527038]
 anchor_mode = 0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1552538026]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=598585079]
