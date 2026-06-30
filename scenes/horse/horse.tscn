@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c8cm8e46ayus1"]
+
+[ext_resource type="Script" uid="uid://cj4wgvondgprr" path="res://scenes/horse/horse.gd" id="1_r381u"]
+[ext_resource type="Texture2D" uid="uid://cp86e1xwxu4mc" path="res://scenes/horse/white_horse.png" id="2_5ve0o"]
+
+[node name="Horse" type="Node2D" unique_id=1786993282]
+script = ExtResource("1_r381u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=721530982]
+texture = ExtResource("2_5ve0o")
