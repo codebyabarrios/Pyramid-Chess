@@ -14,6 +14,9 @@ const TILE_SIZE = 64
 @onready var bishop_scene=preload("res://scenes/bishop/bishop.tscn")
 @onready var white_bishop_tex="res://scenes/bishop/white_bishop.png"
 @onready var black_bishop_tex="res://scenes/bishop/black_bishop.png"
+@onready var tower_scene=preload("res://tower/tower.tscn")
+@onready var white_tower_tex="res://tower/white_tower.png"
+@onready var black_tower_tex="res://tower/black_tower.png"
 
 
 
@@ -32,7 +35,15 @@ func create_board():
 			
 						var current_piece = null
 						
-						if y == 3:
+						if y == 2:
+							if x>= 2 and x<= 5:
+								current_piece = bishop_scene.instantiate()
+								current_piece.grid_position = Vector2i(x, y)
+								if(x + y) % 2 == 0:
+									current_piece.set_side(true, white_tower_tex)
+								else:
+									current_piece.set_side(false, black_tower_tex)
+						elif y == 3:
 							if x >= 2 and x <= 5:
 								current_piece = bishop_scene.instantiate()
 								current_piece.grid_position = Vector2i(x, y)
