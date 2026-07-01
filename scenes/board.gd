@@ -11,6 +11,11 @@ const TILE_SIZE = 64
 @onready var horse_scene=preload("res://scenes/horse/horse.tscn")
 @onready var black_horse_tex="res://scenes/horse/black_horse.png"
 @onready var white_horse_tex="res://scenes/horse/white_horse.png"
+@onready var bishop_scene=preload("res://scenes/bishop/bishop.tscn")
+@onready var white_bishop_tex="res://scenes/bishop/white_bishop.png"
+@onready var black_bishop_tex="res://scenes/bishop/black_bishop.png"
+
+
 
 var board = []
 
@@ -26,8 +31,18 @@ func create_board():
 				for x in range(BOARD_SIZE):
 			
 						var current_piece = null
-				
-						if y == 4:
+						
+						if y == 3:
+							if x >= 2 and x <= 5:
+								current_piece = bishop_scene.instantiate()
+								current_piece.grid_position = Vector2i(x, y)
+								if(x + y) % 2 == 0:
+										current_piece.set_side(true, white_bishop_tex)
+								else:
+										current_piece.set_side(false, black_bishop_tex)
+							else:
+								current_piece = null
+						elif y == 4:
 							if x >= 2 and x <= 5:
 								current_piece = horse_scene.instantiate()
 								current_piece.grid_position = Vector2i(x, y)
