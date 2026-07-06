@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://ldoc64csgcb1"]
-
-[ext_resource type="Script" uid="uid://i4pkh0t4khsx" path="res://tower/tower.gd" id="1_b3ino"]
-
-[node name="Tower" type="Node2D" unique_id=624958963]
-script = ExtResource("1_b3ino")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=449985959]

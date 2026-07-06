@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ldoc64csgcb1"]
+
+[ext_resource type="Script" uid="uid://i4pkh0t4khsx" path="res://scenes/rook/rook.gd" id="1_2bkxc"]
+
+[node name="Rook" type="Node2D" unique_id=624958963]
+z_index = 2
+script = ExtResource("1_2bkxc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=449985959]

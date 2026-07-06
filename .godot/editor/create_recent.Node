@@ -1,0 +1,9 @@
+ColorRect
+Label
+Control
+Sprite2D
+CanvasLayer
+Node2D
+Camera2D
+CollisionShape2D
+Area2D

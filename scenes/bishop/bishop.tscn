@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bigja4a58ju2n" path="res://scenes/bishop/white_bishop.png" id="2_1fyf2"]
 
 [node name="Bishop" type="Node2D" unique_id=1334100779]
+z_index = 2
 script = ExtResource("1_os63u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1285889952]

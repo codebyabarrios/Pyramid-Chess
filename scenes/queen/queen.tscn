@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmff63cllh765" path="res://scenes/queen/white_queen.png" id="2_1o2r3"]
 
 [node name="Queen" type="Node2D" unique_id=1626808816]
+z_index = 2
 script = ExtResource("1_28cf0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1744925915]

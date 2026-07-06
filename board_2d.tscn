@@ -6,3 +6,4 @@
 script = ExtResource("1_hx37k")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1380788001]
+z_index = 1

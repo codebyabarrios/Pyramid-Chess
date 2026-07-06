@@ -7,4 +7,5 @@
 script = ExtResource("1_pcpcu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=955054553]
+z_index = 2
 texture = ExtResource("1_5dqq3")
