@@ -7,7 +7,7 @@ var direction = 1
 # Interruptor para saber si es el Jugador 1 (WASD) o el Jugador 2 (Flechas)
 var is_player_one = true
 
-const SPEED = 200.0
+const TILE_SIZE = 64
 
 func _ready():
 	# Conectamos la colisión para comer piezas
@@ -21,26 +21,27 @@ func set_side(white: bool, texture_path: String):
 	$Sprite2D.texture = load(texture_path)
 
 func _process(delta):
-	var input_vector = Vector2.ZERO
+	var move_direction = Vector2.ZERO
 	
 	if is_player_one:
-		if Input.is_action_pressed("p1_right"): 
-			input_vector.x += 1
-		if Input.is_action_pressed("p1_left"):  
-			input_vector.x -= 1
-		if Input.is_action_pressed("p1_up"):    
-			input_vector.y -= 1
+		if Input.is_action_just_pressed("p1_right"): 
+			move_direction.x = 1
+		if Input.is_action_just_pressed("p1_left"):  
+			move_direction.x = -1
+		if Input.is_action_just_pressed("p1_up"):    
+			move_direction.y = -1
 	else:
-		if Input.is_action_pressed("p2_right"): 
-			input_vector.x += 1
-		if Input.is_action_pressed("p2_left"):  
-			input_vector.x -= 1
-		if Input.is_action_pressed("p2_up"):    
-			input_vector.y -= 1
-		
-	if input_vector != Vector2.ZERO:
-		position += input_vector.normalized() * SPEED * delta
-
+		if Input.is_action_just_pressed("p2_right"): 
+			move_direction.x = 1
+		if Input.is_action_just_pressed("p2_left"):  
+			move_direction.x = -1
+		if Input.is_action_just_pressed("p2_up"):    
+			move_direction.y = -1
+	
+	if move_direction != Vector2.ZERO:
+		position.x += move_direction.x * TILE_SIZE
+		position.y += move_direction.y * TILE_SIZE
+	
 func _on_area_entered(area_que_tocamos: Area2D):
 	var piece = area_que_tocamos.get_parent()
 	if piece != null:
