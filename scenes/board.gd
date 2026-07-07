@@ -124,22 +124,42 @@ func create_board():
 				current_piece.position = new_tile.position
 				add_child(current_piece)
 
-func _process(delta):
 
+var movement_timer = 0.0
+const STEP_DELAY = 0.75
+
+func _process(delta):
+	movement_timer += delta
+	
+	if movement_timer >= STEP_DELAY:
+		movement_timer = 0.0
+		
+		for y in range(7):
+			for x in range(BOARD_SIZE):
+				var target = board[y][x]
+				
+				if target != null:
+					var move_dir = target.direction
+					target.position.x += TILE_SIZE * move_dir
+				
+					if move_dir == 1:
+						if target.position.x > MAX_X_POSITION:
+							target.position.x -= MAX_X_POSITION
+					
+					elif move_dir == -1:
+						if target.position.x < 0:
+							target.position.x += MAX_X_POSITION
+
+func register_rider_in_matrix(rider_node: Node2D, x_pos: int, y_pos: int):
+	if y_pos >= 0 and y_pos < 7 and x_pos >= 0 and x_pos < BOARD_SIZE:
+		board[y_pos][x_pos] = rider_node
+		
+func remove_rider_from_matrix(rider_node: Node2D):
 	for y in range(7):
 		for x in range(BOARD_SIZE):
-			var piece = board[y][x]
-			if piece != null:
-				
-				piece.position.x += movement_speed * delta * piece.direction
-				
-				if piece.direction == 1:
-					if piece.position.x > MAX_X_POSITION:
-						piece.position.x -= MAX_X_POSITION 
-						
-				elif piece.direction == -1:
-					if piece.position.x < 0:
-						piece.position.x += MAX_X_POSITION 
+			if board[y][x] == rider_node:
+				board[y][x] = null
+
 
 func print_board():
 	for row in board:
