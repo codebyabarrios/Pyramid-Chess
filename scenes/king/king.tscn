@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://cqcocstunn5u1"]
 
 [ext_resource type="Script" uid="uid://c4ujuua5i2nd4" path="res://scenes/king/king.gd" id="1_5iat2"]
+[ext_resource type="Texture2D" uid="uid://bpkpa3bg604s5" path="res://scenes/king/white_king.png" id="2_p7cqd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r133v"]
+size = Vector2(23, 53)
 
 [node name="King" type="Node2D" unique_id=2097322059]
 z_index = 2
 script = ExtResource("1_5iat2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=9845086]
+texture = ExtResource("2_p7cqd")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=985569132]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1447528571]
+position = Vector2(1.5, 0.5)
+shape = SubResource("RectangleShape2D_r133v")

@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://ldoc64csgcb1"]
 
 [ext_resource type="Script" uid="uid://i4pkh0t4khsx" path="res://scenes/rook/rook.gd" id="1_2bkxc"]
+[ext_resource type="Texture2D" uid="uid://bthki64odvwpm" path="res://scenes/rook/white_rook.png" id="2_5jt6t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hshyq"]
+size = Vector2(32, 43)
 
 [node name="Rook" type="Node2D" unique_id=624958963]
 z_index = 2
 script = ExtResource("1_2bkxc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=449985959]
+texture = ExtResource("2_5jt6t")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1087109492]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=833081697]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_hshyq")

@@ -3,9 +3,19 @@
 [ext_resource type="Texture2D" uid="uid://d2sytox82n5sl" path="res://scenes/pawn/white_pawn.png" id="1_5dqq3"]
 [ext_resource type="Script" uid="uid://d0sddvsfh0t7i" path="res://scenes/pawn/pawn.gd" id="1_pcpcu"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcpcu"]
+size = Vector2(49, 52)
+
 [node name="Pawn_tscn" type="Node2D" unique_id=710072714]
 script = ExtResource("1_pcpcu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=955054553]
 z_index = 2
 texture = ExtResource("1_5dqq3")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2104229383]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=420721540]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_pcpcu")

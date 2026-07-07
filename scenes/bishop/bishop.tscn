@@ -3,9 +3,19 @@
 [ext_resource type="Script" uid="uid://bbidlfoih354w" path="res://scenes/bishop/bishop.gd" id="1_os63u"]
 [ext_resource type="Texture2D" uid="uid://bigja4a58ju2n" path="res://scenes/bishop/white_bishop.png" id="2_1fyf2"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_os63u"]
+size = Vector2(22, 47)
+
 [node name="Bishop" type="Node2D" unique_id=1334100779]
 z_index = 2
 script = ExtResource("1_os63u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1285889952]
 texture = ExtResource("2_1fyf2")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1134277098]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1467051538]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_os63u")

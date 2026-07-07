@@ -34,6 +34,10 @@ var board = []
 @onready var white_king_tex = "res://scenes/king/white_king.png"
 @onready var black_king_tex = "res://scenes/king/black_king.png"
 
+@onready var main_character_scene = preload("res://scenes/main character/main character.tscn")
+@onready var white_main_character_tex = "res://scenes/main character/white-main_character.png"
+@onready var black_main_character_tex = "res://scenes/main character/black_main_character.png"
+
 func _ready():
 	create_board()
 	print_board()
@@ -89,6 +93,14 @@ func create_board():
 					current_piece.set_side(true, white_pawn_tex)
 				else: 
 					current_piece.set_side(false, black_pawn_tex)
+			
+			elif y == 7:
+					if x == 3:
+						current_piece = main_character_scene.instantiate()
+						current_piece.set_side(false, black_main_character_tex)
+					elif x == 4:
+						current_piece = main_character_scene.instantiate()
+						current_piece.set_side(true, white_main_character_tex)
 			else:
 				current_piece = null
 			
@@ -114,7 +126,7 @@ func create_board():
 
 func _process(delta):
 
-	for y in range(BOARD_SIZE):
+	for y in range(7):
 		for x in range(BOARD_SIZE):
 			var piece = board[y][x]
 			if piece != null:
