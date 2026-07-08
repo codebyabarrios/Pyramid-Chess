@@ -1,6 +1,6 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1783543605
-board_2d.tscn::PackedScene::5345570941739636764::1783479063::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd
+::res://::1783547305
+board_2d.tscn::PackedScene::5345570941739636764::1783544751::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd
 export_presets.cfg::TextFile::-1::1783373642::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::273730838333825194::1781649852::1781649856::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1781985153::0::1::::<><><>0<>0<><>::
@@ -57,10 +57,10 @@ black_knight.png::CompressedTexture2D::3646016461749330705::1782845102::17832953
 knight.gd::GDScript::5465755528813056783::1783294587::0::1::::<>Node2D<><>0<>0<><>::
 knight.tscn::PackedScene::7093989754363643310::1783479063::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://cp86e1xwxu4mc::::res://scenes/knight/white_knight.png
 white_knight.png::CompressedTexture2D::5895689259960780830::1782845110::1783295364::1::::<><><>0<>0<>40df550ac9c664cc6ad9e3cd319a6b61<>res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex::
-::res://scenes/main character/::1783542705
+::res://scenes/main character/::1783544751
 black_main_character.png::CompressedTexture2D::1340542571665933096::1783393656::1783393656::1::::<><><>0<>0<>bf4d7abe109d1911d5c26557093e1b2a<>res://.godot/imported/black_main_character.png-a828ec770ba350155c34b2aa1f5c8fe2.ctex::
 main character.tscn::PackedScene::6179730098071991820::1783539600::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://08aevrgcsipu::::res://scenes/main character/white-main_character.png
-main_character.gd::GDScript::4035469817133263474::1783542705::0::1::::<>Node2D<><>0<>0<><>::
+main_character.gd::GDScript::4035469817133263474::1783544751::0::1::::<>Node2D<><>0<>0<><>::
 white-main_character.png::CompressedTexture2D::1822853829538432354::1783393656::1783393656::1::::<><><>0<>0<>4798d38004bccff3b654f0c113f38a94<>res://.godot/imported/white-main_character.png-a9f233045053e9f7ff42a3eab331f2f7.ctex::
 ::res://scenes/pawn/::1783479063
 black_pawn.png::CompressedTexture2D::4661603628222712927::1782344359::1782344359::1::::<><><>0<>0<>fe70535ef32cba2f957098fd89cbfb14<>res://.godot/imported/black_pawn.png-6c6ee77f407be106d8623b9b86aaa232.ctex::
