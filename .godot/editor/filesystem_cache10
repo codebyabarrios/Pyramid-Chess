@@ -1,7 +1,7 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1783547305
+::res://::1783554334
 board_2d.tscn::PackedScene::5345570941739636764::1783544751::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd
-export_presets.cfg::TextFile::-1::1783373642::0::1::::<><><>0<>0<><>::
+export_presets.cfg::TextFile::-1::1783547556::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::273730838333825194::1781649852::1781649856::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1781985153::0::1::::<><><>0<>0<><>::
 ::res://addons/::1781989600
@@ -30,7 +30,11 @@ white_king.png::CompressedTexture2D::549237530016919174::1782924090::1782924364:
 white_pawn.png::CompressedTexture2D::3649631925007966996::1782343179::1782358541::1::::<><><>0<>0<>d1139c462ce39bee8e1081fb465bb141<>res://.godot/imported/white_pawn.png-75875183b08298d063b048c2ccb91b29.ctex::
 white_queen.png::CompressedTexture2D::4342278400154378205::1782870771::1782879791::1::::<><><>0<>0<>28fbca69b39c4c766a1fadd56f924dc8<>res://.godot/imported/white_queen.png-f5f0cb1ea4f22ad5e98fce3e4518c537.ctex::
 white_tower.png::CompressedTexture2D::4468768411701345593::1782857688::1782869502::1::::<><><>0<>0<>38b0eb4b2b0b50135fafb5a9fb1e49ab<>res://.godot/imported/white_tower.png-04eef04e01ac29f2ee81acca6da9b37b.ctex::
-::res://index.html/::1783373637
+::res://index.html/::1783547552
+::res://index.html/Exportacion Web 3/::1783547641
+index.apple-touch-icon.png::CompressedTexture2D::8442279362181889514::1783547556::1783547641::1::::<><><>0<>0<>08b793868b93173968215368dd708191<>res://.godot/imported/index.apple-touch-icon.png-c7413f78e900331adb09c73f929ef497.ctex::
+index.icon.png::CompressedTexture2D::2595035363107436594::1783547556::1783547641::1::::<><><>0<>0<>732695c9e492a0bbdb23252ef1577452<>res://.godot/imported/index.icon.png-432d7ba6a9d60a1a8f893ebe8e24b62c.ctex::
+index.png::CompressedTexture2D::5554538087763135435::1783547556::1783547641::1::::<><><>0<>0<>f362bafdc8d1913f5393d833de3251a9<>res://.godot/imported/index.png-aa6eed353b15e769e12ee0f180aee4a4.ctex::
 ::res://index.html/ExportacionWeb/::1783198250
 index.apple-touch-icon.png::CompressedTexture2D::6166282414509085088::1783196694::1783198249::1::::<><><>0<>0<>2c14488ae5e215546d3e801bb30a7ea2<>res://.godot/imported/index.apple-touch-icon.png-38772f6cceb806a486488088174fb8a1.ctex::
 index.icon.png::CompressedTexture2D::4053130624343968319::1783196694::1783198249::1::::<><><>0<>0<>b26e7338a850ff474c8072b28ded82bd<>res://.godot/imported/index.icon.png-26c790a5ce6bf8d8431262906ceb6e02.ctex::
@@ -57,10 +61,10 @@ black_knight.png::CompressedTexture2D::3646016461749330705::1782845102::17832953
 knight.gd::GDScript::5465755528813056783::1783294587::0::1::::<>Node2D<><>0<>0<><>::
 knight.tscn::PackedScene::7093989754363643310::1783479063::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://cp86e1xwxu4mc::::res://scenes/knight/white_knight.png
 white_knight.png::CompressedTexture2D::5895689259960780830::1782845110::1783295364::1::::<><><>0<>0<>40df550ac9c664cc6ad9e3cd319a6b61<>res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex::
-::res://scenes/main character/::1783544751
+::res://scenes/main character/::1783553772
 black_main_character.png::CompressedTexture2D::1340542571665933096::1783393656::1783393656::1::::<><><>0<>0<>bf4d7abe109d1911d5c26557093e1b2a<>res://.godot/imported/black_main_character.png-a828ec770ba350155c34b2aa1f5c8fe2.ctex::
 main character.tscn::PackedScene::6179730098071991820::1783539600::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://08aevrgcsipu::::res://scenes/main character/white-main_character.png
-main_character.gd::GDScript::4035469817133263474::1783544751::0::1::::<>Node2D<><>0<>0<><>::
+main_character.gd::GDScript::4035469817133263474::1783553772::0::1::::<>Node2D<><>0<>0<><>::
 white-main_character.png::CompressedTexture2D::1822853829538432354::1783393656::1783393656::1::::<><><>0<>0<>4798d38004bccff3b654f0c113f38a94<>res://.godot/imported/white-main_character.png-a9f233045053e9f7ff42a3eab331f2f7.ctex::
 ::res://scenes/pawn/::1783479063
 black_pawn.png::CompressedTexture2D::4661603628222712927::1782344359::1782344359::1::::<><><>0<>0<>fe70535ef32cba2f957098fd89cbfb14<>res://.godot/imported/black_pawn.png-6c6ee77f407be106d8623b9b86aaa232.ctex::

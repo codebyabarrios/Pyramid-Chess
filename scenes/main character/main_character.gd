@@ -11,6 +11,10 @@ var input_buffer_timer = 0.0
 const INPUT_BUFFER_DELAY = 0.08
 var buffered_move_direction = Vector2.ZERO
 var is_waiting_for_input = false
+var cont_same_color = 0
+
+var initial_position_d1 = Vector2 ((4 * TILE_SIZE) + (TILE_SIZE / 2), (7 * TILE_SIZE) + (TILE_SIZE / 2))
+var initial_position_e1 = Vector2 ((3 * TILE_SIZE) + (TILE_SIZE / 2), (7 * TILE_SIZE) + (TILE_SIZE / 2))
 
 const STEP_DELAY = 0.75
 const TILE_SIZE = 64
@@ -89,10 +93,19 @@ func _on_area_entered(touched_area: Area2D):
 	if piece != null:
 		var board_node = get_parent()
 		if piece.is_white == is_white:
+			cont_same_color += 1
 			position.y += TILE_SIZE
-			if board_node and board_node.has_method("remove_rider_from_matrix"):
-				board_node.remove_rider_from_matrix(self)
+			if cont_same_color >= 3:
 				
+				if board_node and board_node.has_method("remove_rider_from_matrix"):
+					board_node.remove_rider_from_matrix(self)
+				
+				if is_player_one:
+					position = initial_position_e1
+				else:
+					position = initial_position_d1
+				
+				cont_same_color = 0
 		else:
 			direction = piece.direction
 			if board_node and board_node.has_method("register_rider_in_matrix"):
