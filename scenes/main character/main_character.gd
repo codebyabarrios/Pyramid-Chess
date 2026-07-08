@@ -17,7 +17,7 @@ const TILE_SIZE = 64
 
 func _ready():
 	$Area2D.area_entered.connect(_on_area_entered)
-
+	
 func set_side(white: bool, texture_path: String):
 	is_white = white
 	is_player_one = !white
@@ -35,16 +35,20 @@ func _process(delta):
 	if is_player_one:
 		if Input.is_action_just_pressed("p1_right"): 
 			buffered_move_direction.x = 1
+			key_pressed_this_frame = true
 		if Input.is_action_just_pressed("p1_left"):  
 			buffered_move_direction.x = -1
+			key_pressed_this_frame = true
 		if Input.is_action_just_pressed("p1_up"):  
 			buffered_move_direction.y = -1
 			key_pressed_this_frame = true
 	else:
 		if Input.is_action_just_pressed("p2_right"): 
 			buffered_move_direction.x = 1
+			key_pressed_this_frame = true
 		if Input.is_action_just_pressed("p2_left"):  
 			buffered_move_direction.x = -1
+			key_pressed_this_frame = true
 		if Input.is_action_just_pressed("p2_up"):   
 			buffered_move_direction.y = -1
 			key_pressed_this_frame = true
@@ -64,8 +68,18 @@ func _process(delta):
 				if board_node and board_node.has_method("remove_rider_from_matrix"):
 					board_node.remove_rider_from_matrix(self)
 				
-				position.x += buffered_move_direction.x * TILE_SIZE
-				position.y += buffered_move_direction.y * TILE_SIZE
+				var nueva_pos_x = position.x + (buffered_move_direction.x * TILE_SIZE)
+				var nueva_pos_y = position.y + (buffered_move_direction.y * TILE_SIZE)
+				
+				var min_limit = 0
+				var max_limit = 8 * TILE_SIZE
+				
+				if nueva_pos_x > min_limit and nueva_pos_x < max_limit and nueva_pos_y > min_limit and nueva_pos_y < max_limit:
+					if board_node and board_node.has_method("remove_rider_from_matrix"):
+						board_node.remove_rider_from_matrix(self)
+						
+					position.x = nueva_pos_x
+					position.y = nueva_pos_y
 			
 			buffered_move_direction = Vector2.ZERO
 

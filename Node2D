@@ -1,0 +1,304 @@
+[1mdiff --git a/.godot/editor/editor_layout.cfg b/.godot/editor/editor_layout.cfg[m
+[1mindex c336f..d5293 100644[m
+[1m--- a/.godot/editor/editor_layout.cfg[m
+[1m+++ b/.godot/editor/editor_layout.cfg[m
+[36m@@ -15,7 +15,7 @@[m [mdock_9_selected_tab_idx=0[m
+ dock_3="Scene,Import"[m
+ dock_4="FileSystem,History"[m
+ dock_5="Inspector,Signals,Groups"[m
+[31m-dock_9="Output,Debugger,Audio,Animation,Shader Editor,2h 53m[m
+[32m+[m[32mdock_9="Output,Debugger,Audio,Animation,Shader Editor,7m[m
+ ,Search Results,AnimationTree,ResourcePreloader,ShaderFile,SpriteFrames,Theme,Polygon,TileSet,TileMap,Replication,GridMap"[m
+ [m
+ [docks/FileSystem][m
+[36m@@ -50,8 +50,8 @@[m [mselected_main_editor_idx=2[m
+ [EditorWindow][m
+ [m
+ screen=0[m
+[31m-mode="maximized"[m
+[31m-position=Vector2i(0, 23)[m
+[32m+[m[32mmode="windowed"[m
+[32m+[m[32mposition=Vector2i(1, 31)[m
+ size=Vector2i(1278, 1000)[m
+ [m
+ [ScriptEditor][m
+[1mdiff --git a/.godot/editor/editor_script_doc_cache.res b/.godot/editor/editor_script_doc_cache.res[m
+[1mdeleted file mode 100644[m
+[1mindex f6f61..00000[m
+Binary files a/.godot/editor/editor_script_doc_cache.res and /dev/null differ
+[1mdiff --git a/.godot/editor/filesystem_cache10 b/.godot/editor/filesystem_cache10[m
+[1mindex 163e8..222f6 100644[m
+[1m--- a/.godot/editor/filesystem_cache10[m
+[1m+++ b/.godot/editor/filesystem_cache10[m
+[36m@@ -1,5 +1,5 @@[m
+ 63f7b34db8d8cdea90c76aacccf841ec[m
+[31m-::res://::1783458950[m
+[32m+[m[32m::res://::1783467313[m
+ board_2d.tscn::PackedScene::5345570941739636764::1783398137::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd[m
+ export_presets.cfg::TextFile::-1::1783373642::0::1::::<><><>0<>0<><>::[m
+ icon.svg::CompressedTexture2D::273730838333825194::1781649852::1781649856::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::[m
+[36m@@ -57,10 +57,10 @@[m [mblack_knight.png::CompressedTexture2D::3646016461749330705::1782845102::17832953[m
+ knight.gd::GDScript::5465755528813056783::1783294587::0::1::::<>Node2D<><>0<>0<><>::[m
+ knight.tscn::PackedScene::7093989754363643310::1783395569::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://cp86e1xwxu4mc::::res://scenes/knight/white_knight.png[m
+ white_knight.png::CompressedTexture2D::5895689259960780830::1782845110::1783295364::1::::<><><>0<>0<>40df550ac9c664cc6ad9e3cd319a6b61<>res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex::[m
+[31m-::res://scenes/main character/::1783458620[m
+[32m+[m[32m::res://scenes/main character/::1783462057[m
+ black_main_character.png::CompressedTexture2D::1340542571665933096::1783393656::1783393656::1::::<><><>0<>0<>bf4d7abe109d1911d5c26557093e1b2a<>res://.godot/imported/black_main_character.png-a828ec770ba350155c34b2aa1f5c8fe2.ctex::[m
+ main character.tscn::PackedScene::6179730098071991820::1783399511::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://08aevrgcsipu::::res://scenes/main character/white-main_character.png[m
+[31m-main_character.gd::GDScript::4035469817133263474::1783458620::0::1::::<>Node2D<><>0<>0<><>::[m
+[32m+[m[32mmain_character.gd::GDScript::4035469817133263474::1783462057::0::1::::<>Node2D<><>0<>0<><>::[m
+ white-main_character.png::CompressedTexture2D::1822853829538432354::1783393656::1783393656::1::::<><><>0<>0<>4798d38004bccff3b654f0c113f38a94<>res://.godot/imported/white-main_character.png-a9f233045053e9f7ff42a3eab331f2f7.ctex::[m
+ ::res://scenes/pawn/::1783395569[m
+ black_pawn.png::CompressedTexture2D::4661603628222712927::1782344359::1782344359::1::::<><><>0<>0<>fe70535ef32cba2f957098fd89cbfb14<>res://.godot/imported/black_pawn.png-6c6ee77f407be106d8623b9b86aaa232.ctex::[m
+[1mdiff --git a/.godot/editor/script_editor_cache.cfg b/.godot/editor/script_editor_cache.cfg[m
+[1mindex d729f..7cc1d 100644[m
+[1m--- a/.godot/editor/script_editor_cache.cfg[m
+[1m+++ b/.godot/editor/script_editor_cache.cfg[m
+[36m@@ -105,11 +105,11 @@[m [mstate={[m
+ state={[m
+ "bookmarks": PackedInt32Array(),[m
+ "breakpoints": PackedInt32Array(),[m
+[31m-"column": 41,[m
+[32m+[m[32m"column": 4,[m
+ "folded_lines": PackedInt32Array(),[m
+ "h_scroll_position": 0,[m
+[31m-"row": 69,[m
+[31m-"scroll_position": 56.0,[m
+[32m+[m[32m"row": 42,[m
+[32m+[m[32m"scroll_position": 24.130434,[m
+ "selection": false,[m
+ "syntax_highlighter": "GDScript"[m
+ }[m
+[1mdiff --git a/scenes/main character/main_character.gd b/scenes/main character/main_character.gd[m
+[1mindex 54f78..ac93c 100644[m
+[1m--- a/scenes/main character/main_character.gd[m	
+[1m+++ b/scenes/main character/main_character.gd[m	
+[36m@@ -17,6 +17,8 @@[m [mconst TILE_SIZE = 64[m
+ [m
+ func _ready():[m
+ 	$Area2D.area_entered.connect(_on_area_entered)[m
+[32m+[m	[32mgrid_position.x = int((position.x - 64 - 32) / TILE_SIZE)[m
+[32m+[m	[32mgrid_position.y = int((position.y - 64 - 32) / TILE_SIZE)[m
+ [m
+ func set_side(white: bool, texture_path: String):[m
+ 	is_white = white[m
+[36m@@ -29,22 +31,35 @@[m [mfunc _process(delta):[m
+ 		if auto_movement_timer >= STEP_DELAY:[m
+ 			auto_movement_timer = 0.0[m
+ 			position.x += TILE_SIZE * direction[m
+[31m-	[m
+[32m+[m[41m			[m
+[32m+[m			[32mgrid_position.x = int((position.x - 64 - 32) / TILE_SIZE)[m
+[32m+[m[41m			[m
+[32m+[m			[32mif grid_position.x > 7:[m
+[32m+[m				[32mgrid_position.x = 0[m
+[32m+[m				[32mposition.x = (grid_position.x * TILE_SIZE) + 64 + 32[m
+[32m+[m			[32melif grid_position.x < 0:[m
+[32m+[m				[32mgrid_position.x = 7[m
+[32m+[m				[32mposition.x = (grid_position.x * TILE_SIZE) + 64 + 32[m
+[32m+[m[41m				[m
+ 	var key_pressed_this_frame = false[m
+ 	[m
+ 	if is_player_one:[m
+ 		if Input.is_action_just_pressed("p1_right"): [m
+ 			buffered_move_direction.x = 1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p1_left"):  [m
+ 			buffered_move_direction.x = -1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p1_up"):  [m
+ 			buffered_move_direction.y = -1[m
+ 			key_pressed_this_frame = true[m
+ 	else:[m
+ 		if Input.is_action_just_pressed("p2_right"): [m
+ 			buffered_move_direction.x = 1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p2_left"):  [m
+ 			buffered_move_direction.x = -1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p2_up"):   [m
+ 			buffered_move_direction.y = -1[m
+ 			key_pressed_this_frame = true[m
+[36m@@ -55,17 +70,24 @@[m [mfunc _process(delta):[m
+ 	[m
+ 	if is_waiting_for_input:[m
+ 		input_buffer_timer += delta[m
+[31m-		[m
+[32m+[m[41m	[m
+ 		if input_buffer_timer >= INPUT_BUFFER_DELAY:[m
+ 			is_waiting_for_input = false[m
+ 			[m
+ 			if buffered_move_direction != Vector2.ZERO:[m
+[31m-				var board_node = get_parent()[m
+[31m-				if board_node and board_node.has_method("remove_rider_from_matrix"):[m
+[31m-					board_node.remove_rider_from_matrix(self)[m
+[32m+[m				[32mvar next_x = position.x + (buffered_move_direction.x * TILE_SIZE)[m
+[32m+[m				[32mvar next_y = position.y + (buffered_move_direction.y * TILE_SIZE)[m
+[32m+[m[41m				[m
+[32m+[m				[32mvar is_inside_x = (next_x >= 64) and (next_x <= 576)[m
+[32m+[m				[32mvar is_inside_y = (next_y >= 64) and (next_y <= 576)[m
+ 				[m
+[31m-				position.x += buffered_move_direction.x * TILE_SIZE[m
+[31m-				position.y += buffered_move_direction.y * TILE_SIZE[m
+[32m+[m				[32mif is_inside_x and is_inside_y:[m
+[32m+[m					[32mvar board_node = get_parent()[m
+[32m+[m					[32mif board_node and board_node.has_method("remove_rider_from_matrix"):[m
+[32m+[m						[32mboard_node.remove_rider_from_matrix(self)[m
+[32m+[m[41m					[m
+[32m+[m					[32mposition.x += buffered_move_direction.x * TILE_SIZE[m
+[32m+[m					[32mposition.y += buffered_move_direction.y * TILE_SIZE[m
+ 			[m
+ 			buffered_move_direction = Vector2.ZERO[m
+ [m
+[1mdiff --git a/.godot/editor/editor_layout.cfg b/.godot/editor/editor_layout.cfg[m
+[1mindex c336f..d5293 100644[m
+[1m--- a/.godot/editor/editor_layout.cfg[m
+[1m+++ b/.godot/editor/editor_layout.cfg[m
+[36m@@ -15,7 +15,7 @@[m [mdock_9_selected_tab_idx=0[m
+ dock_3="Scene,Import"[m
+ dock_4="FileSystem,History"[m
+ dock_5="Inspector,Signals,Groups"[m
+[31m-dock_9="Output,Debugger,Audio,Animation,Shader Editor,2h 53m[m
+[32m+[m[32mdock_9="Output,Debugger,Audio,Animation,Shader Editor,7m[m
+ ,Search Results,AnimationTree,ResourcePreloader,ShaderFile,SpriteFrames,Theme,Polygon,TileSet,TileMap,Replication,GridMap"[m
+ [m
+ [docks/FileSystem][m
+[36m@@ -50,8 +50,8 @@[m [mselected_main_editor_idx=2[m
+ [EditorWindow][m
+ [m
+ screen=0[m
+[31m-mode="maximized"[m
+[31m-position=Vector2i(0, 23)[m
+[32m+[m[32mmode="windowed"[m
+[32m+[m[32mposition=Vector2i(1, 31)[m
+ size=Vector2i(1278, 1000)[m
+ [m
+ [ScriptEditor][m
+[1mdiff --git a/.godot/editor/editor_script_doc_cache.res b/.godot/editor/editor_script_doc_cache.res[m
+[1mdeleted file mode 100644[m
+[1mindex f6f61..00000[m
+Binary files a/.godot/editor/editor_script_doc_cache.res and /dev/null differ
+[1mdiff --git a/.godot/editor/filesystem_cache10 b/.godot/editor/filesystem_cache10[m
+[1mindex 163e8..222f6 100644[m
+[1m--- a/.godot/editor/filesystem_cache10[m
+[1m+++ b/.godot/editor/filesystem_cache10[m
+[36m@@ -1,5 +1,5 @@[m
+ 63f7b34db8d8cdea90c76aacccf841ec[m
+[31m-::res://::1783458950[m
+[32m+[m[32m::res://::1783467313[m
+ board_2d.tscn::PackedScene::5345570941739636764::1783398137::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd[m
+ export_presets.cfg::TextFile::-1::1783373642::0::1::::<><><>0<>0<><>::[m
+ icon.svg::CompressedTexture2D::273730838333825194::1781649852::1781649856::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::[m
+[36m@@ -57,10 +57,10 @@[m [mblack_knight.png::CompressedTexture2D::3646016461749330705::1782845102::17832953[m
+ knight.gd::GDScript::5465755528813056783::1783294587::0::1::::<>Node2D<><>0<>0<><>::[m
+ knight.tscn::PackedScene::7093989754363643310::1783395569::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://cp86e1xwxu4mc::::res://scenes/knight/white_knight.png[m
+ white_knight.png::CompressedTexture2D::5895689259960780830::1782845110::1783295364::1::::<><><>0<>0<>40df550ac9c664cc6ad9e3cd319a6b61<>res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex::[m
+[31m-::res://scenes/main character/::1783458620[m
+[32m+[m[32m::res://scenes/main character/::1783462057[m
+ black_main_character.png::CompressedTexture2D::1340542571665933096::1783393656::1783393656::1::::<><><>0<>0<>bf4d7abe109d1911d5c26557093e1b2a<>res://.godot/imported/black_main_character.png-a828ec770ba350155c34b2aa1f5c8fe2.ctex::[m
+ main character.tscn::PackedScene::6179730098071991820::1783399511::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://08aevrgcsipu::::res://scenes/main character/white-main_character.png[m
+[31m-main_character.gd::GDScript::4035469817133263474::1783458620::0::1::::<>Node2D<><>0<>0<><>::[m
+[32m+[m[32mmain_character.gd::GDScript::4035469817133263474::1783462057::0::1::::<>Node2D<><>0<>0<><>::[m
+ white-main_character.png::CompressedTexture2D::1822853829538432354::1783393656::1783393656::1::::<><><>0<>0<>4798d38004bccff3b654f0c113f38a94<>res://.godot/imported/white-main_character.png-a9f233045053e9f7ff42a3eab331f2f7.ctex::[m
+ ::res://scenes/pawn/::1783395569[m
+ black_pawn.png::CompressedTexture2D::4661603628222712927::1782344359::1782344359::1::::<><><>0<>0<>fe70535ef32cba2f957098fd89cbfb14<>res://.godot/imported/black_pawn.png-6c6ee77f407be106d8623b9b86aaa232.ctex::[m
+[1mdiff --git a/.godot/editor/script_editor_cache.cfg b/.godot/editor/script_editor_cache.cfg[m
+[1mindex d729f..7cc1d 100644[m
+[1m--- a/.godot/editor/script_editor_cache.cfg[m
+[1m+++ b/.godot/editor/script_editor_cache.cfg[m
+[36m@@ -105,11 +105,11 @@[m [mstate={[m
+ state={[m
+ "bookmarks": PackedInt32Array(),[m
+ "breakpoints": PackedInt32Array(),[m
+[31m-"column": 41,[m
+[32m+[m[32m"column": 4,[m
+ "folded_lines": PackedInt32Array(),[m
+ "h_scroll_position": 0,[m
+[31m-"row": 69,[m
+[31m-"scroll_position": 56.0,[m
+[32m+[m[32m"row": 42,[m
+[32m+[m[32m"scroll_position": 24.130434,[m
+ "selection": false,[m
+ "syntax_highlighter": "GDScript"[m
+ }[m
+[1mdiff --git a/scenes/main character/main_character.gd b/scenes/main character/main_character.gd[m
+[1mindex 54f78..ac93c 100644[m
+[1m--- a/scenes/main character/main_character.gd[m	
+[1m+++ b/scenes/main character/main_character.gd[m	
+[36m@@ -17,6 +17,8 @@[m [mconst TILE_SIZE = 64[m
+ [m
+ func _ready():[m
+ 	$Area2D.area_entered.connect(_on_area_entered)[m
+[32m+[m	[32mgrid_position.x = int((position.x - 64 - 32) / TILE_SIZE)[m
+[32m+[m	[32mgrid_position.y = int((position.y - 64 - 32) / TILE_SIZE)[m
+ [m
+ func set_side(white: bool, texture_path: String):[m
+ 	is_white = white[m
+[36m@@ -29,22 +31,35 @@[m [mfunc _process(delta):[m
+ 		if auto_movement_timer >= STEP_DELAY:[m
+ 			auto_movement_timer = 0.0[m
+ 			position.x += TILE_SIZE * direction[m
+[31m-	[m
+[32m+[m[41m			[m
+[32m+[m			[32mgrid_position.x = int((position.x - 64 - 32) / TILE_SIZE)[m
+[32m+[m[41m			[m
+[32m+[m			[32mif grid_position.x > 7:[m
+[32m+[m				[32mgrid_position.x = 0[m
+[32m+[m				[32mposition.x = (grid_position.x * TILE_SIZE) + 64 + 32[m
+[32m+[m			[32melif grid_position.x < 0:[m
+[32m+[m				[32mgrid_position.x = 7[m
+[32m+[m				[32mposition.x = (grid_position.x * TILE_SIZE) + 64 + 32[m
+[32m+[m[41m				[m
+ 	var key_pressed_this_frame = false[m
+ 	[m
+ 	if is_player_one:[m
+ 		if Input.is_action_just_pressed("p1_right"): [m
+ 			buffered_move_direction.x = 1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p1_left"):  [m
+ 			buffered_move_direction.x = -1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p1_up"):  [m
+ 			buffered_move_direction.y = -1[m
+ 			key_pressed_this_frame = true[m
+ 	else:[m
+ 		if Input.is_action_just_pressed("p2_right"): [m
+ 			buffered_move_direction.x = 1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p2_left"):  [m
+ 			buffered_move_direction.x = -1[m
+[32m+[m			[32mkey_pressed_this_frame = true[m
+ 		if Input.is_action_just_pressed("p2_up"):   [m
+ 			buffered_move_direction.y = -1[m
+ 			key_pressed_this_frame = true[m
+[36m@@ -55,17 +70,24 @@[m [mfunc _process(delta):[m
+ 	[m
+ 	if is_waiting_for_input:[m
+ 		input_buffer_timer += delta[m
+[31m-		[m
+[32m+[m[41m	[m
+ 		if input_buffer_timer >= INPUT_BUFFER_DELAY:[m
+ 			is_waiting_for_input = false[m
+ 			[m
+ 			if buffered_move_direction != Vector2.ZERO:[m
+[31m-				var board_node = get_parent()[m
+[31m-				if board_node and board_node.has_method("remove_rider_from_matrix"):[m
+[31m-					board_node.remove_rider_from_matrix(self)[m
+[32m+[m				[32mvar next_x = position.x + (buffered_move_direction.x * TILE_SIZE)[m
+[32m+[m				[32mvar next_y = position.y + (buffered_move_direction.y * TILE_SIZE)[m
+[32m+[m[41m				[m
+[32m+[m				[32mvar is_inside_x = (next_x >= 64) and (next_x <= 576)[m
+[32m+[m				[32mvar is_inside_y = (next_y >= 64) and (next_y <= 576)[m
+ 				[m
+[31m-				position.x += buffered_move_direction.x * TILE_SIZE[m
+[31m-				position.y += buffered_move_direction.y * TILE_SIZE[m
+[32m+[m				[32mif is_inside_x and is_inside_y:[m
+[32m+[m					[32mvar board_node = get_parent()[m
+[32m+[m					[32mif board_node and board_node.has_method("remove_rider_from_matrix"):[m
+[32m+[m						[32mboard_node.remove_rider_from_matrix(self)[m
+[32m+[m[41m					[m
+[32m+[m					[32mposition.x += buffered_move_direction.x * TILE_SIZE[m
+[32m+[m					[32mposition.y += buffered_move_direction.y * TILE_SIZE[m
+ 			[m
+ 			buffered_move_direction = Vector2.ZERO[m
+ [m
