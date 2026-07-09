@@ -1,10 +1,12 @@
+Label
+VBoxContainer
+PanelContainer
+Control
+CanvasLayer
 CollisionShape2D
 StaticBody2D
 Area2D
 Sprite2D
 ColorRect
-Label
-Control
-CanvasLayer
 Node2D
 Camera2D

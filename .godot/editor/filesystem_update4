@@ -1,1 +1,11 @@
+res://scenes/main.tscn
+res://scenes/bishop/bishop.gd
+res://scenes/board.gd
+res://gamemanager.gd
+res://scenes/king/king.gd
+res://scenes/knight/knight.gd
 res://scenes/main character/main_character.gd
+res://scenes/pawn/pawn.gd
+res://scenes/queen/queen.gd
+res://scenes/rook/rook.gd
+res://scenes/score_interface.gd

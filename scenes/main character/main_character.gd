@@ -108,7 +108,11 @@ func _on_area_entered(touched_area: Area2D):
 	
 	if piece != null:
 		var board_node = get_parent()
+		var rider_color = "white" if is_white else "black"
+		
 		if piece.is_white == is_white:
+			capture_pieces(piece, rider_color)
+			
 			cont_same_color += 1
 			position.y += TILE_SIZE
 			if cont_same_color >= 3:
@@ -123,8 +127,15 @@ func _on_area_entered(touched_area: Area2D):
 				
 				cont_same_color = 0
 		else:
+			capture_pieces(piece, rider_color)
 			direction = piece.direction
 			if board_node and board_node.has_method("register_rider_in_matrix"):
 				board_node.register_rider_in_matrix(self, piece.grid_position.x, piece.grid_position.y)
 			
-			piece.queue_free()
+
+func capture_pieces(captured_piece: Node, rider_color_that_captures: String):
+	var same_color = (captured_piece.is_white == is_white)
+	
+	Gamemanager.process_capture(captured_piece.type_piece, same_color, rider_color_that_captures)
+	
+	captured_piece.queue_free()

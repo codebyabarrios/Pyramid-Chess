@@ -54,6 +54,7 @@ func create_board():
 			
 			if y == 0 and is_valid_column:
 				current_piece = king_scene.instantiate()
+				current_piece.type_piece = "king"
 				if should_be_white: 
 					current_piece.set_side(true, white_king_tex)
 				else: 
@@ -61,6 +62,7 @@ func create_board():
 					
 			elif y == 1 and is_valid_column:
 				current_piece = queen_scene.instantiate()
+				current_piece.type_piece = "queen"
 				if should_be_white: 
 					current_piece.set_side(true, white_queen_tex)
 				else: 
@@ -68,6 +70,7 @@ func create_board():
 						
 			elif y == 2 and is_valid_column:
 				current_piece = rook_scene.instantiate()
+				current_piece.type_piece = "rook"
 				if should_be_white: 
 					current_piece.set_side(true, white_rook_tex)
 				else: 
@@ -75,6 +78,7 @@ func create_board():
 								
 			elif y == 3 and is_valid_column:
 				current_piece = bishop_scene.instantiate()
+				current_piece.type_piece = "bishop"
 				if should_be_white: 
 					current_piece.set_side(true, white_bishop_tex)
 				else: 
@@ -82,6 +86,7 @@ func create_board():
 
 			elif y == 4 and is_valid_column:
 				current_piece = knight_scene.instantiate()
+				current_piece.type_piece = "horse"
 				if should_be_white: 
 					current_piece.set_side(true, white_knight_tex)
 				else: 
@@ -89,6 +94,7 @@ func create_board():
 				
 			elif y == 5 or y == 6:
 				current_piece = pawn_scene.instantiate()
+				current_piece.type_piece = "pawn"
 				if should_be_white: 
 					current_piece.set_side(true, white_pawn_tex)
 				else: 
@@ -97,9 +103,11 @@ func create_board():
 			elif y == 7:
 					if x == 3:
 						current_piece = main_character_scene.instantiate()
+						current_piece.is_white = false
 						current_piece.set_side(false, black_main_character_tex)
 					elif x == 4:
 						current_piece = main_character_scene.instantiate()
+						current_piece.is_white = true
 						current_piece.set_side(true, white_main_character_tex)
 			else:
 				current_piece = null
