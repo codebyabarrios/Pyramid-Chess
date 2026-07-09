@@ -21,6 +21,7 @@ const TILE_SIZE = 64
 
 func _ready():
 	$Area2D.area_entered.connect(_on_area_entered)
+	add_to_group("players")
 	
 func set_side(white: bool, texture_path: String):
 	is_white = white
@@ -69,23 +70,38 @@ func _process(delta):
 			
 			if buffered_move_direction != Vector2.ZERO:
 				var board_node = get_parent()
-				if board_node and board_node.has_method("remove_rider_from_matrix"):
-					board_node.remove_rider_from_matrix(self)
 				
-				var nueva_pos_x = position.x + (buffered_move_direction.x * TILE_SIZE)
-				var nueva_pos_y = position.y + (buffered_move_direction.y * TILE_SIZE)
+				var new_pos_x = position.x + (buffered_move_direction.x * TILE_SIZE)
+				var new_pos_y = position.y + (buffered_move_direction.y * TILE_SIZE)
 				
-				var min_limit = 0
-				var max_limit = 8 * TILE_SIZE
+				var min_limit_x = 0
+				var max_limit_x = 8 * TILE_SIZE
+				var min_limit_y = 0
+				var max_limit_y = 8 * TILE_SIZE
 				
-				if nueva_pos_x > min_limit and nueva_pos_x < max_limit and nueva_pos_y > min_limit and nueva_pos_y < max_limit:
-					if board_node and board_node.has_method("remove_rider_from_matrix"):
-						board_node.remove_rider_from_matrix(self)
-						
-					position.x = nueva_pos_x
-					position.y = nueva_pos_y
-			
-			buffered_move_direction = Vector2.ZERO
+				if new_pos_x > max_limit_x:
+					new_pos_x = (0 * TILE_SIZE) + (TILE_SIZE / 2)
+				
+				elif new_pos_x < min_limit_x:
+					new_pos_x = (7 * TILE_SIZE) + (TILE_SIZE / 2)
+				
+				var allowed_movement = true
+				var all_main_characters = get_tree().get_nodes_in_group("players")
+				
+				for player in all_main_characters:
+					if player != self:
+						if abs(player.position.x - new_pos_x) < 5 and abs(player.position.y - new_pos_y) < 5:
+							allowed_movement = false
+							break
+				
+				if allowed_movement:
+					if new_pos_y > min_limit_y and new_pos_y < max_limit_y:
+						if board_node and board_node.has_method("remove_rider_from_matrix"):
+							board_node.remove_rider_from_matrix(self)
+						position.x = new_pos_x
+						position.y = new_pos_y
+					
+					buffered_move_direction = Vector2.ZERO
 
 func _on_area_entered(touched_area: Area2D):
 	var piece = touched_area.get_parent()
