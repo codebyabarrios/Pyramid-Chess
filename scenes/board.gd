@@ -16,7 +16,7 @@ var board = []
 
 @onready var knight_scene = preload("res://scenes/knight/knight.tscn")
 @onready var black_knight_tex = "res://scenes/knight/black_knight.png"
-@onready var white_knight_tex = "res://scenes/knight/white_knight.png"
+@onready var white_knight_tex = "res://scenes/knight/white_horse.png"
 
 @onready var bishop_scene = preload("res://scenes/bishop/bishop.tscn")
 @onready var white_bishop_tex = "res://scenes/bishop/white_bishop.png"

@@ -22,7 +22,7 @@ Gamemanager="*uid://m2k5hyrltacg"
 [display]
 
 window/size/viewport_width=900
-window/size/viewport_height=900
+window/size/viewport_height=700
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
