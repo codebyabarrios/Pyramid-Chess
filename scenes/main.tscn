@@ -1,11 +1,25 @@
 [gd_scene format=3 uid="uid://nqv46bfmrryw"]
 
 [ext_resource type="PackedScene" uid="uid://cifo1i558nk3e" path="res://board_2d.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://brr0t123mr6jd" path="res://background_mosaic.png" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dm7cwttgoiago" path="res://scenes/score_interface.gd" id="2_0wfyh"]
 
 [node name="Main" type="Node2D" unique_id=1119833376]
 
+[node name="Background" type="TextureRect" parent="." unique_id=403642504]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1000.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sugp2")
+expand_mode = 1
+stretch_mode = 1
+
 [node name="Board2D" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
+z_index = 6
 position = Vector2(64, 64)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=829527038]

@@ -1,17 +1,15 @@
 [gd_scene format=3 uid="uid://c8cm8e46ayus1"]
 
 [ext_resource type="Script" uid="uid://cj4wgvondgprr" path="res://scenes/knight/knight.gd" id="1_itplb"]
-[ext_resource type="Texture2D" uid="uid://cp86e1xwxu4mc" path="res://scenes/knight/white_knight.png" id="2_633bp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_itplb"]
 size = Vector2(30, 39)
 
-[node name="Horse" type="Node2D" unique_id=1786993282]
+[node name="Knight" type="Node2D" unique_id=1786993282]
 z_index = 2
 script = ExtResource("1_itplb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=721530982]
-texture = ExtResource("2_633bp")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1940264997]
 collision_mask = 0

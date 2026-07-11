@@ -1,1 +1,2 @@
-res://scenes/board.gd
+res://scenes/knight/knight.tscn
+res://scenes/main.tscn
