@@ -1,2 +1,2 @@
-res://scenes/knight/knight.tscn
 res://scenes/main.tscn
+res://scenes/score_interface.gd

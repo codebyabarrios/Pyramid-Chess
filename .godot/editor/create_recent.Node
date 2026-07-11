@@ -1,5 +1,6 @@
-TextureRect
 Label
+HBoxContainer
+TextureRect
 VBoxContainer
 PanelContainer
 Control
