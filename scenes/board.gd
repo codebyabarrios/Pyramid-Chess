@@ -4,6 +4,9 @@ const BOARD_SIZE = 8
 const TILE_SIZE = 64
 const MAX_X_POSITION = 8 * 64 
 
+const TOTAL_BOARD_PIXELS_WITH_BORDERS = 592.0
+const BORDER_OFFSET = 40.0
+
 var movement_speed = 100.0
 var board = []
 
@@ -41,6 +44,10 @@ var board = []
 func _ready():
 	create_board()
 	print_board()
+	
+	if get_tree().root:
+		get_tree().root.size_changed.connect(_adapt_to_viewport)
+	_adapt_to_viewport()
 
 func create_board():
 	board.clear()
@@ -114,24 +121,23 @@ func create_board():
 			
 			if current_piece != null:
 				current_piece.grid_position = Vector2i(x, y)
-				
-				if y % 2 != 0:
+				if y % 2 != 0: 
 					current_piece.direction = -1
-				else:
+				else: 
 					current_piece.direction = 1
 					
 			board[y].append(current_piece)
-			
 			var new_tile = Sprite2D.new()
+			
 			if (x + y) % 2 == 0: new_tile.texture = white_tile_texture
 			else: new_tile.texture = black_tile_texture
+			
 			new_tile.position = Vector2((x * TILE_SIZE) + (TILE_SIZE / 2), (y * TILE_SIZE) + (TILE_SIZE / 2))
 			add_child(new_tile)
 			
 			if current_piece != null:
 				current_piece.position = new_tile.position
 				add_child(current_piece)
-
 
 var movement_timer = 0.0
 const STEP_DELAY = 0.75
@@ -149,11 +155,11 @@ func _process(delta):
 				if target != null:
 					var move_dir = target.direction
 					target.position.x += TILE_SIZE * move_dir
-				
+					
 					if move_dir == 1:
 						if target.position.x > MAX_X_POSITION:
 							target.position.x -= MAX_X_POSITION
-					
+						
 					elif move_dir == -1:
 						if target.position.x < 0:
 							target.position.x += MAX_X_POSITION
@@ -168,7 +174,58 @@ func remove_rider_from_matrix(rider_node: Node2D):
 			if board[y][x] == rider_node:
 				board[y][x] = null
 
-
 func print_board():
 	for row in board:
 		print(row)
+		
+func _adapt_to_viewport() -> void:
+	var viewport_size = get_viewport_rect().size
+	var left_margin = 15.0 
+	
+	var scale_factor_x = (viewport_size.x - left_margin) / TOTAL_BOARD_PIXELS_WITH_BORDERS
+	var scale_factor_y = viewport_size.y / TOTAL_BOARD_PIXELS_WITH_BORDERS
+	
+	var final_scale = min(scale_factor_x, scale_factor_y)
+	scale = Vector2(final_scale, final_scale)
+	
+	var dynamic_offset_x = left_margin + (BORDER_OFFSET * final_scale)
+	var dynamic_offset_y = ((viewport_size.y - (TOTAL_BOARD_PIXELS_WITH_BORDERS * final_scale)) / 2.0) + (BORDER_OFFSET * final_scale)
+	position = Vector2(dynamic_offset_x, dynamic_offset_y)
+	
+	queue_redraw()
+
+func _draw() -> void:
+	var fondo_rect = Rect2(Vector2(-BORDER_OFFSET, -BORDER_OFFSET), Vector2(TOTAL_BOARD_PIXELS_WITH_BORDERS, TOTAL_BOARD_PIXELS_WITH_BORDERS))
+	draw_rect(fondo_rect, Color.BLACK, true)
+	
+	var letras = ["A", "B", "C", "D", "E", "F", "G", "H"]
+	var numeros = ["8", "7", "6", "5", "4", "3", "2", "1"]
+	
+	var font_size = 18
+	var text_color = Color.WHITE
+	
+	var temp_label = Label.new()
+	var default_font = temp_label.get_theme_font("font")
+	temp_label.free()
+	
+	for i in range(8):
+		var texto = letras[i]
+		var centro_x = (i * TILE_SIZE) + (TILE_SIZE / 2.0)
+		var string_size = default_font.get_string_size(texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+		
+		var pos_arriba = Vector2(centro_x - (string_size.x / 2.0), -20.0 + (string_size.y / 4.0))
+		draw_string(default_font, pos_arriba, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
+		
+		var pos_abajo = Vector2(centro_x - (string_size.x / 2.0), 532.0 + (string_size.y / 4.0))
+		draw_string(default_font, pos_abajo, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
+
+	for i in range(8):
+		var texto = numeros[i]
+		var centro_y = (i * TILE_SIZE) + (TILE_SIZE / 2.0)
+		var string_size = default_font.get_string_size(texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+		
+		var pos_izquierda = Vector2(-20.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
+		draw_string(default_font, pos_izquierda, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
+		
+		var pos_derecha = Vector2(532.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
+		draw_string(default_font, pos_derecha, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
