@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Pyramid Chess"
-run/main_scene="uid://nqv46bfmrryw"
+run/main_scene="uid://rawceymk87uw"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

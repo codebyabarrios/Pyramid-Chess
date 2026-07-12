@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://rawceymk87uw"]
+
+[ext_resource type="Script" uid="uid://cax4flmuaghpn" path="res://main_menu.gd" id="1_eiy7p"]
+[ext_resource type="Texture2D" uid="uid://duwdvdj2sxpqd" path="res://Game assets/New Piskel-1.png (34).png" id="1_qoqlk"]
+[ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="2_h7a2f"]
+[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="3_h7a2f"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1343380221]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1717123421]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qoqlk")
+stretch_mode = 1
+
+[node name="MainMenu" type="Control" parent="." unique_id=78641064]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eiy7p")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu" unique_id=1803889590]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="MainMenu" unique_id=627027259]
+anchors_preset = 0
+offset_right = 700.0
+offset_bottom = 700.0
+
+[node name="Control" type="Control" parent="MainMenu/Control" unique_id=1383977718]
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 105.0
+
+[node name="Label" type="Label" parent="MainMenu/Control/Control" unique_id=1171638647]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 105.0
+offset_right = 590.0
+offset_bottom = 176.0
+theme_override_colors/font_color = Color(0.3529412, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_h7a2f")
+theme_override_font_sizes/font_size = 70
+text = "PYRAMID  CHESS"
+
+[node name="Control" type="Control" parent="MainMenu/Control/Control" unique_id=232355696]
+z_index = 2
+anchors_preset = 0
+offset_top = 21.0
+offset_right = 150.0
+offset_bottom = 105.0
+
+[node name="PlayButton" type="Button" parent="MainMenu/Control/Control/Control" unique_id=1040244697]
+modulate = Color(0.39215687, 0.59607846, 0, 1)
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 0
+offset_left = 259.0
+offset_top = 339.0
+offset_right = 409.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("3_h7a2f")
+theme_override_font_sizes/font_size = 40
+text = "PLAY"
+
+[node name="ExitButton" type="Button" parent="MainMenu/Control/Control/Control" unique_id=1149100741]
+modulate = Color(0.73333335, 0.21568628, 0.101960786, 1)
+z_index = 2
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 0
+offset_left = 259.0
+offset_top = 503.0
+offset_right = 409.0
+offset_bottom = 543.0
+theme_override_fonts/font = ExtResource("3_h7a2f")
+theme_override_font_sizes/font_size = 40
+text = "EXIT"
+
+[connection signal="pressed" from="MainMenu/Control/Control/Control/PlayButton" to="MainMenu" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MainMenu/Control/Control/Control/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
