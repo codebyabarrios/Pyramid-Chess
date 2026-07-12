@@ -1,0 +1,4 @@
+res://scenes/main.tscn
+res://scenes/score_interface.gd
+res://scenes/board.gd
+res://gamemanager.gd

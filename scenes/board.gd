@@ -182,14 +182,20 @@ func _adapt_to_viewport() -> void:
 	var viewport_size = get_viewport_rect().size
 	var left_margin = 15.0 
 	
-	var scale_factor_x = (viewport_size.x - left_margin) / TOTAL_BOARD_PIXELS_WITH_BORDERS
-	var scale_factor_y = viewport_size.y / TOTAL_BOARD_PIXELS_WITH_BORDERS
+	var ui_bottom_margin = 50.0
+	var available_width = viewport_size.x - left_margin
+	var available_height = viewport_size.y - ui_bottom_margin
+	
+	var scale_factor_x = available_width / TOTAL_BOARD_PIXELS_WITH_BORDERS
+	var scale_factor_y = available_height / TOTAL_BOARD_PIXELS_WITH_BORDERS
 	
 	var final_scale = min(scale_factor_x, scale_factor_y)
 	scale = Vector2(final_scale, final_scale)
 	
-	var dynamic_offset_x = left_margin + (BORDER_OFFSET * final_scale)
-	var dynamic_offset_y = ((viewport_size.y - (TOTAL_BOARD_PIXELS_WITH_BORDERS * final_scale)) / 2.0) + (BORDER_OFFSET * final_scale)
+	var board_real_size = TOTAL_BOARD_PIXELS_WITH_BORDERS * final_scale
+	
+	var dynamic_offset_x = left_margin + ((available_width - board_real_size) / 2.0) + (BORDER_OFFSET * final_scale)
+	var dynamic_offset_y = ((available_height - board_real_size) / 2.0) + (BORDER_OFFSET * final_scale)
 	position = Vector2(dynamic_offset_x, dynamic_offset_y)
 	
 	queue_redraw()
