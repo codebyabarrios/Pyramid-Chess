@@ -109,13 +109,19 @@ func create_board():
 			
 			elif y == 7:
 					if x == 3:
-						current_piece = main_character_scene.instantiate()
-						current_piece.is_white = false
-						current_piece.set_side(false, black_main_character_tex)
+						if Global.total_players == 2 or Global.selected_side == "black":
+							current_piece = main_character_scene.instantiate()
+							current_piece.is_white = false
+							current_piece.set_side(false, black_main_character_tex)
+						else:
+							current_piece = null
 					elif x == 4:
-						current_piece = main_character_scene.instantiate()
-						current_piece.is_white = true
-						current_piece.set_side(true, white_main_character_tex)
+						if Global.total_players == 2 or Global.selected_side == "white":
+							current_piece = main_character_scene.instantiate()
+							current_piece.is_white = true
+							current_piece.set_side(true, white_main_character_tex)
+						else:
+							current_piece = null
 			else:
 				current_piece = null
 			

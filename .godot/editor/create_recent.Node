@@ -1,10 +1,10 @@
-TextureRect
 Control
 Button
+Label
+VBoxContainer
+TextureRect
 CanvasLayer
 Node2D
-VBoxContainer
-Label
 MarginContainer
 CanvasGroup
 HBoxContainer
