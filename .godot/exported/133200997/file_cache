@@ -8,5 +8,6 @@ res://scenes/main.tscn::26a3bbc92d81316ac4c5c1b2b35985fe::1783902744::res://.god
 res://board_2d.tscn::8790b9e59ae1ceba94bd2d8778a5d7b3::1783741650::res://.godot/exported/133200997/export-ffc9f8113f5d36ebcaba446f78f54d10-board_2d.scn
 res://scenes/knight/knight.tscn::4fd22475821d12998d5f8f8d0403a0f3::1783724113::res://.godot/exported/133200997/export-54edfe3bb69f919e06880286f28f0fd3-knight.scn
 res://scenes/rook/rook.tscn::7f3ad6645c2582dfbfb0a05063995815::1783479063::res://.godot/exported/133200997/export-426bfb342fb88fdfe383a0176c76713b-rook.scn
-res://scenes/main character/main character.tscn::34eeec4533b06d2a7147ebe4fe19f480::1783539600::res://.godot/exported/133200997/export-84f8c5b42001312c8ed238d6b8983e1e-main character.scn
-res://MainMenu.tscn::a4161cbf1411f2d8b69185375dba0cc5::1783904099::res://.godot/exported/133200997/export-e20540a8a37e906f11cb1dae59cc6ed4-MainMenu.scn
+res://scenes/main character/main character.tscn::34eeec4533b06d2a7147ebe4fe19f480::1783918674::res://.godot/exported/133200997/export-84f8c5b42001312c8ed238d6b8983e1e-main character.scn
+res://MainMenu.tscn::a0f58c06aeccd4093014ac43e289c894::1783911442::res://.godot/exported/133200997/export-e20540a8a37e906f11cb1dae59cc6ed4-MainMenu.scn
+res://FloatingText.tscn::ffaea0879f44206e6216d54a2db4fcd0::1783974183::res://.godot/exported/133200997/export-90b0b00a1b6b155e7a219f01b14c116d-FloatingText.scn

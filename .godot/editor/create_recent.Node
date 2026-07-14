@@ -1,7 +1,10 @@
-Control
-Button
 Label
+Button
+Control
 VBoxContainer
+TextureProgressBar
+ColorRect
+AnimationPlayer
 TextureRect
 CanvasLayer
 Node2D
@@ -9,6 +12,3 @@ MarginContainer
 CanvasGroup
 HBoxContainer
 SubViewport
-PanelContainer
-CollisionShape2D
-StaticBody2D

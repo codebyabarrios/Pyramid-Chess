@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://cuxedbii2k0qt"]
+
+[ext_resource type="Script" uid="uid://b4rium32iel1i" path="res://floating_text.gd" id="1_bmcqi"]
+[ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="2_fpf3r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fpf3r"]
+
+[sub_resource type="Animation" id="Animation_fpf3r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f7o28"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -60)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rxxxx"]
+_data = {
+&"RESET": SubResource("Animation_fpf3r"),
+&"show": SubResource("Animation_f7o28")
+}
+
+[node name="FloatingText" type="Node2D" unique_id=1956891445]
+top_level = true
+z_index = 100
+script = ExtResource("1_bmcqi")
+
+[node name="Label" type="Label" parent="." unique_id=422887446]
+z_index = 10
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("2_fpf3r")
+theme_override_font_sizes/font_size = 36
+label_settings = SubResource("LabelSettings_fpf3r")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="show" type="AnimationPlayer" parent="." unique_id=1116680248]
+libraries/ = SubResource("AnimationLibrary_rxxxx")

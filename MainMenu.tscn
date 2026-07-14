@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://rawceymk87uw"]
 
 [ext_resource type="Script" uid="uid://cax4flmuaghpn" path="res://main_menu.gd" id="1_eiy7p"]
-[ext_resource type="Texture2D" uid="uid://duwdvdj2sxpqd" path="res://Game assets/New Piskel-1.png (34).png" id="1_qoqlk"]
+[ext_resource type="Texture2D" uid="uid://cikppdcbhcu68" path="res://Game assets/background_mosaic.png" id="1_iwfq2"]
 [ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="2_h7a2f"]
 [ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="3_h7a2f"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="5_iwfq2"]
@@ -14,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_qoqlk")
+texture = ExtResource("1_iwfq2")
 stretch_mode = 1
 
 [node name="MainMenu" type="Control" parent="." unique_id=78641064]
@@ -39,18 +39,18 @@ offset_bottom = 700.0
 
 [node name="HomeLayout" type="Control" parent="MainMenu/HomeMenu" unique_id=1383977718]
 anchors_preset = 0
-offset_right = 150.0
-offset_bottom = 105.0
+offset_right = 700.0
+offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/HomeMenu/HomeLayout" unique_id=1171638647]
 layout_mode = 0
-offset_left = 113.0
+offset_left = 75.0
 offset_top = 147.0
-offset_right = 593.0
-offset_bottom = 218.0
-theme_override_colors/font_color = Color(0.3529412, 1, 1, 1)
+offset_right = 623.0
+offset_bottom = 228.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 80
 text = "PYRAMID  CHESS"
 
 [node name="Button Container" type="Control" parent="MainMenu/HomeMenu/HomeLayout" unique_id=232355696]
@@ -61,28 +61,27 @@ offset_right = 150.0
 offset_bottom = 105.0
 
 [node name="PlayButton" type="Button" parent="MainMenu/HomeMenu/HomeLayout/Button Container" unique_id=1040244697]
-modulate = Color(0.39215687, 0.59607846, 0, 1)
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 259.0
-offset_top = 339.0
-offset_right = 409.0
-offset_bottom = 379.0
+offset_left = 277.0
+offset_top = 319.0
+offset_right = 427.0
+offset_bottom = 378.0
+theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 1, 0.5019608)
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 55
 text = "PLAY"
 
 [node name="ExitButton" type="Button" parent="MainMenu/HomeMenu/HomeLayout/Button Container" unique_id=1149100741]
-modulate = Color(0.73333335, 0.21568628, 0.101960786, 1)
 z_index = 2
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 259.0
-offset_top = 503.0
-offset_right = 409.0
-offset_bottom = 543.0
+offset_left = 277.0
+offset_top = 482.0
+offset_right = 427.0
+offset_bottom = 541.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 55
 text = "EXIT"
 
 [node name="MenuQuantity" type="Control" parent="MainMenu" unique_id=926200393]
@@ -94,35 +93,34 @@ offset_bottom = 700.0
 [node name="Label" type="Label" parent="MainMenu/MenuQuantity" unique_id=1312099447]
 layout_mode = 0
 offset_left = 40.0
-offset_top = 128.0
+offset_top = 147.0
 offset_right = 760.0
-offset_bottom = 168.0
-theme_override_colors/font_color = Color(0, 0.8862745, 0, 1)
+offset_bottom = 187.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
 theme_override_font_sizes/font_size = 35
 text = "¿How many players?"
 
 [node name="Btn2Players" type="Button" parent="MainMenu/MenuQuantity" unique_id=2083347897]
 layout_mode = 0
-offset_left = 224.0
+offset_left = 242.0
 offset_top = 291.0
-offset_right = 440.0
+offset_right = 458.0
 offset_bottom = 335.0
-theme_override_colors/font_color = Color(0.8745098, 0.38431373, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_h7a2f")
 theme_override_font_sizes/font_size = 40
 text = "2 PLAYERS"
 
 [node name="Btn1Player" type="Button" parent="MainMenu/MenuQuantity" unique_id=321805837]
-modulate = Color(0.32941177, 0.18431373, 1, 1)
 layout_mode = 0
-offset_left = 243.0
-offset_top = 475.0
-offset_right = 421.0
-offset_bottom = 519.0
+offset_left = 196.0
+offset_top = 459.0
+offset_right = 504.0
+offset_bottom = 503.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
 theme_override_font_sizes/font_size = 40
-text = "1 PLAYER"
+text = "TRAINING MODE"
 
 [node name="SideMenu" type="Control" parent="MainMenu" unique_id=1864275522]
 visible = false
@@ -132,11 +130,11 @@ offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/SideMenu" unique_id=1635652581]
 layout_mode = 0
-offset_left = 60.0
+offset_left = 56.0
 offset_top = 147.0
-offset_right = 655.0
+offset_right = 651.0
 offset_bottom = 182.0
-theme_override_colors/font_color = Color(0.77254903, 0.16862746, 0.627451, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
 theme_override_font_sizes/font_size = 35
 text = "Choose your Rider"
@@ -147,7 +145,7 @@ offset_left = 224.0
 offset_top = 291.0
 offset_right = 457.0
 offset_bottom = 340.0
-theme_override_colors/font_color = Color(0.7647059, 0.5764706, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 40
 text = "WHITE  RIDER"
@@ -158,7 +156,7 @@ offset_left = 224.0
 offset_top = 426.0
 offset_right = 457.0
 offset_bottom = 475.0
-theme_override_colors/font_color = Color(0.56627375, 0.5814839, 0.97728366, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 40
 text = "BLACK  RIDER"
@@ -169,7 +167,7 @@ offset_left = 259.0
 offset_top = 568.0
 offset_right = 401.0
 offset_bottom = 599.0
-theme_override_colors/font_color = Color(0.7019608, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 40
 text = "BACK"

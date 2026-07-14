@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Gamemanager="*uid://m2k5hyrltacg"
 Global="*uid://pmtp2v2cmxtj"
+Gamemanager="*uid://m2k5hyrltacg"
 
 [display]
 

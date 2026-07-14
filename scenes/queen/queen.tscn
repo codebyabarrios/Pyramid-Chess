@@ -19,3 +19,9 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1545499459]
 position = Vector2(-1.5, -1.25)
 shape = SubResource("RectangleShape2D_28cf0")
+
+[node name="VisualLife" type="TextureProgressBar" parent="Area2D" unique_id=1250634492]
+offset_left = -20.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -28.0

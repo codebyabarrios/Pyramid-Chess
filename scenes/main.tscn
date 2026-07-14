@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://brr0t123mr6jd" path="res://background_mosaic.png" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dm7cwttgoiago" path="res://scenes/score_interface.gd" id="2_0wfyh"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="4_jyhfs"]
+[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="4_tbgi4"]
 
 [node name="Main" type="Node2D" unique_id=1119833376]
 
@@ -71,6 +72,39 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_jyhfs")
 theme_override_font_sizes/font_size = 15
 
+[node name="GameOverMenu" type="Control" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=358739954]
+visible = false
+anchors_preset = 0
+offset_left = 95.0
+offset_top = -636.0
+offset_right = 599.0
+offset_bottom = -146.0
+
+[node name="Label" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu" unique_id=1884650765]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 121.0
+offset_right = 457.0
+offset_bottom = 190.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_tbgi4")
+theme_override_font_sizes/font_size = 75
+text = "GAME OVER"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu" unique_id=940561093]
+process_mode = 3
+layout_mode = 0
+offset_left = 146.0
+offset_top = 392.0
+offset_right = 374.0
+offset_bottom = 440.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_jyhfs")
+theme_override_font_sizes/font_size = 22
+text = "PLAY AGAIN"
+
 [node name="Board2D" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
 z_index = 6
 position = Vector2(64, 64)
+
+[connection signal="pressed" from="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu/RestartButton" to="CanvasLayer2/UIRoot/ScoreInterface" method="_on_restart_button_pressed"]

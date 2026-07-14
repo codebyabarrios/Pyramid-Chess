@@ -19,7 +19,7 @@ var board = []
 
 @onready var knight_scene = preload("res://scenes/knight/knight.tscn")
 @onready var black_knight_tex = "res://scenes/knight/black_knight.png"
-@onready var white_knight_tex = "res://scenes/knight/white_horse.png"
+@onready var white_knight_tex = "res://scenes/knight/white_knight.png"
 
 @onready var bishop_scene = preload("res://scenes/bishop/bishop.tscn")
 @onready var white_bishop_tex = "res://scenes/bishop/white_bishop.png"
@@ -93,7 +93,7 @@ func create_board():
 
 			elif y == 4 and is_valid_column:
 				current_piece = knight_scene.instantiate()
-				current_piece.type_piece = "horse"
+				current_piece.type_piece = "knight"
 				if should_be_white: 
 					current_piece.set_side(true, white_knight_tex)
 				else: 
@@ -241,3 +241,4 @@ func _draw() -> void:
 		
 		var pos_derecha = Vector2(532.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
 		draw_string(default_font, pos_derecha, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
+		

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://c8u85kocrddi6"]
 
-[ext_resource type="Texture2D" uid="uid://d2sytox82n5sl" path="res://scenes/pawn/white_pawn.png" id="1_5dqq3"]
+[ext_resource type="Texture2D" uid="uid://c1fhd3u0j1oql" path="res://scenes/pawn/white_pawn.png" id="1_5dqq3"]
 [ext_resource type="Script" uid="uid://d0sddvsfh0t7i" path="res://scenes/pawn/pawn.gd" id="1_pcpcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcpcu"]
-size = Vector2(49, 52)
+size = Vector2(27, 52)
 
 [node name="Pawn_tscn" type="Node2D" unique_id=710072714]
 script = ExtResource("1_pcpcu")

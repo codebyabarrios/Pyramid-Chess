@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjg8gr57y3q6a"
-path="res://.godot/imported/white_horse.png-1464651b22692b9d674d62485afefd40.ctex"
+path="res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/knight/white_horse.png"
-dest_files=["res://.godot/imported/white_horse.png-1464651b22692b9d674d62485afefd40.ctex"]
+source_file="res://scenes/knight/white_knight.png"
+dest_files=["res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex"]
 
 [params]
 
