@@ -132,9 +132,9 @@ func _on_area_entered(touched_area: Area2D) -> void:
 				life_bar.size = Vector2(44, 10)
 				
 				var gradient_resource = Gradient.new()
-				var left_color = Color.from_hsv(0.0, 0.9, 0.9) # Red
+				var left_color = Color.from_hsv(0.0, 0.9, 0.9) 
 				var current_hue = health_percentage * 0.33
-				var right_color = Color.from_hsv(current_hue, 0.9, 0.9) # Dynamic Green/Yellow
+				var right_color = Color.from_hsv(current_hue, 0.9, 0.9) 
 				
 				gradient_resource.set_color(0, left_color)
 				gradient_resource.set_color(1, right_color)
@@ -196,9 +196,8 @@ func _on_area_entered(touched_area: Area2D) -> void:
 				
 				if life_bar.texture_under == null:
 					var bg_img = Image.create(44, 10, false, Image.FORMAT_RGBA8)
-					bg_img.fill(Color("#1a1a1a")) # Dark charcoal grey inside
+					bg_img.fill(Color("#1a1a1a")) 
 					
-					# Draw base black outline on background
 					for x in range(44):
 						for y in range(10):
 							if x == 0 or x == 43 or y == 0 or y == 9:

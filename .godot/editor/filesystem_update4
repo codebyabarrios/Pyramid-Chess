@@ -1,4 +1,2 @@
+res://scenes/board.gd
 res://scenes/main character/main_character.gd
-res://scenes/king/king.gd
-res://scenes/main.tscn
-res://scenes/score_interface.gd

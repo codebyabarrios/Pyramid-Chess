@@ -56,10 +56,11 @@ func create_board():
 		for x in range(BOARD_SIZE):
 			
 			var current_piece = null
+			var valid_column_king_queen = (x > 2 and x < 5)
 			var is_valid_column = (x >= 2 and x <= 5)
 			var should_be_white = ((x + y) % 2 == 0)
 			
-			if y == 0 and is_valid_column:
+			if y == 0 and valid_column_king_queen:
 				current_piece = king_scene.instantiate()
 				current_piece.type_piece = "king"
 				if should_be_white: 
@@ -67,7 +68,7 @@ func create_board():
 				else: 
 					current_piece.set_side(false, black_king_tex)
 					
-			elif y == 1 and is_valid_column:
+			elif y == 1 and valid_column_king_queen:
 				current_piece = queen_scene.instantiate()
 				current_piece.type_piece = "queen"
 				if should_be_white: 
