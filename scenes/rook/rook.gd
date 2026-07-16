@@ -19,7 +19,7 @@ func _initialize_health() -> void:
 		"bishop": health = 3
 		"rook": health = 5
 		"queen": health = 9
-		"king": health = 1
+		
 func set_side(white: bool, texture_path: String) -> void:
 	is_white = white
 	$Sprite2D.texture = load(texture_path)

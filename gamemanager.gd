@@ -67,6 +67,11 @@ func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
 				current_points = pow(current_points, 1.0 / 3.0)
 				text_to_display = "³√"
 				visual_color = Color("#ff00ff")
+		"king":
+			if not same_color:
+				current_points += 100
+				text_to_display = "FINISH!"
+				visual_color = Color("#ffd700")
 	
 	if current_points < 0:
 		current_points = 0.0

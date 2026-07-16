@@ -112,6 +112,10 @@ func _process(delta):
 func _on_area_entered(touched_area: Area2D) -> void:
 	var piece = touched_area.get_parent()
 	if piece != null:
+		if "type_piece" in piece and piece.type_piece == "king":
+			if "color" in piece and my_color == piece.color:
+				pass
+		
 		if "color" in piece:
 			if my_color == piece.color:
 				return
@@ -119,6 +123,16 @@ func _on_area_entered(touched_area: Area2D) -> void:
 		call_deferred("_damage_piece", piece)
 
 func _damage_piece(piece: Node) -> void:
+	if piece.type_piece == "king":
+		if piece.is_white == is_white:
+			_check_capture_penalty()
+			position.y += TILE_SIZE
+			return
+		else:
+			piece.health = 0
+			_handle_piece_destruction(piece)
+			return
+	
 	var max_health = 1.0
 	match piece.type_piece:
 		"pawn": max_health = 1.0
@@ -145,6 +159,15 @@ func _handle_piece_destruction(piece: Node) -> void:
 	var board_node = get_parent()
 	var rider_color = "white" if is_white else "black"
 	
+	if "type_piece" in piece and piece.type_piece == "king":
+		if piece.is_white != is_white:
+			capture_pieces(piece, rider_color)
+			
+			var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+			if score_interface and score_interface.has_method("show_end_game"):
+				score_interface.show_end_game()
+			return
+		
 	if piece.is_white == is_white:
 		var reset_triggered = _check_capture_penalty()
 		capture_pieces(piece, rider_color)
