@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmff63cllh765" path="res://scenes/queen/white_queen.png" id="2_1o2r3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28cf0"]
-size = Vector2(27, 55.5)
+size = Vector2(22, 21)
 
 [node name="Queen" type="Node2D" unique_id=1626808816]
 z_index = 2
@@ -17,7 +17,7 @@ texture = ExtResource("2_1o2r3")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1545499459]
-position = Vector2(-1.5, -1.25)
+position = Vector2(-1, -1.5)
 shape = SubResource("RectangleShape2D_28cf0")
 
 [node name="VisualLife" type="TextureProgressBar" parent="Area2D" unique_id=1250634492]

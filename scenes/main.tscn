@@ -73,6 +73,7 @@ theme_override_fonts/font = ExtResource("4_jyhfs")
 theme_override_font_sizes/font_size = 15
 
 [node name="GameOverMenu" type="Control" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=358739954]
+process_mode = 3
 visible = false
 anchors_preset = 0
 offset_left = 95.0

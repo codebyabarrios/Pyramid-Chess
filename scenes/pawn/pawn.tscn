@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://d0sddvsfh0t7i" path="res://scenes/pawn/pawn.gd" id="1_pcpcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcpcu"]
-size = Vector2(27, 52)
+size = Vector2(23, 26)
 
 [node name="Pawn_tscn" type="Node2D" unique_id=710072714]
 script = ExtResource("1_pcpcu")
@@ -17,5 +17,5 @@ texture = ExtResource("1_5dqq3")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=420721540]
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_pcpcu")

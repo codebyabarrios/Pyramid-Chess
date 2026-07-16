@@ -42,12 +42,20 @@ var board = []
 @onready var black_main_character_tex = "res://scenes/main character/black_main_character.png"
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_INHERIT
+	
+	await get_tree().process_frame
+	
 	create_board()
 	print_board()
 	
 	if get_tree().root:
+		if get_tree().root.size_changed.is_connected(_adapt_to_viewport):
+			get_tree().root.size_changed.disconnect(_adapt_to_viewport)
 		get_tree().root.size_changed.connect(_adapt_to_viewport)
+	
 	_adapt_to_viewport()
+	Gamemanager.active_game = true
 
 func create_board():
 	board.clear()

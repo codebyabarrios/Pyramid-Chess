@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cjg8gr57y3q6a" path="res://scenes/knight/white_knight.png" id="2_itplb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_itplb"]
-size = Vector2(30, 39)
+size = Vector2(26, 15)
 
 [node name="Knight" type="Node2D" unique_id=1786993282]
 z_index = 2
@@ -17,7 +17,7 @@ texture = ExtResource("2_itplb")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1735830512]
-position = Vector2(-1, -1.5)
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_itplb")
 
 [node name="VisualLife" type="TextureProgressBar" parent="Area2D" unique_id=988578364]

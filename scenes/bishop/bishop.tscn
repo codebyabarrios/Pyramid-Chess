@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bigja4a58ju2n" path="res://scenes/bishop/white_bishop.png" id="2_1fyf2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_os63u"]
-size = Vector2(22, 47)
+size = Vector2(19, 20)
 
 [node name="Bishop" type="Node2D" unique_id=1334100779]
 z_index = 2
@@ -17,7 +17,7 @@ texture = ExtResource("2_1fyf2")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1467051538]
-position = Vector2(0, -3.5)
+position = Vector2(0.5, -3)
 shape = SubResource("RectangleShape2D_os63u")
 
 [node name="VisualLife" type="TextureProgressBar" parent="Area2D" unique_id=934669017]

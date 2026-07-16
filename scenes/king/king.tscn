@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpkpa3bg604s5" path="res://scenes/king/white_king.png" id="2_p7cqd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r133v"]
-size = Vector2(23, 53)
+size = Vector2(16, 23)
 
 [node name="King" type="Node2D" unique_id=2097322059]
 z_index = 2
@@ -17,5 +17,5 @@ texture = ExtResource("2_p7cqd")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1447528571]
-position = Vector2(1.5, 0.5)
+position = Vector2(1, 2.5)
 shape = SubResource("RectangleShape2D_r133v")

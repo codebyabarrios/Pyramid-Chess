@@ -1,2 +1,3 @@
+res://scenes/score_interface.gd
 res://scenes/board.gd
-res://scenes/main character/main_character.gd
+res://gamemanager.gd

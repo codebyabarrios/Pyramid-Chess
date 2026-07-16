@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bthki64odvwpm" path="res://scenes/rook/white_rook.png" id="2_5jt6t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hshyq"]
-size = Vector2(32, 43)
+size = Vector2(26, 23)
 
 [node name="Rook" type="Node2D" unique_id=624958963]
 z_index = 2
@@ -17,7 +17,7 @@ texture = ExtResource("2_5jt6t")
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=833081697]
-position = Vector2(0, -0.5)
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_hshyq")
 
 [node name="VisualLife" type="TextureProgressBar" parent="Area2D" unique_id=1071038932]

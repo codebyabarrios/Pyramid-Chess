@@ -5,6 +5,16 @@ var black_points: float = 10.0
 
 const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
+var active_game: bool = false
+
+func _ready() -> void:
+	active_game = false
+
+func reset_game() -> void:
+	white_points = 10.0
+	black_points = 10.0
+	active_game = true
+
 func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
 	var current_points: float = white_points if rider_color == "white" else black_points
 	
@@ -65,6 +75,10 @@ func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
 		white_points = current_points
 	else:
 		black_points = current_points
+	
+	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+	if score_interface and score_interface.has_method("update_score_labels"):
+		score_interface.update_score_labels()
 	
 	if text_to_display != "":
 		var players = get_tree().get_nodes_in_group("players")
