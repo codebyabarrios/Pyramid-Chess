@@ -25,7 +25,7 @@ const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
 @export_enum("White", "Black") var my_color: String = "White"
 
-func _ready():
+func _ready() -> void:
 	$Area2D.area_entered.connect(_on_area_entered)
 	add_to_group("players")
 
@@ -87,13 +87,21 @@ func _process(delta):
 				
 				if new_pos_x > max_limit_x:
 					new_pos_x = (0 * TILE_SIZE) + (TILE_SIZE / 2)
-				
 				elif new_pos_x < min_limit_x:
 					new_pos_x = (7 * TILE_SIZE) + (TILE_SIZE / 2)
 				
 				var allowed_movement = true
-				var all_main_characters = get_tree().get_nodes_in_group("players")
 				
+				if buffered_move_direction.y == 0 and buffered_move_direction.x != 0:
+					if board_node:
+						for child in board_node.get_children():
+							if child != self and not child.is_in_group("players") and is_instance_valid(child) and not child.is_queued_for_deletion():
+								if "type_piece" in child and "position" in child:
+									if abs(child.position.x - new_pos_x) < 5 and abs(child.position.y - new_pos_y) < 5:
+										allowed_movement = false
+										break
+										
+				var all_main_characters = get_tree().get_nodes_in_group("players")
 				for player in all_main_characters:
 					if player != self:
 						if abs(player.position.x - new_pos_x) < 5 and abs(player.position.y - new_pos_y) < 5:
@@ -108,16 +116,19 @@ func _process(delta):
 						position.y = new_pos_y
 					
 					buffered_move_direction = Vector2.ZERO
+				else:
+					buffered_move_direction = Vector2.ZERO
 
 func _on_area_entered(touched_area: Area2D) -> void:
 	var piece = touched_area.get_parent()
 	if piece != null:
 		if "type_piece" in piece and piece.type_piece == "king":
 			if "color" in piece and my_color == piece.color:
-				pass
+				call_deferred("_damage_piece", piece)
+				return
 		
 		if "color" in piece:
-			if my_color == piece.color:
+			if my_color  == piece.color:
 				return
 		
 		call_deferred("_damage_piece", piece)
@@ -125,6 +136,11 @@ func _on_area_entered(touched_area: Area2D) -> void:
 func _damage_piece(piece: Node) -> void:
 	if piece.type_piece == "king":
 		if piece.is_white == is_white:
+			var reset_triggered = _check_capture_penalty()
+			
+			if reset_triggered:
+				return
+			
 			_check_capture_penalty()
 			position.y += TILE_SIZE
 			return
