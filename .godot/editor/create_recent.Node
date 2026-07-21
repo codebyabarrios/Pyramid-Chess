@@ -1,3 +1,4 @@
+Node2D
 Label
 Button
 Control
@@ -7,7 +8,6 @@ ColorRect
 AnimationPlayer
 TextureRect
 CanvasLayer
-Node2D
 MarginContainer
 CanvasGroup
 HBoxContainer

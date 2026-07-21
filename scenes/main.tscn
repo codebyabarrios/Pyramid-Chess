@@ -14,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
 offset_top = -5.0
-offset_right = 1002.0
+offset_right = 1612.0
 offset_bottom = 795.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -104,8 +104,12 @@ theme_override_fonts/font = ExtResource("4_jyhfs")
 theme_override_font_sizes/font_size = 22
 text = "PLAY AGAIN"
 
-[node name="Board2D" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
+[node name="Board2D_1" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
 z_index = 6
 position = Vector2(64, 64)
+
+[node name="Board2D_2" parent="." unique_id=438661248 instance=ExtResource("1_o5qli")]
+
+[node name="Board2D_3" parent="." unique_id=1668790293 instance=ExtResource("1_o5qli")]
 
 [connection signal="pressed" from="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu/RestartButton" to="CanvasLayer2/UIRoot/ScoreInterface" method="_on_restart_button_pressed"]

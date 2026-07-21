@@ -94,17 +94,20 @@ func _process(delta):
 				
 				if buffered_move_direction.y == 0 and buffered_move_direction.x != 0:
 					if board_node:
+						var target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
+						
 						for child in board_node.get_children():
 							if child != self and not child.is_in_group("players") and is_instance_valid(child) and not child.is_queued_for_deletion():
-								if "type_piece" in child and "position" in child:
-									if abs(child.position.x - new_pos_x) < 5 and abs(child.position.y - new_pos_y) < 5:
+								if "type_piece" in child and "global_position" in child:
+									if abs(child.global_position.x - target_global_pos.x) < (5 * global_scale.x) and abs(child.global_position.y - target_global_pos.y) < (5 * global_scale.y):
 										allowed_movement = false
 										break
 										
 				var all_main_characters = get_tree().get_nodes_in_group("players")
 				for player in all_main_characters:
 					if player != self:
-						if abs(player.position.x - new_pos_x) < 5 and abs(player.position.y - new_pos_y) < 5:
+						var target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
+						if abs(player.global_position.x - target_global_pos.x) < (5 * global_scale.x) and abs(player.global_position.y - target_global_pos.y) < (5 * global_scale.y):
 							allowed_movement = false
 							break
 				
@@ -178,12 +181,8 @@ func _handle_piece_destruction(piece: Node) -> void:
 	if "type_piece" in piece and piece.type_piece == "king":
 		if piece.is_white != is_white:
 			capture_pieces(piece, rider_color)
-			
-			var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
-			if score_interface and score_interface.has_method("show_end_game"):
-				score_interface.show_end_game()
 			return
-		
+			
 	if piece.is_white == is_white:
 		var reset_triggered = _check_capture_penalty()
 		capture_pieces(piece, rider_color)
@@ -194,7 +193,8 @@ func _handle_piece_destruction(piece: Node) -> void:
 		direction = piece.direction
 		if board_node and board_node.has_method("register_rider_in_matrix"):
 			board_node.register_rider_in_matrix(self, piece.grid_position.x, piece.grid_position.y)
-
+	
+	
 func _check_capture_penalty() -> bool:
 	cont_same_color += 1
 	

@@ -2,13 +2,15 @@ extends Node2D
 
 const BOARD_SIZE = 8
 const TILE_SIZE = 64
-const MAX_X_POSITION = 8 * 64 
+const MAX_X_POSITION = 8 * 64
 
 const TOTAL_BOARD_PIXELS_WITH_BORDERS = 592.0
 const BORDER_OFFSET = 40.0
 
 var movement_speed = 100.0
 var board = []
+
+var is_movement_active: bool = false
 
 @onready var white_tile_texture = preload("res://Game assets/tile_white.png")
 @onready var black_tile_texture = preload("res://Game assets/tile_black.png")
@@ -43,17 +45,22 @@ var board = []
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_INHERIT
-	
+
 	await get_tree().process_frame
-	
+
+	if name == "Board2D_1":
+		is_movement_active = true
+	else:
+		is_movement_active = false
+
 	create_board()
 	print_board()
-	
+
 	if get_tree().root:
 		if get_tree().root.size_changed.is_connected(_adapt_to_viewport):
 			get_tree().root.size_changed.disconnect(_adapt_to_viewport)
 		get_tree().root.size_changed.connect(_adapt_to_viewport)
-	
+
 	_adapt_to_viewport()
 	Gamemanager.active_game = true
 
@@ -62,61 +69,62 @@ func create_board():
 	for y in range(BOARD_SIZE):
 		board.append([])
 		for x in range(BOARD_SIZE):
-			
+
 			var current_piece = null
 			var valid_column_king_queen = (x > 2 and x < 5)
 			var is_valid_column = (x >= 2 and x <= 5)
 			var should_be_white = ((x + y) % 2 == 0)
-			
+
 			if y == 0 and valid_column_king_queen:
 				current_piece = king_scene.instantiate()
 				current_piece.type_piece = "king"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_king_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_king_tex)
-					
+
 			elif y == 1 and valid_column_king_queen:
 				current_piece = queen_scene.instantiate()
 				current_piece.type_piece = "queen"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_queen_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_queen_tex)
-						
+
 			elif y == 2 and is_valid_column:
 				current_piece = rook_scene.instantiate()
 				current_piece.type_piece = "rook"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_rook_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_rook_tex)
-								
+
 			elif y == 3 and is_valid_column:
 				current_piece = bishop_scene.instantiate()
 				current_piece.type_piece = "bishop"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_bishop_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_bishop_tex)
 
 			elif y == 4 and is_valid_column:
 				current_piece = knight_scene.instantiate()
 				current_piece.type_piece = "knight"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_knight_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_knight_tex)
-				
+
 			elif y == 5 or y == 6:
 				current_piece = pawn_scene.instantiate()
 				current_piece.type_piece = "pawn"
-				if should_be_white: 
+				if should_be_white:
 					current_piece.set_side(true, white_pawn_tex)
-				else: 
+				else:
 					current_piece.set_side(false, black_pawn_tex)
-			
+
 			elif y == 7:
+				if name == "Board2D_1":
 					if x == 3:
 						if Global.total_players == 2 or Global.selected_side == "black":
 							current_piece = main_character_scene.instantiate()
@@ -131,25 +139,27 @@ func create_board():
 							current_piece.set_side(true, white_main_character_tex)
 						else:
 							current_piece = null
+				else:
+					current_piece = null
 			else:
 				current_piece = null
-			
+
 			if current_piece != null:
 				current_piece.grid_position = Vector2i(x, y)
-				if y % 2 != 0: 
+				if y % 2 != 0:
 					current_piece.direction = -1
-				else: 
+				else:
 					current_piece.direction = 1
-					
+
 			board[y].append(current_piece)
 			var new_tile = Sprite2D.new()
-			
+
 			if (x + y) % 2 == 0: new_tile.texture = white_tile_texture
 			else: new_tile.texture = black_tile_texture
-			
+
 			new_tile.position = Vector2((x * TILE_SIZE) + (TILE_SIZE / 2), (y * TILE_SIZE) + (TILE_SIZE / 2))
 			add_child(new_tile)
-			
+
 			if current_piece != null:
 				current_piece.position = new_tile.position
 				add_child(current_piece)
@@ -158,31 +168,78 @@ var movement_timer = 0.0
 const STEP_DELAY = 0.75
 
 func _process(delta):
+	if not is_movement_active:
+		return
+
 	movement_timer += delta
-	
+
 	if movement_timer >= STEP_DELAY:
 		movement_timer = 0.0
-		
+
 		for y in range(7):
 			for x in range(BOARD_SIZE):
 				var target = board[y][x]
-				
+
 				if target != null:
 					var move_dir = target.direction
 					target.position.x += TILE_SIZE * move_dir
-					
+
 					if move_dir == 1:
 						if target.position.x > MAX_X_POSITION:
 							target.position.x -= MAX_X_POSITION
-						
+
 					elif move_dir == -1:
 						if target.position.x < 0:
 							target.position.x += MAX_X_POSITION
 
+func remove_rider() -> Node2D:
+	for y in range(BOARD_SIZE):
+		for x in range(BOARD_SIZE):
+			var piece = board[y][x]
+			if is_instance_valid(piece) and piece.is_in_group("players"):
+				board[y][x] = null
+				remove_child(piece)
+				return piece
+	
+	for child in get_children():
+		if is_instance_valid(child) and child.is_in_group("players"):
+			remove_child(child)
+			return child
+	
+	return null
+
+func receive_rider(rider_node: Node2D):
+	if rider_node == null:
+		return
+
+	var target_x = 4 if rider_node.is_white else 3
+	var target_y = 7
+
+	board[target_y][target_x] = rider_node
+	
+	if "is_riding_rank" in rider_node:
+		rider_node.is_riding_rank = false
+	if "direction" in rider_node:
+		rider_node.direction = 0
+	if "auto_movement_timer" in rider_node:
+		rider_node.auto_movement_timer = 0.0
+	
+	var local_pixel_pos = Vector2((target_x * TILE_SIZE) + (TILE_SIZE / 2), (target_y * TILE_SIZE) + (TILE_SIZE / 2))
+	
+	rider_node.position = local_pixel_pos
+	if "grid_position" in rider_node:
+		rider_node.grid_position = Vector2i(target_x, target_y)
+	
+	rider_node.global_scale = scale
+	
+func activate_piece_movement():
+	is_movement_active = true
+
+
 func register_rider_in_matrix(rider_node: Node2D, x_pos: int, y_pos: int):
 	if y_pos >= 0 and y_pos < 7 and x_pos >= 0 and x_pos < BOARD_SIZE:
 		board[y_pos][x_pos] = rider_node
-		
+
 func remove_rider_from_matrix(rider_node: Node2D):
 	for y in range(7):
 		for x in range(BOARD_SIZE):
@@ -192,51 +249,56 @@ func remove_rider_from_matrix(rider_node: Node2D):
 func print_board():
 	for row in board:
 		print(row)
-		
+
 func _adapt_to_viewport() -> void:
 	var viewport_size = get_viewport_rect().size
-	var left_margin = 15.0 
-	
+	var left_margin = 15.0
+
 	var ui_bottom_margin = 50.0
 	var available_width = viewport_size.x - left_margin
 	var available_height = viewport_size.y - ui_bottom_margin
-	
-	var scale_factor_x = available_width / TOTAL_BOARD_PIXELS_WITH_BORDERS
+
+	var scale_factor_x = available_width / (TOTAL_BOARD_PIXELS_WITH_BORDERS * 3.2)
 	var scale_factor_y = available_height / TOTAL_BOARD_PIXELS_WITH_BORDERS
-	
+
 	var final_scale = min(scale_factor_x, scale_factor_y)
 	scale = Vector2(final_scale, final_scale)
-	
+
 	var board_real_size = TOTAL_BOARD_PIXELS_WITH_BORDERS * final_scale
-	
-	var dynamic_offset_x = left_margin + ((available_width - board_real_size) / 2.0) + (BORDER_OFFSET * final_scale)
+
+	var dynamic_offset_x = left_margin + (BORDER_OFFSET * final_scale)
 	var dynamic_offset_y = ((available_height - board_real_size) / 2.0) + (BORDER_OFFSET * final_scale)
+
+	if name == "Board2D_2":
+		dynamic_offset_x += board_real_size * 1.1
+	elif name == "Board2D_3":
+		dynamic_offset_x += board_real_size * 2.2
+
 	position = Vector2(dynamic_offset_x, dynamic_offset_y)
-	
 	queue_redraw()
 
 func _draw() -> void:
 	var fondo_rect = Rect2(Vector2(-BORDER_OFFSET, -BORDER_OFFSET), Vector2(TOTAL_BOARD_PIXELS_WITH_BORDERS, TOTAL_BOARD_PIXELS_WITH_BORDERS))
 	draw_rect(fondo_rect, Color.BLACK, true)
-	
+
 	var letras = ["A", "B", "C", "D", "E", "F", "G", "H"]
 	var numeros = ["8", "7", "6", "5", "4", "3", "2", "1"]
-	
+
 	var font_size = 18
 	var text_color = Color.WHITE
-	
+
 	var temp_label = Label.new()
 	var default_font = temp_label.get_theme_font("font")
 	temp_label.free()
-	
+
 	for i in range(8):
 		var texto = letras[i]
 		var centro_x = (i * TILE_SIZE) + (TILE_SIZE / 2.0)
 		var string_size = default_font.get_string_size(texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-		
+
 		var pos_arriba = Vector2(centro_x - (string_size.x / 2.0), -20.0 + (string_size.y / 4.0))
 		draw_string(default_font, pos_arriba, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
-		
+
 		var pos_abajo = Vector2(centro_x - (string_size.x / 2.0), 532.0 + (string_size.y / 4.0))
 		draw_string(default_font, pos_abajo, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
 
@@ -244,10 +306,9 @@ func _draw() -> void:
 		var texto = numeros[i]
 		var centro_y = (i * TILE_SIZE) + (TILE_SIZE / 2.0)
 		var string_size = default_font.get_string_size(texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-		
+
 		var pos_izquierda = Vector2(-20.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
 		draw_string(default_font, pos_izquierda, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
-		
+
 		var pos_derecha = Vector2(532.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
 		draw_string(default_font, pos_derecha, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
-		

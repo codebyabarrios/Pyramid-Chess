@@ -7,6 +7,9 @@ const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
 var active_game: bool = false
 
+var current_board: int = 1
+const MAX_BOARDS: int = 3
+
 func _ready() -> void:
 	active_game = false
 
@@ -14,14 +17,15 @@ func reset_game() -> void:
 	white_points = 10.0
 	black_points = 10.0
 	active_game = true
-
-func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
-	var current_points: float = white_points if rider_color == "white" else black_points
 	
+	current_board = 1
+
+func process_capture(piece_type: String, same_color: bool, rider_color: String):
+	var current_points: float = white_points if rider_color == "white" else black_points
 	var text_to_display: String = ""
 	var visual_color = Color("#ffffff")
 	
-	match tipe_piece:
+	match piece_type:
 		"pawn":
 			if not same_color: 
 				current_points += 1
@@ -70,8 +74,14 @@ func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
 		"king":
 			if not same_color:
 				current_points += 100
-				text_to_display = "FINISH!"
-				visual_color = Color("#ffd700")
+				if current_board < MAX_BOARDS:
+					text_to_display = "NEXT STAGE!"
+					visual_color = Color("#00ff00")
+					call_deferred("_teleport_rider_to_next_board", rider_color)
+				else:
+					text_to_display = "FINISH!"
+					visual_color = Color("#ffd700")
+					call_deferred("_trigger_victory_menu")
 	
 	if current_points < 0:
 		current_points = 0.0
@@ -86,37 +96,76 @@ func process_capture(tipe_piece: String, same_color: bool, rider_color: String):
 		score_interface.update_score_labels()
 	
 	if text_to_display != "":
-		var players = get_tree().get_nodes_in_group("players")
-		var spawn_position = Vector2.ZERO
-		for player in players:
-			if "is_white" in player and player.is_white == (rider_color == "white"):
-				spawn_position = player.global_position
-				break
+		_spawn_floating_text(text_to_display, visual_color, rider_color)
+
+func _teleport_rider_to_next_board(rider_color_target: String):
+	var main_scene = get_tree().current_scene
+	var old_board = main_scene.get_node_or_null("Board2D_" + str(current_board))
+	
+	current_board += 1
+	var new_board = main_scene.get_node_or_null("Board2D_" + str(current_board))
+	
+	if old_board and new_board:
+		var rider = null
 		
-		var text_nodo = Label.new()
-		text_nodo.text = text_to_display
-		text_nodo.modulate = visual_color
+		for child in old_board.get_children():
+			if is_instance_valid(child) and child.is_in_group("players"):
+				var child_is_white_color = "is_white" in child and child.is_white
+				if (rider_color_target == "white" and child_is_white_color) or (rider_color_target == "black" and not child_is_white_color):
+					rider = child
+					break
 		
-		var settings = LabelSettings.new()
-		settings.font = load("res://PressStart2P.ttf")
-		settings.font_size = 30
-		settings.font_color = visual_color
-		settings.outline_size = 6
-		settings.outline_color = Color(0, 0, 0)
-		text_nodo.label_settings = settings
+		if rider != null:
+			if old_board.has_method("remove_rider_from_matrix"):
+				old_board.remove_rider_from_matrix(rider)
+			
+			rider.reparent(new_board)
+			
+			new_board.receive_rider(rider)
+			
+			new_board.activate_piece_movement()
 		
-		text_nodo.top_level = true
-		text_nodo.z_index = 100
-		text_nodo.global_position = spawn_position + Vector2(-50, -40) 
-		
-		get_tree().current_scene.add_child(text_nodo)
-		
-		var tween = get_tree().create_tween().set_parallel(true)
-		tween.tween_property(text_nodo, "global_position:y", text_nodo.global_position.y - 60, 0.8)
-		tween.tween_property(text_nodo, "modulate:a", 0.0, 0.8)
-		tween.chain().tween_callback(text_nodo.queue_free)
-		
-		
+
+func _trigger_victoy_menu():
+	await get_tree().create_timer(1.5).timeout
+	var score_interface = get_node_or_null("/root/Main/CanvasLayer2/UIRoot/ScoreInterface")
+	if score_interface and score_interface.get_node_or_null("GameOverMenu"):
+		score_interface.get_node("GameOverMenu").visible = true
+		for i in range(1, 4):
+			var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(i))
+			if board_node:
+				board_node.process_mode = Node.PROCESS_MODE_DISABLED
+
+func _spawn_floating_text(text_to_display: String, visual_color: Color, rider_color: String):
+	var players  = get_tree().get_nodes_in_group("players")
+	var spawn_position = Vector2.ZERO
+	for player in players:
+		if "is_white" in player and player.is_white == (rider_color == "white"):
+			spawn_position = player.global_position
+			break
+			
+	var text_nodo = Label.new()
+	text_nodo.text = text_to_display
+	text_nodo.modulate = visual_color
+	var settings = LabelSettings.new()
+	settings.font = load("res://PressStart2P.ttf")
+	settings.font_size = 30
+	settings.font_color = visual_color
+	settings.outline_size = 6
+	settings.outline_color = Color(0, 0, 0)
+	text_nodo.label_settings = settings
+	
+	text_nodo.top_level = true
+	text_nodo.z_index = 100
+	text_nodo.global_position = spawn_position + Vector2(-50, -40)
+	
+	get_tree().current_scene.add_child(text_nodo)
+	
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property(text_nodo, "global_position:y", text_nodo.global_position.y - 60, 0.8)
+	tween.tween_property(text_nodo, "modulate:a", 0.0, 0.8)
+	tween.chain().tween_callback(text_nodo.queue_free)
+
 func format_points(points: float) -> String:
 	if is_nan(points) or points < 0.0:
 		return "0"
