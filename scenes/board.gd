@@ -180,17 +180,42 @@ func _process(delta):
 			for x in range(BOARD_SIZE):
 				var target = board[y][x]
 
-				if target != null:
+				if target != null and is_instance_valid(target) and not target.is_in_group("players"):
 					var move_dir = target.direction
 					target.position.x += TILE_SIZE * move_dir
 
 					if move_dir == 1:
 						if target.position.x > MAX_X_POSITION:
 							target.position.x -= MAX_X_POSITION
-
 					elif move_dir == -1:
 						if target.position.x < 0:
 							target.position.x += MAX_X_POSITION
+		
+		for child in get_children():
+			if is_instance_valid(child) and child.is_in_group("players"):
+				var rider = child
+				if "is_riding_rank" in rider and rider.is_riding_rank:
+					var rider_grid_y = clamp(int(rider.position.y / TILE_SIZE), 0, 7)
+					
+					var row_still_has_pieces = false
+					for x in range(BOARD_SIZE):
+						var piece = board[rider_grid_y][x]
+						if is_instance_valid(piece) and not piece.is_queued_for_deletion():
+							row_still_has_pieces = true
+							break
+					
+					if not row_still_has_pieces:
+						rider.is_riding_rank = false
+						continue
+					
+					rider.position.x += TILE_SIZE * rider.direction
+					
+					if rider.direction == 1:
+						if rider.position.x > MAX_X_POSITION:
+							rider.position.x -= MAX_X_POSITION
+					elif rider.direction == -1:
+						if rider.position.x < 0:
+							rider.position.x += MAX_X_POSITION
 
 func remove_rider() -> Node2D:
 	for y in range(BOARD_SIZE):

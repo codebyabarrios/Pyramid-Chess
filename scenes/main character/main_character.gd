@@ -35,12 +35,6 @@ func set_side(white: bool, texture_path: String):
 	$Sprite2D.texture = load(texture_path)
 
 func _process(delta):
-	if is_riding_rank:
-		auto_movement_timer += delta
-		if auto_movement_timer >= STEP_DELAY:
-			auto_movement_timer = 0.0
-			position.x += TILE_SIZE * direction
-	
 	var key_pressed_this_frame = false
 	
 	if is_player_one:
@@ -115,13 +109,25 @@ func _process(delta):
 					if new_pos_y > min_limit_y and new_pos_y < max_limit_y:
 						if board_node and board_node.has_method("remove_rider_from_matrix"):
 							board_node.remove_rider_from_matrix(self)
+						
 						position.x = new_pos_x
 						position.y = new_pos_y
+						
+						is_riding_rank = false
+						var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
+						
+						if board_node and "board" in board_node:
+							for x in range(8):
+								var piece = board_node.board[current_grid_y][x]
+								if is_instance_valid(piece) and piece != self and not piece.is_in_group("players"):
+									is_riding_rank = true
+									direction = -1 if (current_grid_y % 2 != 0) else 1
+									break
 					
 					buffered_move_direction = Vector2.ZERO
 				else:
 					buffered_move_direction = Vector2.ZERO
-
+						
 func _on_area_entered(touched_area: Area2D) -> void:
 	var piece = touched_area.get_parent()
 	if piece != null:
@@ -139,6 +145,9 @@ func _on_area_entered(touched_area: Area2D) -> void:
 				
 				if board_node and board_node.has_method("remove_rider_from_matrix"):
 					board_node.remove_rider_from_matrix(self)
+				
+				is_riding_rank = false
+				direction = 0
 				
 				if is_white:
 					position = initial_position_e1
@@ -167,6 +176,7 @@ func _damage_piece(piece: Node) -> void:
 			
 			_check_capture_penalty()
 			position.y += TILE_SIZE
+			_recalculate_rank_movement()
 			return
 		else:
 			piece.health = 0
@@ -192,8 +202,23 @@ func _damage_piece(piece: Node) -> void:
 				return
 		
 		position.y += TILE_SIZE
+		_recalculate_rank_movement()
 	else:
 		_handle_piece_destruction(piece)
+
+func _recalculate_rank_movement() -> void:
+	var board_node = get_parent()
+	is_riding_rank = false
+	var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
+	
+	if board_node and "board" in board_node:
+		for x in range(8):
+			var current_piece = board_node.board[current_grid_y][x]
+			
+			if is_instance_valid(current_piece) and current_piece != self and not current_piece.is_in_group("players"):
+				is_riding_rank = true
+				direction = -1 if (current_grid_y % 2 != 0) else 1
+				break
 
 func _handle_piece_destruction(piece: Node) -> void:
 	var board_node = get_parent()
@@ -212,6 +237,7 @@ func _handle_piece_destruction(piece: Node) -> void:
 	else:
 		capture_pieces(piece, rider_color)
 		direction = piece.direction
+		is_riding_rank = true
 		if board_node and board_node.has_method("register_rider_in_matrix"):
 			board_node.register_rider_in_matrix(self, piece.grid_position.x, piece.grid_position.y)
 	
