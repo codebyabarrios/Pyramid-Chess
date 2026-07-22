@@ -34,24 +34,24 @@ offset_bottom = 40.0
 
 [node name="HomeMenu" type="Control" parent="MainMenu" unique_id=627027259]
 anchors_preset = 0
-offset_right = 700.0
+offset_right = 1500.0
 offset_bottom = 700.0
 
 [node name="HomeLayout" type="Control" parent="MainMenu/HomeMenu" unique_id=1383977718]
 anchors_preset = 0
-offset_right = 700.0
+offset_right = 1500.0
 offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/HomeMenu/HomeLayout" unique_id=1171638647]
 layout_mode = 0
-offset_left = 75.0
-offset_top = 147.0
-offset_right = 623.0
-offset_bottom = 228.0
+offset_left = 56.0
+offset_top = 65.0
+offset_right = 1446.0
+offset_bottom = 268.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 80
-text = "PYRAMID  CHESS"
+theme_override_font_sizes/font_size = 168
+text = "P Y R A M I D   C H E S S"
 
 [node name="Button Container" type="Control" parent="MainMenu/HomeMenu/HomeLayout" unique_id=232355696]
 z_index = 2
@@ -63,114 +63,114 @@ offset_bottom = 105.0
 [node name="PlayButton" type="Button" parent="MainMenu/HomeMenu/HomeLayout/Button Container" unique_id=1040244697]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 277.0
+offset_left = 651.0
 offset_top = 319.0
-offset_right = 427.0
-offset_bottom = 378.0
+offset_right = 855.0
+offset_bottom = 399.0
 theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 1, 0.5019608)
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 55
+theme_override_font_sizes/font_size = 80
 text = "PLAY"
 
 [node name="ExitButton" type="Button" parent="MainMenu/HomeMenu/HomeLayout/Button Container" unique_id=1149100741]
 z_index = 2
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 277.0
-offset_top = 482.0
-offset_right = 427.0
-offset_bottom = 541.0
+offset_left = 651.0
+offset_top = 547.0
+offset_right = 843.0
+offset_bottom = 627.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 55
+theme_override_font_sizes/font_size = 80
 text = "EXIT"
 
 [node name="MenuQuantity" type="Control" parent="MainMenu" unique_id=926200393]
 visible = false
 anchors_preset = 0
-offset_right = 700.0
+offset_right = 1500.0
 offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/MenuQuantity" unique_id=1312099447]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 147.0
-offset_right = 760.0
-offset_bottom = 187.0
+offset_left = 56.0
+offset_top = 105.0
+offset_right = 1500.0
+offset_bottom = 183.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 78
 text = "¿How many players?"
 
 [node name="Btn2Players" type="Button" parent="MainMenu/MenuQuantity" unique_id=2083347897]
 layout_mode = 0
-offset_left = 242.0
-offset_top = 291.0
-offset_right = 458.0
-offset_bottom = 335.0
+offset_left = 609.0
+offset_top = 340.0
+offset_right = 929.0
+offset_bottom = 402.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 60
 text = "2 PLAYERS"
 
 [node name="Btn1Player" type="Button" parent="MainMenu/MenuQuantity" unique_id=321805837]
 layout_mode = 0
-offset_left = 196.0
-offset_top = 459.0
-offset_right = 504.0
-offset_bottom = 503.0
+offset_left = 532.0
+offset_top = 516.0
+offset_right = 990.0
+offset_bottom = 578.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 60
 text = "TRAINING MODE"
 
 [node name="SideMenu" type="Control" parent="MainMenu" unique_id=1864275522]
 visible = false
 anchors_preset = 0
-offset_right = 700.0
+offset_right = 1500.0
 offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/SideMenu" unique_id=1635652581]
 layout_mode = 0
-offset_left = 56.0
-offset_top = 147.0
-offset_right = 651.0
-offset_bottom = 182.0
+offset_left = 76.0
+offset_top = 105.0
+offset_right = 1436.0
+offset_bottom = 185.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 80
 text = "Choose your Rider"
 
 [node name="BtnWhiteRider" type="Button" parent="MainMenu/SideMenu" unique_id=117028647]
 layout_mode = 0
-offset_left = 224.0
-offset_top = 291.0
-offset_right = 457.0
-offset_bottom = 340.0
+offset_left = 532.0
+offset_top = 304.0
+offset_right = 966.0
+offset_bottom = 373.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 40
-text = "WHITE  RIDER"
+theme_override_font_sizes/font_size = 60
+text = "W H I T E    R I D E R"
 
 [node name="BtnBlackRider" type="Button" parent="MainMenu/SideMenu" unique_id=277011042]
 layout_mode = 0
-offset_left = 224.0
-offset_top = 426.0
-offset_right = 457.0
-offset_bottom = 475.0
+offset_left = 532.0
+offset_top = 420.0
+offset_right = 958.0
+offset_bottom = 489.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 40
-text = "BLACK  RIDER"
+theme_override_font_sizes/font_size = 60
+text = "B L A C K    R I D E R"
 
 [node name="BtnBack" type="Button" parent="MainMenu/SideMenu" unique_id=1938994199]
 layout_mode = 0
-offset_left = 259.0
-offset_top = 568.0
-offset_right = 401.0
-offset_bottom = 599.0
+offset_left = 651.0
+offset_top = 578.0
+offset_right = 815.0
+offset_bottom = 647.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 40
-text = "BACK"
+theme_override_font_sizes/font_size = 60
+text = "B A C K"
 
 [connection signal="pressed" from="MainMenu/HomeMenu/HomeLayout/Button Container/PlayButton" to="MainMenu" method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenu/HomeMenu/HomeLayout/Button Container/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
