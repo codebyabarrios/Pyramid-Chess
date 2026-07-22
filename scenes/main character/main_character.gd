@@ -130,9 +130,30 @@ func _on_area_entered(touched_area: Area2D) -> void:
 				call_deferred("_damage_piece", piece)
 				return
 		
-		if "color" in piece:
-			if my_color  == piece.color:
-				return
+		if "is_white" in piece:
+			if piece.is_white == is_white:
+				var board_node = get_parent()
+				var rider_color = "white" if is_white else "black"
+				
+				Gamemanager.process_capture(piece.type_piece, true, rider_color)
+				
+				if board_node and board_node.has_method("remove_rider_from_matrix"):
+					board_node.remove_rider_from_matrix(self)
+				
+				if is_white:
+					position = initial_position_e1
+					grid_position = Vector2i(4, 7)
+					if board_node and board_node.has_method("register_rider_in_matrix"):
+						board_node.register_rider_in_matrix(self, 4, 7)
+				else:
+					position = initial_position_d1
+					grid_position = Vector2i(3, 7)
+					if board_node and board_node.has_method("register_rider_in_matrix"):
+						board_node.register_rider_in_matrix(self, 3, 7)
+				
+				_check_capture_penalty()
+				
+				return 
 		
 		call_deferred("_damage_piece", piece)
 
@@ -219,12 +240,12 @@ func _check_capture_penalty() -> bool:
 					board_node.remove_rider_from_matrix(player)
 				
 				if player.is_white:
-					player.position = initial_position_e1
+					player.position = player.initial_position_e1
 					player.grid_position = Vector2i(4, 7)
 					if board_node.has_method("register_rider_in_matrix"):
 						board_node.register_rider_in_matrix(player, 4, 7)
 				else:
-					player.position = initial_position_d1
+					player.position = player.initial_position_d1
 					player.grid_position = Vector2i(3, 7)
 					if board_node.has_method("register_rider_in_matrix"):
 						board_node.register_rider_in_matrix(player, 3, 7)
