@@ -27,6 +27,8 @@ const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
 var previous_move_position = Vector2.ZERO
 
+var has_captured_this_turn: bool = false
+
 func _ready() -> void:
 	$Area2D.area_entered.connect(_on_area_entered)
 	add_to_group("players")
@@ -126,6 +128,7 @@ func _process(delta):
 							$Area2D.monitoring = false
 						
 						previous_move_position = position
+						has_captured_this_turn = false 
 						
 						position.x = new_pos_x
 						position.y = new_pos_y
@@ -136,6 +139,39 @@ func _process(delta):
 						
 						is_riding_rank = false
 						var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
+						
+						if current_grid_y == 0:
+							var spawn_pos = global_position
+							get_tree().create_timer(0.05).timeout.connect(func():
+								if not has_captured_this_turn and is_instance_valid(self):
+									if FLOATING_TEXT_SCENE:
+										var text_instance = FLOATING_TEXT_SCENE.instantiate()
+										if board_node:
+											board_node.add_child(text_instance)
+											text_instance.global_position = spawn_pos
+											if text_instance.has_method("start"):
+												text_instance.start("Coming Back!", Color.ORANGE)
+											elif "label" in text_instance and text_instance.label != null:
+												text_instance.label.text = "Coming Back!"
+												text_instance.label.self_modulate = Color.ORANGE
+									
+									if board_node and board_node.has_method("remove_rider_from_matrix"):
+										board_node.remove_rider_from_matrix(self)
+									
+									is_riding_rank = false
+									direction = 0
+									
+									if is_white:
+										position = initial_position_e1
+										grid_position = Vector2i(4, 7)
+										if board_node and board_node.has_method("register_rider_in_matrix"):
+											board_node.register_rider_in_matrix(self, 4, 7)
+									else:
+										position = initial_position_d1
+										grid_position = Vector2i(3, 7)
+										if board_node and board_node.has_method("register_rider_in_matrix"):
+											board_node.register_rider_in_matrix(self, 3, 7)
+							)
 						
 						if board_node and "board" in board_node:
 							for x in range(8):
@@ -152,6 +188,8 @@ func _process(delta):
 func _on_area_entered(touched_area: Area2D) -> void:
 	var piece = touched_area.get_parent()
 	if piece != null:
+		has_captured_this_turn = true 
+		
 		if "type_piece" in piece and piece.type_piece == "king":
 			if "color" in piece and my_color == piece.color:
 				call_deferred("_damage_piece", piece)
