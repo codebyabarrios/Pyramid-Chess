@@ -6,21 +6,19 @@ var black_points: float = 10.0
 const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
 var active_game: bool = false
-
 var current_board: int = 1
 const MAX_BOARDS: int = 3
 
 func _ready() -> void:
-	active_game = false
+	active_game = true
 
 func reset_game() -> void:
 	white_points = 10.0
 	black_points = 10.0
 	active_game = true
-	
 	current_board = 1
 
-func process_capture(piece_type: String, same_color: bool, rider_color: String):
+func process_capture(piece_type: String, same_color: bool, rider_color: String, rider_node: Node2D = null):
 	var current_points: float = white_points if rider_color == "white" else black_points
 	var text_to_display: String = ""
 	var visual_color = Color("#ffffff")
@@ -77,11 +75,13 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String):
 				if current_board < MAX_BOARDS:
 					text_to_display = "NEXT STAGE!"
 					visual_color = Color("#00ff00")
-					call_deferred("_teleport_rider_to_next_board", rider_color)
 				else:
 					text_to_display = "FINISH!"
 					visual_color = Color("#ffd700")
-					call_deferred("_trigger_victory_menu")
+				
+				var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+				if score_interface and score_interface.has_method("show_end_game") and rider_node != null:
+					score_interface.call_deferred("show_end_game", rider_node)
 	
 	if current_points < 0:
 		current_points = 0.0
@@ -126,15 +126,24 @@ func _teleport_rider_to_next_board(rider_color_target: String):
 			new_board.activate_piece_movement()
 		
 
-func _trigger_victoy_menu():
+func _trigger_victory_menu():
 	await get_tree().create_timer(1.5).timeout
-	var score_interface = get_node_or_null("/root/Main/CanvasLayer2/UIRoot/ScoreInterface")
-	if score_interface and score_interface.get_node_or_null("GameOverMenu"):
-		score_interface.get_node("GameOverMenu").visible = true
-		for i in range(1, 4):
-			var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(i))
-			if board_node:
-				board_node.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false) 
+	
+	if score_interface:
+		var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
+		if game_over_menu:
+			game_over_menu.visible = true
+	
+	for i in range(1, 4):
+		var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(i))
+		if board_node:
+			board_node.process_mode = Node.PROCESS_MODE_DISABLED
+
+func restart_game_scene():
+	reset_game()
+	get_tree().reload_current_scene()
 
 func _spawn_floating_text(text_to_display: String, visual_color: Color, rider_color: String):
 	var players  = get_tree().get_nodes_in_group("players")

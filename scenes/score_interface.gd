@@ -35,19 +35,18 @@ func show_end_game(attacking_rider: Node2D):
 	if Gamemanager.current_board < Gamemanager.MAX_BOARDS:
 		Gamemanager.current_board += 1
 		call_deferred("advance_to_next_board_with_rider", attacking_rider)
-		return 
-		
+		return
+	
 	if not Gamemanager.active_game:
-		return 
+		return
 	
 	is_transitioning = true
-	await get_tree().create_timer(1.5).timeout
+	
+	get_tree().paused = true
+	
 	if game_over_menu != null:
+		game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 		game_over_menu.visible = true
-		for i in range(1, 4):
-			var board_node = get_node_or_null("/root/Main/Board2D_" + str(i))
-			if board_node:
-				board_node.process_mode = Node.PROCESS_MODE_DISABLED
 
 func advance_to_next_board_with_rider(rider: Node2D):
 	var old_board = get_node_or_null("/root/Main/Board2D_" + str(Gamemanager.current_board - 1))
@@ -68,5 +67,4 @@ func advance_to_next_board_with_rider(rider: Node2D):
 func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
 	Gamemanager.reset_game()
-	get_tree().call_deferred("change_scene_to_file", "res://scenes/main.tscn")
-	queue_free()
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

@@ -296,8 +296,10 @@ func _handle_piece_destruction(piece: Node) -> void:
 	if "type_piece" in piece and piece.type_piece == "king":
 		if piece.is_white != is_white:
 			capture_pieces(piece, rider_color)
-			return
 			
+			Gamemanager.process_capture(piece.type_piece, false, rider_color, self)
+			return
+	
 	if piece.is_white == is_white:
 		var reset_triggered = _check_capture_penalty()
 		capture_pieces(piece, rider_color)
@@ -309,7 +311,6 @@ func _handle_piece_destruction(piece: Node) -> void:
 		is_riding_rank = true
 		if board_node and board_node.has_method("register_rider_in_matrix"):
 			board_node.register_rider_in_matrix(self, piece.grid_position.x, piece.grid_position.y)
-	
 	
 func _check_capture_penalty() -> bool:
 	cont_same_color += 1
