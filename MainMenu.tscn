@@ -44,13 +44,13 @@ offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/HomeMenu/HomeLayout" unique_id=1171638647]
 layout_mode = 0
-offset_left = 56.0
-offset_top = 65.0
-offset_right = 1446.0
-offset_bottom = 268.0
+offset_left = 256.0
+offset_top = 105.0
+offset_right = 1646.0
+offset_bottom = 308.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 168
+theme_override_font_sizes/font_size = 120
 text = "P Y R A M I D   C H E S S"
 
 [node name="Button Container" type="Control" parent="MainMenu/HomeMenu/HomeLayout" unique_id=232355696]
@@ -63,9 +63,9 @@ offset_bottom = 105.0
 [node name="PlayButton" type="Button" parent="MainMenu/HomeMenu/HomeLayout/Button Container" unique_id=1040244697]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 651.0
+offset_left = 609.0
 offset_top = 319.0
-offset_right = 855.0
+offset_right = 813.0
 offset_bottom = 399.0
 theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 1, 0.5019608)
 theme_override_fonts/font = ExtResource("3_h7a2f")
@@ -76,10 +76,10 @@ text = "PLAY"
 z_index = 2
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 0
-offset_left = 651.0
-offset_top = 547.0
-offset_right = 843.0
-offset_bottom = 627.0
+offset_left = 609.0
+offset_top = 495.0
+offset_right = 801.0
+offset_bottom = 575.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
 theme_override_font_sizes/font_size = 80
 text = "EXIT"
@@ -92,20 +92,20 @@ offset_bottom = 700.0
 
 [node name="Label" type="Label" parent="MainMenu/MenuQuantity" unique_id=1312099447]
 layout_mode = 0
-offset_left = 56.0
-offset_top = 105.0
-offset_right = 1500.0
-offset_bottom = 183.0
+offset_left = 208.0
+offset_top = 137.0
+offset_right = 1652.0
+offset_bottom = 215.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
-theme_override_font_sizes/font_size = 78
+theme_override_font_sizes/font_size = 60
 text = "¿How many players?"
 
 [node name="Btn2Players" type="Button" parent="MainMenu/MenuQuantity" unique_id=2083347897]
 layout_mode = 0
-offset_left = 609.0
+offset_left = 551.0
 offset_top = 340.0
-offset_right = 929.0
+offset_right = 871.0
 offset_bottom = 402.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_h7a2f")
@@ -114,9 +114,9 @@ text = "2 PLAYERS"
 
 [node name="Btn1Player" type="Button" parent="MainMenu/MenuQuantity" unique_id=321805837]
 layout_mode = 0
-offset_left = 532.0
+offset_left = 482.0
 offset_top = 516.0
-offset_right = 990.0
+offset_right = 940.0
 offset_bottom = 578.0
 theme_override_fonts/font = ExtResource("3_h7a2f")
 theme_override_font_sizes/font_size = 60

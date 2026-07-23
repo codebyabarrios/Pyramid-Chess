@@ -12,6 +12,8 @@ var board = []
 
 var is_movement_active: bool = false
 
+var paused_ranks = {}
+
 @onready var white_tile_texture = preload("res://Game assets/tile_white.png")
 @onready var black_tile_texture = preload("res://Game assets/tile_black.png")
 
@@ -337,3 +339,20 @@ func _draw() -> void:
 
 		var pos_derecha = Vector2(532.0 - (string_size.x / 2.0), centro_y + (string_size.y / 4.0))
 		draw_string(default_font, pos_derecha, texto, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, text_color)
+
+func pause_rank(rank_index: int, duration: float) -> void:
+	paused_ranks[rank_index] = true
+	
+	for child in get_children():
+		if "current_grid_y" in child and  child.current_grid_y == rank_index:
+			if child.has_method("set_paused"):
+				child.set_paused(true)
+	
+	await get_tree().create_timer(duration).timeout
+	
+	paused_ranks[rank_index] = false
+	
+	for child in get_children():
+		if "current_grid_y" in child and child.current_grid_y == rank_index:
+			if child.has_method("set_paused"):
+				child.set_paused(false)

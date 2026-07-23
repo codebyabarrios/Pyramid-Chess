@@ -25,6 +25,8 @@ const FLOATING_TEXT_SCENE = preload("res://FloatingText.tscn")
 
 @export_enum("White", "Black") var my_color: String = "White"
 
+var previous_move_position = Vector2.ZERO
+
 func _ready() -> void:
 	$Area2D.area_entered.connect(_on_area_entered)
 	add_to_group("players")
@@ -79,29 +81,39 @@ func _process(delta):
 				var min_limit_y = 0
 				var max_limit_y = 8 * TILE_SIZE
 				
+				var is_border_jump = false
 				if new_pos_x > max_limit_x:
 					new_pos_x = (0 * TILE_SIZE) + (TILE_SIZE / 2)
+					is_border_jump = true
 				elif new_pos_x < min_limit_x:
 					new_pos_x = (7 * TILE_SIZE) + (TILE_SIZE / 2)
+					is_border_jump = true
 				
 				var allowed_movement = true
 				
+				var real_target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
+				if is_border_jump:
+					var local_displacement = Vector2(new_pos_x, new_pos_y) - position
+					real_target_global_pos = global_position + (local_displacement * global_scale)
+				
 				if buffered_move_direction.y == 0 and buffered_move_direction.x != 0:
 					if board_node:
-						var target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
-						
 						for child in board_node.get_children():
 							if child != self and not child.is_in_group("players") and is_instance_valid(child) and not child.is_queued_for_deletion():
 								if "type_piece" in child and "global_position" in child:
-									if abs(child.global_position.x - target_global_pos.x) < (5 * global_scale.x) and abs(child.global_position.y - target_global_pos.y) < (5 * global_scale.y):
-										allowed_movement = false
-										break
-										
+									if is_border_jump:
+										if abs(child.global_position.x - real_target_global_pos.x) < (5 * global_scale.x) and abs(child.global_position.y - real_target_global_pos.y) < (5 * global_scale.y):
+											allowed_movement = false
+											break
+									else:
+										if abs(child.global_position.x - real_target_global_pos.x) < (5 * global_scale.x) and abs(child.global_position.y - real_target_global_pos.y) < (5 * global_scale.y):
+											allowed_movement = false
+											break
+				
 				var all_main_characters = get_tree().get_nodes_in_group("players")
 				for player in all_main_characters:
 					if player != self:
-						var target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
-						if abs(player.global_position.x - target_global_pos.x) < (5 * global_scale.x) and abs(player.global_position.y - target_global_pos.y) < (5 * global_scale.y):
+						if abs(player.global_position.x - real_target_global_pos.x) < (5 * global_scale.x) and abs(player.global_position.y - real_target_global_pos.y) < (5 * global_scale.y):
 							allowed_movement = false
 							break
 				
@@ -110,8 +122,17 @@ func _process(delta):
 						if board_node and board_node.has_method("remove_rider_from_matrix"):
 							board_node.remove_rider_from_matrix(self)
 						
+						if is_border_jump:
+							$Area2D.monitoring = false
+						
+						previous_move_position = position
+						
 						position.x = new_pos_x
 						position.y = new_pos_y
+						
+						if is_border_jump:
+							await get_tree().physics_frame
+							$Area2D.monitoring = true
 						
 						is_riding_rank = false
 						var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
@@ -127,7 +148,7 @@ func _process(delta):
 					buffered_move_direction = Vector2.ZERO
 				else:
 					buffered_move_direction = Vector2.ZERO
-						
+				
 func _on_area_entered(touched_area: Area2D) -> void:
 	var piece = touched_area.get_parent()
 	if piece != null:
@@ -167,15 +188,21 @@ func _on_area_entered(touched_area: Area2D) -> void:
 		call_deferred("_damage_piece", piece)
 
 func _damage_piece(piece: Node) -> void:
+	var board_node = get_parent()
+	
 	if piece.type_piece == "king":
 		if piece.is_white == is_white:
 			var reset_triggered = _check_capture_penalty()
-			
 			if reset_triggered:
 				return
 			
 			_check_capture_penalty()
-			position.y += TILE_SIZE
+			
+			var origin_rank = clamp(int(previous_move_position.y / TILE_SIZE), 0, 7)
+			if board_node and board_node.has_method("pause_rank"):
+				board_node.pause_rank(origin_rank, 0.15)
+			
+			position = previous_move_position
 			_recalculate_rank_movement()
 			return
 		else:
@@ -201,7 +228,11 @@ func _damage_piece(piece: Node) -> void:
 			if _check_capture_penalty():
 				return
 		
-		position.y += TILE_SIZE
+		var origin_rank = clamp(int(previous_move_position.y / TILE_SIZE), 0, 7)
+		if board_node and board_node.has_method("pause_rank"):
+			board_node.pause_rank(origin_rank, 0.15)
+		
+		position = previous_move_position
 		_recalculate_rank_movement()
 	else:
 		_handle_piece_destruction(piece)

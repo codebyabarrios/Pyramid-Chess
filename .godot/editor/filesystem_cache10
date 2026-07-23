@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1784757346
+::res://::1784768766
 ARCADECLASSIC.TTF::FontFile::3704573761839533179::1783895211::1783895211::1::::<><><>0<>0<>49b05b8bd7e4fc7cab7a13ab3a5e139f<>res://.godot/imported/ARCADECLASSIC.TTF-4aef9f254f11210c6b95362e3ee1751d.fontdata::
 background_mosaic.png::CompressedTexture2D::3616278710867777593::1783729440::1783729440::1::::<><><>0<>0<>f9bf5e50be96940baddf2402c5aa545a<>res://.godot/imported/background_mosaic.png-ae748b1ec936ec284403e6f5a06fb63d.ctex::
 board_2d.tscn::PackedScene::5345570941739636764::1783741650::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd
@@ -9,7 +9,7 @@ floating_text.gd::GDScript::4457513697607629352::1783969142::0::1::::<>Node2D<><
 gamemanager.gd::GDScript::898665472287419826::1784677579::0::1::::<>Node<><>0<>0<><>::
 Global.gd::GDScript::1078787049191613963::1783902744::0::1::::<>Node<><>0<>0<><>::
 icon.svg::CompressedTexture2D::273730838333825194::1781649852::1781649856::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-MainMenu.tscn::PackedScene::1194549935003852262::1784753647::0::1::::<><><>0<>0<><>::uid://cax4flmuaghpn::::res://main_menu.gd<>uid://cikppdcbhcu68::::res://Game assets/background_mosaic.png<>uid://bs1r12vvjfutn::::res://ARCADECLASSIC.TTF<>uid://ddrqaayd8ok8m::::res://upheavtt.ttf<>uid://cw110uaky2h3e::::res://PressStart2P.ttf
+MainMenu.tscn::PackedScene::1194549935003852262::1784759281::0::1::::<><><>0<>0<><>::uid://cax4flmuaghpn::::res://main_menu.gd<>uid://cikppdcbhcu68::::res://Game assets/background_mosaic.png<>uid://bs1r12vvjfutn::::res://ARCADECLASSIC.TTF<>uid://ddrqaayd8ok8m::::res://upheavtt.ttf<>uid://cw110uaky2h3e::::res://PressStart2P.ttf
 main_menu.gd::GDScript::4822092374692786391::1783902744::0::1::::<>Control<><>0<>0<><>::
 PressStart2P.ttf::FontFile::6372294086642518640::1783730435::1783730425::1::::<><><>0<>0<>04eb4d1150e1af30ec56000b1f148d31<>res://.godot/imported/PressStart2P.ttf-01b421b2059bc9d11e989c6910b33153.fontdata::
 README.md::TextFile::-1::1783892864::0::1::::<><><>0<>0<><>::
@@ -111,8 +111,8 @@ index.png::CompressedTexture2D::5992327802549035139::1783196694::1783198250::1::
 index.apple-touch-icon.png::CompressedTexture2D::4317840576328868892::1783373641::1783374252::1::::<><><>0<>0<>c0b7e6fa687476b1c47b97a6f816bff5<>res://.godot/imported/index.apple-touch-icon.png-4c9bea7fa33fa5bbd186dba0944b5af0.ctex::
 index.icon.png::CompressedTexture2D::2343987226212015929::1783373641::1783374252::1::::<><><>0<>0<>7419ea0a62de61d4f1a80b508934fdc4<>res://.godot/imported/index.icon.png-b2947b158ac19b950244b3ec1bd60a85.ctex::
 index.png::CompressedTexture2D::8337448504823278501::1783373641::1783374252::1::::<><><>0<>0<>1a2f514492586fee88ba6b22621bccbe<>res://.godot/imported/index.png-5436a4f5857555a17a01c5e6bdbb5c35.ctex::
-::res://scenes/::1784753951
-board.gd::GDScript::3463851040145630650::1784749187::0::1::::<>Node2D<><>0<>0<><>::
+::res://scenes/::1784764016
+board.gd::GDScript::3463851040145630650::1784764016::0::1::::<>Node2D<><>0<>0<><>::
 board_2d_2.gd::GDScript::7117365213206585273::1784580052::0::1::::<>Node2D<><>0<>0<><>::
 board_2d_3.gd::GDScript::6254954612955906042::1784580052::0::1::::<>Node2D<><>0<>0<><>::
 main.gd::GDScript::5563624347564721042::1784177585::0::1::::<>Node2D<><>0<>0<><>::
@@ -133,10 +133,10 @@ black_knight.png::CompressedTexture2D::3646016461749330705::1782845102::17832953
 knight.gd::GDScript::5465755528813056783::1784248428::0::1::::<>Node2D<><>0<>0<><>::
 knight.tscn::PackedScene::7093989754363643310::1784177585::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://cjg8gr57y3q6a::::res://scenes/knight/white_knight.png
 white_knight.png::CompressedTexture2D::5418942542905785534::1783723120::1783990793::1::::<><><>0<>0<>7d68242be34f59429a465cd5a729d88a<>res://.godot/imported/white_knight.png-aa07614c43c7c942509005ff002a86a9.ctex::
-::res://scenes/main character/::1784747817
+::res://scenes/main character/::1784764016
 black_main_character.png::CompressedTexture2D::1340542571665933096::1783393656::1783393656::1::::<><><>0<>0<>bf4d7abe109d1911d5c26557093e1b2a<>res://.godot/imported/black_main_character.png-a828ec770ba350155c34b2aa1f5c8fe2.ctex::
 main character.tscn::PackedScene::6179730098071991820::1784673489::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://08aevrgcsipu::::res://scenes/main character/white-main_character.png
-main_character.gd::GDScript::4035469817133263474::1784747817::0::1::::<>Node2D<><>0<>0<><>::
+main_character.gd::GDScript::4035469817133263474::1784764016::0::1::::<>Node2D<><>0<>0<><>::
 white-main_character.png::CompressedTexture2D::1822853829538432354::1783393656::1783393656::1::::<><><>0<>0<>4798d38004bccff3b654f0c113f38a94<>res://.godot/imported/white-main_character.png-a9f233045053e9f7ff42a3eab331f2f7.ctex::
 ::res://scenes/pawn/::1784248428
 black_pawn.png::CompressedTexture2D::7291565316861906455::1783723867::1783723867::1::::<><><>0<>0<>777ad86b07b130ba8076c844ecb0bdc1<>res://.godot/imported/black_pawn.png-6c6ee77f407be106d8623b9b86aaa232.ctex::
