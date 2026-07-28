@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cifo1i558nk3e" path="res://board_2d.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://brr0t123mr6jd" path="res://background_mosaic.png" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dm7cwttgoiago" path="res://scenes/score_interface.gd" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://dyqkvbg1r65b6" path="res://scenes/camera_2d.gd" id="2_tefeu"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="4_jyhfs"]
 [ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="4_tbgi4"]
 
@@ -23,6 +24,7 @@ stretch_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=829527038]
 anchor_mode = 0
+script = ExtResource("2_tefeu")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=781888411]
 
@@ -107,5 +109,39 @@ position = Vector2(64, 64)
 [node name="Board2D_2" parent="." unique_id=438661248 instance=ExtResource("1_o5qli")]
 
 [node name="Board2D_3" parent="." unique_id=1668790293 instance=ExtResource("1_o5qli")]
+
+[node name="ScreenMask" type="CanvasLayer" parent="." unique_id=1558060460]
+
+[node name="MaskContainer" type="Control" parent="ScreenMask" unique_id=1101781331]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TopBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=991101178]
+layout_mode = 0
+offset_right = 1500.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=2013845526]
+layout_mode = 0
+offset_top = 700.0
+offset_right = 1500.0
+offset_bottom = 740.0
+color = Color(0, 0, 0, 1)
+
+[node name="LeftBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=1277155197]
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 700.0
+color = Color(0, 0, 0, 1)
+
+[node name="RightBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=1158491506]
+layout_mode = 0
+offset_left = 1100.0
+offset_right = 1540.0
+offset_bottom = 700.0
+color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu/RestartButton" to="CanvasLayer2/UIRoot/ScoreInterface" method="_on_restart_button_pressed"]
