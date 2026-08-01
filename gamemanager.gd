@@ -94,6 +94,11 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 	if score_interface and score_interface.has_method("update_score_labels"):
 		score_interface.update_score_labels()
+		
+		if text_to_display != "" and score_interface.has_method("add_operation_to_history"):
+			current_points = round(current_points)
+			var formatted_history = text_to_display + " -> " + format_points(current_points)
+			score_interface.add_operation_to_history(rider_color, formatted_history, visual_color)
 	
 	if text_to_display != "":
 		_spawn_floating_text(text_to_display, visual_color, rider_color)
@@ -107,7 +112,6 @@ func _teleport_rider_to_next_board(rider_color_target: String):
 	
 	if old_board and new_board:
 		var rider = null
-		
 		for child in old_board.get_children():
 			if is_instance_valid(child) and child.is_in_group("players"):
 				var child_is_white_color = "is_white" in child and child.is_white
@@ -118,19 +122,13 @@ func _teleport_rider_to_next_board(rider_color_target: String):
 		if rider != null:
 			if old_board.has_method("remove_rider_from_matrix"):
 				old_board.remove_rider_from_matrix(rider)
-			
 			rider.reparent(new_board)
-			
 			new_board.receive_rider(rider)
-			
 			new_board.activate_piece_movement()
-		
 
 func _trigger_victory_menu():
 	await get_tree().create_timer(1.5).timeout
-	
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false) 
-	
 	if score_interface:
 		var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
 		if game_over_menu:
@@ -146,7 +144,7 @@ func restart_game_scene():
 	get_tree().reload_current_scene()
 
 func _spawn_floating_text(text_to_display: String, visual_color: Color, rider_color: String):
-	var players  = get_tree().get_nodes_in_group("players")
+	var players = get_tree().get_nodes_in_group("players")
 	var spawn_position = Vector2.ZERO
 	for player in players:
 		if "is_white" in player and player.is_white == (rider_color == "white"):
@@ -180,16 +178,13 @@ func format_points(points: float) -> String:
 		return "0"
 	if is_inf(points):
 		return "MAX"
-
 	if points < 1000.0:
 		return str(int(points))
 
 	var suffixes = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"]
 	var index_suffix = 0
 	var reduced_value = points
-
 	while reduced_value >= 1000.0 and index_suffix < suffixes.size() - 1:
 		reduced_value /= 1000.0
 		index_suffix += 1
-
 	return "%.1f" % reduced_value + suffixes[index_suffix]

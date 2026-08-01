@@ -25,6 +25,16 @@ func _ready() -> void:
 	global_position = board_1_pos
 	zoom = close_zoom
 	
+	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+	if score_interface:
+		score_interface.visible = false
+		score_interface.modulate.a = 0.0 
+		
+		var points_panel = score_interface.find_child("ControlDerecha", true, false)
+		if points_panel:
+			points_panel.visible = false
+			points_panel.modulate.a = 0.0
+	
 	if mask_container:
 		mask_container.modulate.a = 1.0
 	
@@ -59,3 +69,25 @@ func _ready() -> void:
 	else:
 		tween.tween_property(self, "global_position", board_1_pos, 1.2)
 		tween.parallel().tween_property(self, "zoom", close_zoom, 1.2)
+		
+	if score_interface:
+		tween.tween_callback(func(): score_interface.visible = true)
+		tween.tween_property(score_interface, "modulate:a", 1.0, 0.5)
+		
+		var round_label = score_interface.find_child("RoundLabel", true, false)
+		if round_label:
+			tween.tween_callback(func(): 
+				round_label.modulate.a = 0.0
+				round_label.visible = true
+			)
+			tween.tween_property(round_label, "modulate:a", 1.0, 0.2)
+			
+			tween.tween_interval(2.5)
+			
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.3)
+			tween.tween_callback(func(): round_label.visible = false)
+			
+		var points_panel = score_interface.find_child("ControlDerecha", true, false)
+		if points_panel:
+			tween.tween_callback(func(): points_panel.visible = true)
+			tween.tween_property(points_panel, "modulate:a", 1.0, 0.4)

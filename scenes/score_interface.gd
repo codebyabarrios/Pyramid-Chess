@@ -1,7 +1,10 @@
 extends Control
 
-@onready var white_label: Label = $PanelContainer/HBoxContainer/WhiteLabel
-@onready var black_label: Label = $PanelContainer/HBoxContainer/BlackLabel
+@onready var white_score_label: Label = $RightControl/PanelContainer/HBoxContainer/WhiteContainer/WhitePoints
+@onready var black_score_label: Label = $RightControl/PanelContainer/HBoxContainer/BlackContainer/BlackPoints
+@onready var white_history: VBoxContainer = $RightControl/PanelContainer/HBoxContainer/WhiteContainer/WhiteHistory
+@onready var black_history: VBoxContainer = $RightControl/PanelContainer/HBoxContainer/BlackContainer/BlackHistory
+
 @onready var game_over_menu = $GameOverMenu
 
 var is_transitioning: bool = false
@@ -11,7 +14,7 @@ func _ready():
 		game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 		game_over_menu.visible = false
 		
-	var restart_button = game_over_menu.get_node("RestartButton")
+	var restart_button = game_over_menu.get_node_or_null("RestartButton")
 	if restart_button and not restart_button.pressed.is_connected(_on_restart_button_pressed):
 		restart_button.pressed.connect(_on_restart_button_pressed)
 	
@@ -19,14 +22,36 @@ func _ready():
 	update_score_labels()
 	
 func update_score_labels() -> void:
-	if not is_instance_valid(white_label) or not is_instance_valid(black_label):
+	if not is_instance_valid(white_score_label) or not is_instance_valid(black_score_label):
 		return
 		
 	var white_text = Gamemanager.format_points(Gamemanager.white_points)
 	var black_text = Gamemanager.format_points(Gamemanager.black_points)
 	
-	white_label.text = "White Rider: " + white_text + " pts"
-	black_label.text = "Black Rider: " + black_text + " pts"
+	white_score_label.text = white_text + " pts"
+	black_score_label.text = black_text + " pts"
+	
+func add_operation_to_history(rider_color: String, operation_text: String, text_color: Color) -> void:
+	var target_container = white_history if rider_color == "white" else black_history
+	if not is_instance_valid(target_container):
+		return
+		
+	var history_item = Label.new()
+	history_item.text = operation_text
+	
+	var settings = LabelSettings.new()
+	settings.font = load("res://PressStart2P.ttf")
+	settings.font_size = 20 
+	settings.font_color = text_color
+	settings.outline_size = 4
+	settings.outline_color = Color(0, 0, 0)
+	history_item.label_settings = settings
+	
+	target_container.add_child(history_item)
+	target_container.move_child(history_item, 0)
+	
+	if target_container.get_child_count() > 4:
+		target_container.get_child(target_container.get_child_count() - 1).queue_free()
 
 func show_end_game(attacking_rider: Node2D):
 	if is_transitioning:
@@ -41,7 +66,6 @@ func show_end_game(attacking_rider: Node2D):
 		return
 	
 	is_transitioning = true
-	
 	get_tree().paused = true
 	
 	if game_over_menu != null:
@@ -57,9 +81,7 @@ func advance_to_next_board_with_rider(rider: Node2D):
 			old_board.remove_rider_from_matrix(rider)
 			
 		rider.reparent(new_board)
-		
 		new_board.receive_rider(rider) 
-		
 		new_board.activate_piece_movement()
 	
 	is_transitioning = false
