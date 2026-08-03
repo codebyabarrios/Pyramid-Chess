@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var game_manager_node = get_node("/root/Gamemanager")
 
+var is_frozen: bool = false
+
 var grid_position = Vector2i.ZERO
 var is_white = true
 var direction = 1
@@ -41,7 +43,7 @@ func set_side(white: bool, texture_path: String):
 	$Sprite2D.texture = load(texture_path)
 
 func _process(delta):
-	if has_finished:
+	if has_finished or is_frozen:
 		return
 		
 	var key_pressed_this_frame = false
@@ -329,20 +331,26 @@ func _handle_piece_destruction(piece: Node) -> void:
 					return 
 			
 			var target_position = piece.position 
+			position = target_position
+			
 			has_finished = true
+			is_riding_rank = false
+			direction = 0
 			
 			if has_node("Area2D"):
 				$Area2D.monitoring = false
 				$Area2D.monitorable = false
 			
-			is_riding_rank = false
-			direction = 0
-			position = target_position
-			
 			if is_white:
 				Gamemanager.white_clock_active = false
 			else:
 				Gamemanager.black_clock_active = false
+			
+			if board_node and board_node.has_method("register_frozen_rider"):
+				board_node.register_frozen_rider(self)
+			
+			if board_node and board_node.has_method("remove_rider_from_matrix"):
+				board_node.remove_rider_from_matrix(self)
 			
 			Gamemanager.process_capture(piece.type_piece, false, rider_color, self)
 			piece.queue_free() 
@@ -362,6 +370,9 @@ func _handle_piece_destruction(piece: Node) -> void:
 			board_node.register_rider_in_matrix(self, piece.grid_position.x, piece.grid_position.y)
 	
 func _check_capture_penalty() -> bool:
+	if has_finished:
+		return false
+	
 	cont_same_color += 1
 	
 	if cont_same_color >= 3:
@@ -381,6 +392,9 @@ func _check_capture_penalty() -> bool:
 		var players = get_tree().get_nodes_in_group("players")
 		for player in players:
 			if is_instance_valid(player):
+				if "has_finished" in player and player.has_finished:
+					continue
+				
 				if board_node.has_method("remove_rider_from_matrix"):
 					board_node.remove_rider_from_matrix(player)
 				
