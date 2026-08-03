@@ -29,6 +29,8 @@ var previous_move_position = Vector2.ZERO
 
 var has_captured_this_turn: bool = false
 
+var has_finished: bool = false
+
 func _ready() -> void:
 	$Area2D.area_entered.connect(_on_area_entered)
 	add_to_group("players")
@@ -39,6 +41,9 @@ func set_side(white: bool, texture_path: String):
 	$Sprite2D.texture = load(texture_path)
 
 func _process(delta):
+	if has_finished:
+		return
+		
 	var key_pressed_this_frame = false
 	
 	if is_player_one:
@@ -143,6 +148,9 @@ func _process(delta):
 						if current_grid_y == 0:
 							var spawn_pos = global_position
 							get_tree().create_timer(0.05).timeout.connect(func():
+								if has_finished:
+									return
+									
 								if not has_captured_this_turn and is_instance_valid(self):
 									if FLOATING_TEXT_SCENE:
 										var text_instance = FLOATING_TEXT_SCENE.instantiate()
@@ -186,9 +194,21 @@ func _process(delta):
 					buffered_move_direction = Vector2.ZERO
 				
 func _on_area_entered(touched_area: Area2D) -> void:
+	if "has_finished" in self and has_finished:
+		return
+	
 	var piece = touched_area.get_parent()
 	if piece != null:
-		has_captured_this_turn = true 
+		if "type_piece" in piece and piece.type_piece == "king":
+			if "is_white" in piece and piece.is_white != is_white:
+				$Area2D.monitoring = false
+				$Area2D.monitorable = false
+		
+				has_captured_this_turn = true
+				
+				if has_method("_handle_piece_destruction"):
+					_handle_piece_destruction(piece)
+				return
 		
 		if "type_piece" in piece and piece.type_piece == "king":
 			if "color" in piece and my_color == piece.color:
@@ -221,7 +241,7 @@ func _on_area_entered(touched_area: Area2D) -> void:
 				
 				_check_capture_penalty()
 				
-				return 
+				return
 		
 		call_deferred("_damage_piece", piece)
 
@@ -276,6 +296,11 @@ func _damage_piece(piece: Node) -> void:
 		_handle_piece_destruction(piece)
 
 func _recalculate_rank_movement() -> void:
+	if has_finished:
+		is_riding_rank = false
+		direction = 0
+		return
+	
 	var board_node = get_parent()
 	is_riding_rank = false
 	var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
@@ -290,14 +315,38 @@ func _recalculate_rank_movement() -> void:
 				break
 
 func _handle_piece_destruction(piece: Node) -> void:
+	if has_finished:
+		return
+	
 	var board_node = get_parent()
 	var rider_color = "white" if is_white else "black"
 	
 	if "type_piece" in piece and piece.type_piece == "king":
 		if piece.is_white != is_white:
-			capture_pieces(piece, rider_color)
+			if piece.has_method("mark_as_captured"):
+				var is_first_capture = piece.mark_as_captured()
+				if not is_first_capture:
+					return 
+			
+			var target_position = piece.position 
+			has_finished = true
+			
+			if has_node("Area2D"):
+				$Area2D.monitoring = false
+				$Area2D.monitorable = false
+			
+			is_riding_rank = false
+			direction = 0
+			position = target_position
+			
+			if is_white:
+				Gamemanager.white_clock_active = false
+			else:
+				Gamemanager.black_clock_active = false
 			
 			Gamemanager.process_capture(piece.type_piece, false, rider_color, self)
+			piece.queue_free() 
+			
 			return
 	
 	if piece.is_white == is_white:
@@ -426,3 +475,26 @@ func _apply_borders_and_corners(img: Image, black: Color, transparent: Color) ->
 	img.set_pixel(43, 9, transparent); img.set_pixel(42, 9, transparent); img.set_pixel(41, 9, transparent)
 	img.set_pixel(43, 8, transparent); img.set_pixel(43, 7, transparent)
 	img.set_pixel(42, 8, black); img.set_pixel(41, 8, black); img.set_pixel(42, 7, black)
+
+func _show_finish_banner() -> void:
+	var canvas = CanvasLayer.new()
+	get_tree().root.add_child(canvas)
+	
+	var label = Label.new()
+	label.text = "FINISH"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	var settings = LabelSettings.new()
+	settings.font = load("res://PressStart2P.ttf") 
+	settings.font_size = 55
+	settings.font_color = Color("#ffd700") 
+	settings.outline_size = 8
+	settings.outline_color = Color.BLACK
+	label.label_settings = settings
+	
+	canvas.add_child(label)
+
+	await get_tree().create_timer(2.5).timeout
+	canvas.queue_free()

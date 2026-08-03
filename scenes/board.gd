@@ -14,6 +14,9 @@ var is_movement_active: bool = false
 
 var paused_ranks = {}
 
+var clock_label: Label = null
+var board_color_side: String = "white"
+
 @onready var white_tile_texture = preload("res://Game assets/tile_white.png")
 @onready var black_tile_texture = preload("res://Game assets/tile_black.png")
 
@@ -49,22 +52,27 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 	await get_tree().process_frame
-
-	if name == "Board2D_1":
-		is_movement_active = true
+	
+	if Global.selected_side == "black":
+		board_color_side = "black"
 	else:
-		is_movement_active = false
-
+		board_color_side = "white"
+	
+	if "2" in name:
+		board_color_side = "black" if Global.total_players == 2 else "white"
+	
 	create_board()
 	print_board()
-
+	
 	if get_tree().root:
 		if get_tree().root.size_changed.is_connected(_adapt_to_viewport):
 			get_tree().root.size_changed.disconnect(_adapt_to_viewport)
 		get_tree().root.size_changed.connect(_adapt_to_viewport)
-
+	
 	_adapt_to_viewport()
-	Gamemanager.active_game = true
+	
+	is_movement_active = false
+	set_process(false)
 
 func create_board():
 	board.clear()
@@ -173,6 +181,27 @@ func _process(delta):
 	if not is_movement_active:
 		return
 
+	if is_movement_active and Gamemanager.active_game:
+		var all_riders = get_tree().get_nodes_in_group("players")
+		
+		for rider in all_riders:
+			if is_instance_valid(rider):
+				if "is_white" in rider and rider.is_white and Gamemanager.white_clock_active:
+					Gamemanager.white_time_left -= delta
+					if Gamemanager.white_time_left <= 0:
+						Gamemanager.white_time_left = 0.0
+						Gamemanager.white_clock_active = false
+				
+				elif "is_white" in rider and not rider.is_white and Gamemanager.black_clock_active:
+					Gamemanager.black_time_left -= delta
+					if Gamemanager.black_time_left <= 0:
+						Gamemanager.black_time_left = 0.0
+						Gamemanager.black_clock_active = false
+		
+		if not Gamemanager.white_clock_active and not Gamemanager.black_clock_active:
+			Gamemanager.active_game = false
+			_trigger_global_game_over()
+
 	movement_timer += delta
 
 	if movement_timer >= STEP_DELAY:
@@ -184,18 +213,36 @@ func _process(delta):
 
 				if target != null and is_instance_valid(target) and not target.is_in_group("players"):
 					var move_dir = target.direction
-					target.position.x += TILE_SIZE * move_dir
-
-					if move_dir == 1:
-						if target.position.x > MAX_X_POSITION:
-							target.position.x -= MAX_X_POSITION
-					elif move_dir == -1:
-						if target.position.x < 0:
-							target.position.x += MAX_X_POSITION
+					
+					var next_pos_x = target.position.x + (TILE_SIZE * move_dir)
+					
+					if move_dir == 1 and next_pos_x > MAX_X_POSITION:
+						next_pos_x -= MAX_X_POSITION
+					elif move_dir == -1 and next_pos_x < 0:
+						next_pos_x += MAX_X_POSITION
+					
+					if "type_piece" in target and target.type_piece == "king":
+						var players = get_tree().get_nodes_in_group("players")
+						for player in players:
+							if is_instance_valid(player) and "has_finished" in player and player.has_finished:
+								if abs(next_pos_x - player.position.x) < 5 and abs(target.position.y - player.position.y) < 5:
+									next_pos_x += TILE_SIZE * move_dir
+									
+									if move_dir == 1 and next_pos_x > MAX_X_POSITION:
+										next_pos_x -= MAX_X_POSITION
+									elif move_dir == -1 and next_pos_x < 0:
+										next_pos_x += MAX_X_POSITION
+									break
+					
+					target.position.x = next_pos_x
 		
 		for child in get_children():
 			if is_instance_valid(child) and child.is_in_group("players"):
 				var rider = child
+				
+				if "has_finished" in rider and rider.has_finished:
+					continue
+					
 				if "is_riding_rank" in rider and rider.is_riding_rank:
 					var rider_grid_y = clamp(int(rider.position.y / TILE_SIZE), 0, 7)
 					
@@ -259,6 +306,15 @@ func receive_rider(rider_node: Node2D):
 	
 	rider_node.global_scale = scale
 	
+	if rider_node:
+		if "has_finished" in rider_node:
+			rider_node.has_finished = false
+		
+		if rider_node.has_node("Area2D"):
+			var rider_area = rider_node.get_node("Area2D")
+			rider_area.monitoring = true
+			rider_area.monitorable = true
+	
 func activate_piece_movement():
 	is_movement_active = true
 
@@ -303,7 +359,14 @@ func _adapt_to_viewport() -> void:
 
 	position = Vector2(dynamic_offset_x, dynamic_offset_y)
 	queue_redraw()
-
+	
+	if is_instance_valid(clock_label):
+		var clock_x = dynamic_offset_x - (BORDER_OFFSET * scale.x) - (90.0 * scale.x)
+		
+		var clock_y = dynamic_offset_y + (3.8 * TILE_SIZE * scale.y)
+		
+		clock_label.global_position = Vector2(clock_x, clock_y)
+	
 func _draw() -> void:
 	var fondo_rect = Rect2(Vector2(-BORDER_OFFSET, -BORDER_OFFSET), Vector2(TOTAL_BOARD_PIXELS_WITH_BORDERS, TOTAL_BOARD_PIXELS_WITH_BORDERS))
 	draw_rect(fondo_rect, Color.BLACK, true)
@@ -356,3 +419,12 @@ func pause_rank(rank_index: int, duration: float) -> void:
 		if "current_grid_y" in child and child.current_grid_y == rank_index:
 			if child.has_method("set_paused"):
 				child.set_paused(false)
+
+func _trigger_global_game_over():
+	get_tree().paused = true
+	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+	if score_interface:
+		var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
+		if game_over_menu:
+			game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+			game_over_menu.visible = true

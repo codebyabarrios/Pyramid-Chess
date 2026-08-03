@@ -71,86 +71,82 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 47.0
+offset_top = 3.0
+offset_right = 47.0
+offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreInterface" type="Control" parent="CanvasLayer2/UIRoot" unique_id=812645047]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 700.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -350.0
+offset_bottom = -350.0
 grow_vertical = 2
 script = ExtResource("2_0wfyh")
 
 [node name="RightControl" type="Control" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=1076835338]
+z_index = 22
+custom_minimum_size = Vector2(300, 500)
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -390.0
-offset_top = -695.0
-offset_right = -1.0
-offset_bottom = 6.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_right = 300.0
+offset_bottom = 500.0
+grow_horizontal = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1211063322]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -364.0
-offset_top = -38.5
-offset_right = -14.0
-offset_bottom = 38.5
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer" unique_id=1312479408]
-layout_mode = 2
-
-[node name="WhiteContainer" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer" unique_id=1853021345]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="WhiteTitle" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/WhiteContainer" unique_id=580096401]
-layout_mode = 2
+[node name="WhiteTitle" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=580096401]
+layout_mode = 0
+offset_left = -14.0
+offset_right = 145.0
+offset_bottom = 41.0
 theme_override_fonts/font = ExtResource("4_o6xl0")
 theme_override_font_sizes/font_size = 40
 text = "PLAYER 1"
 
-[node name="WhitePoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/WhiteContainer" unique_id=1908297819]
-layout_mode = 2
+[node name="WhitePoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1908297819]
+layout_mode = 0
+offset_top = 45.0
+offset_right = 159.0
+offset_bottom = 91.0
 theme_override_fonts/font = ExtResource("4_o6xl0")
 theme_override_font_sizes/font_size = 45
 text = "10 pts"
 
-[node name="WhiteHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/WhiteContainer" unique_id=1590115270]
-layout_mode = 2
+[node name="WhiteHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1590115270]
+layout_mode = 0
+offset_top = 95.0
+offset_right = 159.0
+offset_bottom = 95.0
 
-[node name="BlackContainer" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer" unique_id=1651010240]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="BlackLabel" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/BlackContainer" unique_id=1028967788]
-layout_mode = 2
+[node name="BlackLabel" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1028967788]
+layout_mode = 0
+offset_left = 163.0
+offset_right = 322.0
+offset_bottom = 41.0
 theme_override_fonts/font = ExtResource("4_o6xl0")
 theme_override_font_sizes/font_size = 40
 text = "PLAYER 2"
 
-[node name="BlackPoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/BlackContainer" unique_id=1643787928]
-layout_mode = 2
+[node name="BlackPoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1643787928]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 45.0
+offset_right = 322.0
+offset_bottom = 91.0
 theme_override_fonts/font = ExtResource("4_o6xl0")
 theme_override_font_sizes/font_size = 45
 text = "10 pts"
 
-[node name="BlackHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl/PanelContainer/HBoxContainer/BlackContainer" unique_id=243422773]
-layout_mode = 2
+[node name="BlackHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=243422773]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 95.0
+offset_right = 322.0
+offset_bottom = 95.0
 
 [node name="RoundLabel" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=8462405]
 visible = false

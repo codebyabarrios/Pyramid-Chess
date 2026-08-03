@@ -9,14 +9,32 @@ var active_game: bool = false
 var current_board: int = 1
 const MAX_BOARDS: int = 3
 
+var white_time_left: float = 180.0
+var black_time_left: float = 180.0
+
+var white_clock_active: bool = true
+var black_clock_active: bool = true
+
+var kings_captured_this_round: int = 0
+
+var is_changing_board: bool = false
+
 func _ready() -> void:
-	active_game = true
+	pass
 
 func reset_game() -> void:
 	white_points = 10.0
 	black_points = 10.0
 	active_game = true
 	current_board = 1
+	
+	white_time_left = 180.0
+	black_time_left = 180.0
+	white_clock_active = true
+	black_clock_active = true
+	
+	kings_captured_this_round = 0
+	is_changing_board = false
 
 func process_capture(piece_type: String, same_color: bool, rider_color: String, rider_node: Node2D = null):
 	var current_points: float = white_points if rider_color == "white" else black_points
@@ -71,17 +89,55 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 				visual_color = Color("#ff00ff")
 		"king":
 			if not same_color:
-				current_points += 100
-				if current_board < MAX_BOARDS:
-					text_to_display = "NEXT STAGE!"
-					visual_color = Color("#00ff00")
-				else:
-					text_to_display = "FINISH!"
-					visual_color = Color("#ffd700")
+				if is_changing_board:
+					return
 				
-				var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
-				if score_interface and score_interface.has_method("show_end_game") and rider_node != null:
-					score_interface.call_deferred("show_end_game", rider_node)
+				current_points += 100
+				text_to_display = "FINISH!"
+				visual_color = Color("#ffd700")
+				
+				kings_captured_this_round += 1
+				
+				if kings_captured_this_round >= 2:
+					kings_captured_this_round = 0
+					is_changing_board = true 
+					
+					if current_board < MAX_BOARDS:
+						white_points = 10.0
+						black_points = 10.0
+						white_time_left = 180.0
+						black_time_left = 180.0
+						white_clock_active = true
+						black_clock_active = true
+						
+						var all_riders = get_tree().get_nodes_in_group("players")
+						for rider in all_riders:
+							if is_instance_valid(rider):
+								rider.has_finished = false
+								rider.is_riding_rank = false
+								rider.direction = 0
+						
+						_teleport_rider_to_next_board()
+						
+						var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+						if score_interface:
+							score_interface.set_process(true)
+							if score_interface.has_method("update_score_labels"):
+								score_interface.update_score_labels()
+						
+						get_tree().create_timer(0.5).timeout.connect(func():
+							is_changing_board = false
+						)
+					
+					else:
+						active_game = false
+						var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+						if score_interface:
+							var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
+							if game_over_menu:
+								get_tree().paused = true
+								game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+								game_over_menu.visible = true
 	
 	if current_points < 0:
 		current_points = 0.0
@@ -103,7 +159,7 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 	if text_to_display != "":
 		_spawn_floating_text(text_to_display, visual_color, rider_color)
 
-func _teleport_rider_to_next_board(rider_color_target: String):
+func _teleport_rider_to_next_board(rider_color_target: String = ""):
 	var main_scene = get_tree().current_scene
 	var old_board = main_scene.get_node_or_null("Board2D_" + str(current_board))
 	
@@ -111,20 +167,23 @@ func _teleport_rider_to_next_board(rider_color_target: String):
 	var new_board = main_scene.get_node_or_null("Board2D_" + str(current_board))
 	
 	if old_board and new_board:
-		var rider = null
-		for child in old_board.get_children():
-			if is_instance_valid(child) and child.is_in_group("players"):
-				var child_is_white_color = "is_white" in child and child.is_white
-				if (rider_color_target == "white" and child_is_white_color) or (rider_color_target == "black" and not child_is_white_color):
-					rider = child
-					break
+		var riders = old_board.get_tree().get_nodes_in_group("players")
+		for rider in riders:
+			if is_instance_valid(rider) and rider.get_parent() == old_board:
+				if old_board.has_method("remove_rider_from_matrix"):
+					old_board.remove_rider_from_matrix(rider)
+				
+				rider.reparent(new_board)
+				new_board.receive_rider(rider)
 		
-		if rider != null:
-			if old_board.has_method("remove_rider_from_matrix"):
-				old_board.remove_rider_from_matrix(rider)
-			rider.reparent(new_board)
-			new_board.receive_rider(rider)
+		var camera = main_scene.get_node_or_null("Camera2D")
+		if camera and camera.has_method("move_to_board"):
+			camera.move_to_board(current_board)
+		
+		if new_board.has_method("activate_piece_movement"):
 			new_board.activate_piece_movement()
+		
+		new_board.set_process(true)
 
 func _trigger_victory_menu():
 	await get_tree().create_timer(1.5).timeout

@@ -10,6 +10,8 @@ const TILE_SIZE = 64
 
 var health: int = 1
 
+var is_already_captured: bool = false
+
 func _ready() -> void:
 	_initialize_health()
 	
@@ -29,6 +31,16 @@ func _initialize_health() -> void:
 func set_side(white: bool, texture_path: String) -> void:
 	is_white = white
 	$Sprite2D.texture = load(texture_path)
+
+func mark_as_captured() -> bool:
+	if is_already_captured:
+		return false
+	
+	is_already_captured = true
+	if is_in_group("chess_pieces"):
+		remove_from_group("chess_pieces")
+	return true
+	
 
 func _exit_tree() -> void:
 	pass

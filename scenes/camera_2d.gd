@@ -30,6 +30,7 @@ func _ready() -> void:
 		score_interface.visible = false
 		score_interface.modulate.a = 0.0 
 		
+		# FIXED: We look for the container by its name (if you renamed it, change "ControlDerecha" to its new name)
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel:
 			points_panel.visible = false
@@ -71,7 +72,11 @@ func _ready() -> void:
 		tween.parallel().tween_property(self, "zoom", close_zoom, 1.2)
 		
 	if score_interface:
-		tween.tween_callback(func(): score_interface.visible = true)
+		tween.tween_callback(func(): 
+			score_interface.visible = true
+			if score_interface.has_method("_reposition_clocks"):
+				score_interface._reposition_clocks()
+		)
 		tween.tween_property(score_interface, "modulate:a", 1.0, 0.5)
 		
 		var round_label = score_interface.find_child("RoundLabel", true, false)
@@ -87,7 +92,37 @@ func _ready() -> void:
 			tween.tween_property(round_label, "modulate:a", 0.0, 0.3)
 			tween.tween_callback(func(): round_label.visible = false)
 			
+		# FIXED: Animates the container directly at its current manually repositioned left layout
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel:
 			tween.tween_callback(func(): points_panel.visible = true)
 			tween.tween_property(points_panel, "modulate:a", 1.0, 0.4)
+		
+		tween.tween_callback(func():
+			Gamemanager.active_game = true
+			
+			var board_1 = get_tree().current_scene.get_node_or_null("Board2D_1")
+			if board_1:
+				board_1.is_movement_active = true
+				board_1.set_process(true)
+			
+			score_interface.set_process(true)
+		)
+		
+func move_to_board(board_index: int) -> Signal:
+	var target_position = global_position
+	
+	match board_index:
+		1:
+			target_position = Vector2(230.0, 310.0)
+		2:
+			target_position = Vector2(740.0, 310.0)
+		3:
+			target_position = Vector2(1258.0, 310.0)
+	
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", target_position, 1.5)\
+		.set_trans(Tween.TRANS_CUBIC)\
+		.set_ease(Tween.EASE_OUT)
+	
+	return tween.finished
