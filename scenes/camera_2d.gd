@@ -71,30 +71,52 @@ func _ready() -> void:
 		tween.parallel().tween_property(self, "zoom", close_zoom, 1.2)
 		
 	if score_interface:
-		tween.tween_callback(func(): 
+		var points_panel = score_interface.find_child("ControlDerecha", true, false)
+		if points_panel == null:
+			points_panel = score_interface.find_child("RightControl", true, false)
+		
+		tween.tween_callback(func():
 			score_interface.visible = true
-			if score_interface.has_method("_reposition_clocks"):
-				score_interface._reposition_clocks()
+			score_interface.modulate.a = 1.0
+			
+			if "white_clock_label" in score_interface and score_interface.white_clock_label:
+				score_interface.white_clock_label.visible = false
+			if "black_clock_label" in score_interface and score_interface.black_clock_label:
+				score_interface.black_clock_label.visible = false
+			
+			if points_panel:
+				points_panel.visible = false
 		)
-		tween.tween_property(score_interface, "modulate:a", 1.0, 0.5)
 		
 		var round_label = score_interface.find_child("RoundLabel", true, false)
 		if round_label:
-			tween.tween_callback(func(): 
+			tween.tween_callback(func():
 				round_label.modulate.a = 0.0
 				round_label.visible = true
+				
+				round_label.anchors_preset = Control.PRESET_CENTER
+				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 			)
+			
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.2)
 			
 			tween.tween_interval(2.5)
 			
 			tween.tween_property(round_label, "modulate:a", 0.0, 0.3)
 			tween.tween_callback(func(): round_label.visible = false)
-			
-		var points_panel = score_interface.find_child("ControlDerecha", true, false)
+		
+		tween.tween_callback(func():
+			if score_interface.has_method("_reposition_clocks"):
+				score_interface._reposition_clocks()
+		)
+		
 		if points_panel:
-			tween.tween_callback(func(): points_panel.visible = true)
-			tween.tween_property(points_panel, "modulate:a", 1.0, 0.4)
+			tween.tween_callback(func():
+				points_panel.visible = true
+				points_panel.modulate.a = 0.0
+			)
+			tween.tween_property(points_panel, "modulate:a", 1.0, 0.5)
 		
 		tween.tween_callback(func():
 			Gamemanager.active_game = true
