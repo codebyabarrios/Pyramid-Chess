@@ -31,6 +31,9 @@ func _ready() -> void:
 		score_interface.modulate.a = 0.0 
 		
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
+		if points_panel == null:
+			points_panel = score_interface.find_child("RightControl", true, false)
+		
 		if points_panel:
 			points_panel.visible = false
 			points_panel.modulate.a = 0.0
@@ -91,8 +94,11 @@ func _ready() -> void:
 		var round_label = score_interface.find_child("RoundLabel", true, false)
 		if round_label:
 			tween.tween_callback(func():
+				round_label.text = "ROUND 1"
 				round_label.modulate.a = 0.0
 				round_label.visible = true
+				round_label.horizontal_alignment = 1
+				round_label.vertical_alignment = 1
 				
 				round_label.anchors_preset = Control.PRESET_CENTER
 				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -100,10 +106,65 @@ func _ready() -> void:
 			)
 			
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.2)
+			tween.tween_interval(1.5)
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
 			
-			tween.tween_interval(2.5)
+			tween.tween_callback(func():
+				round_label.text = "3"
+				round_label.modulate.a = 0.0
+				round_label.horizontal_alignment = 1
+				round_label.vertical_alignment = 1
+				
+				round_label.anchors_preset = Control.PRESET_CENTER
+				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+			)
 			
-			tween.tween_property(round_label, "modulate:a", 0.0, 0.3)
+			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
+			tween.tween_interval(0.8)
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
+			
+			tween.tween_callback(func():
+				round_label.text = "2"
+				round_label.modulate.a = 0.0
+				round_label.horizontal_alignment = 1
+				round_label.vertical_alignment = 1
+				
+				round_label.anchors_preset = Control.PRESET_CENTER
+				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+			)
+			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
+			tween.tween_interval(0.8)
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
+			
+			tween.tween_callback(func():
+				round_label.text = "1"
+				round_label.modulate.a = 0.0
+				round_label.horizontal_alignment = 1
+				round_label.vertical_alignment = 1
+				
+				round_label.anchors_preset = Control.PRESET_CENTER
+				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+			)
+			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
+			tween.tween_interval(0.8)
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
+			
+			tween.tween_callback(func():
+				round_label.text = "PLAY!"
+				round_label.modulate.a = 0.0
+				round_label.horizontal_alignment = 1
+				round_label.vertical_alignment = 1
+				
+				round_label.anchors_preset = Control.PRESET_CENTER
+				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
+				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
+			)
+			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
+			tween.tween_interval(0.6)
+			tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
 			tween.tween_callback(func(): round_label.visible = false)
 		
 		tween.tween_callback(func():
