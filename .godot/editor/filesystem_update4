@@ -1,2 +1,3 @@
-res://scenes/score_interface.gd
 res://scenes/main.tscn
+res://scenes/score_interface.gd
+res://scenes/camera_2d.gd

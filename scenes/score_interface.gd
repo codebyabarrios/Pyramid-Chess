@@ -113,13 +113,6 @@ func update_score_labels() -> void:
 	white_score_label.text = white_text + " pts"
 	black_score_label.text = black_text + " pts"
 	
-	white_score_label.position.x = 0.0
-	if is_instance_valid(white_history):
-		white_history.position.x = 0.0
-	
-	black_score_label.position.x = 200.0
-	if is_instance_valid(black_history):
-		black_history.position.x = 200.0
 		
 func add_operation_to_history(rider_color: String, operation_text: String, text_color: Color) -> void:
 	var target_container = white_history if rider_color == "white" else black_history
@@ -184,19 +177,5 @@ func _reposition_clocks() -> void:
 		black_clock_label.position = Vector2(margin_left, base_y + 40.0)
 		black_clock_label.visible = true
 		black_clock_label.modulate.a = 1.0
-	
-	var points_panel = find_child("ControlDerecha", true, false)
-	if points_panel == null:
-		points_panel = find_child("RightControl", true, false)
-	
-	if points_panel and is_instance_valid(points_panel):
-		points_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
-		
-		var panel_x = 10.0 
-		var panel_y = (ui_size.y / 2.0) - 150.0
-		
-		points_panel.position = Vector2(panel_x, panel_y)
-		points_panel.visible = true
-		points_panel.modulate.a = 1.0
 	
 	update_score_labels()

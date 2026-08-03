@@ -12,11 +12,11 @@ func _ready() -> void:
 	enabled = true
 	anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
 	
-	var board_1_pos = Vector2(230.0, 310.0)
-	var board_2_pos = Vector2(740.0, 310.0)
-	var board_3_pos = Vector2(1258.0, 310.0)
+	var board_1_pos = Vector2(252.0, 310.0)
+	var board_2_pos = Vector2(762.0, 310.0)
+	var board_3_pos = Vector2(1272.0, 310.0)
 	
-	var overview_pos_x: float = 740.0
+	var overview_pos_x: float = 762.0
 	var overview_pos_y: float = 310.0
 	
 	var close_zoom = Vector2(1.48, 1.48)
@@ -30,7 +30,6 @@ func _ready() -> void:
 		score_interface.visible = false
 		score_interface.modulate.a = 0.0 
 		
-		# FIXED: We look for the container by its name (if you renamed it, change "ControlDerecha" to its new name)
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel:
 			points_panel.visible = false
@@ -92,7 +91,6 @@ func _ready() -> void:
 			tween.tween_property(round_label, "modulate:a", 0.0, 0.3)
 			tween.tween_callback(func(): round_label.visible = false)
 			
-		# FIXED: Animates the container directly at its current manually repositioned left layout
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel:
 			tween.tween_callback(func(): points_panel.visible = true)
@@ -114,11 +112,11 @@ func move_to_board(board_index: int) -> Signal:
 	
 	match board_index:
 		1:
-			target_position = Vector2(230.0, 310.0)
+			target_position = Vector2(252.0, 310.0)
 		2:
-			target_position = Vector2(740.0, 310.0)
+			target_position = Vector2(762.0, 310.0)
 		3:
-			target_position = Vector2(1258.0, 310.0)
+			target_position = Vector2(1272.0, 310.0)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target_position, 1.5)\

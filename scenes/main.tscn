@@ -33,27 +33,28 @@ color = Color(0, 0, 0, 1)
 
 [node name="LeftBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=1277155197]
 layout_mode = 0
-offset_left = 1.0
+offset_left = -9.0
 offset_top = 3.0
-offset_right = 441.0
+offset_right = 401.0
 offset_bottom = 703.0
 color = Color(0, 0, 0, 1)
 
 [node name="RightBar" type="ColorRect" parent="ScreenMask/MaskContainer" unique_id=1158491506]
 layout_mode = 0
-offset_left = 1104.0
-offset_top = 7.0
-offset_right = 1544.0
-offset_bottom = 707.0
+offset_left = 1085.0
+offset_top = 2.0
+offset_right = 1500.0
+offset_bottom = 699.0
 color = Color(0, 0, 0, 1)
 
 [node name="Background" type="TextureRect" parent="." unique_id=403642504]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -5.0
-offset_right = 1500.0
-offset_bottom = 700.0
+offset_left = 1.0
+offset_top = -43.0
+offset_right = 1501.0
+offset_bottom = 808.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_sugp2")
@@ -71,10 +72,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 47.0
-offset_top = 3.0
-offset_right = 47.0
-offset_bottom = 3.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -100,53 +101,57 @@ grow_horizontal = 2
 
 [node name="WhiteTitle" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=580096401]
 layout_mode = 0
-offset_left = -14.0
-offset_right = 145.0
-offset_bottom = 41.0
+offset_left = 60.0
+offset_top = 200.5
+offset_right = 315.0
+offset_bottom = 261.5
 theme_override_fonts/font = ExtResource("4_o6xl0")
-theme_override_font_sizes/font_size = 40
-text = "PLAYER 1"
+theme_override_font_sizes/font_size = 60
+text = "PLAYER   1"
 
 [node name="WhitePoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1908297819]
 layout_mode = 0
-offset_top = 45.0
-offset_right = 159.0
-offset_bottom = 91.0
+offset_left = 98.0
+offset_top = 281.5
+offset_right = 257.0
+offset_bottom = 335.5
 theme_override_fonts/font = ExtResource("4_o6xl0")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 52
 text = "10 pts"
 
 [node name="WhiteHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1590115270]
 layout_mode = 0
-offset_top = 95.0
-offset_right = 159.0
-offset_bottom = 95.0
+offset_left = 93.0
+offset_top = 362.5
+offset_right = 252.0
+offset_bottom = 495.5
 
 [node name="BlackLabel" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1028967788]
 layout_mode = 0
-offset_left = 163.0
-offset_right = 322.0
-offset_bottom = 41.0
+offset_left = 1180.0
+offset_top = 200.5
+offset_right = 1435.0
+offset_bottom = 261.5
 theme_override_fonts/font = ExtResource("4_o6xl0")
-theme_override_font_sizes/font_size = 40
-text = "PLAYER 2"
+theme_override_font_sizes/font_size = 60
+text = "PLAYER   2"
 
 [node name="BlackPoints" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=1643787928]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 45.0
-offset_right = 322.0
-offset_bottom = 91.0
+offset_left = 1210.0
+offset_top = 281.5
+offset_right = 1369.0
+offset_bottom = 336.5
 theme_override_fonts/font = ExtResource("4_o6xl0")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 54
 text = "10 pts"
 
 [node name="BlackHistory" type="VBoxContainer" parent="CanvasLayer2/UIRoot/ScoreInterface/RightControl" unique_id=243422773]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 95.0
-offset_right = 322.0
-offset_bottom = 95.0
+offset_left = 1204.0
+offset_top = 362.5
+offset_right = 1363.0
+offset_bottom = 492.0
 
 [node name="RoundLabel" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=8462405]
 visible = false
