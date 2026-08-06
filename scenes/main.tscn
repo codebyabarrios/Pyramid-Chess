@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dyqkvbg1r65b6" path="res://scenes/camera_2d.gd" id="2_tefeu"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="4_jyhfs"]
 [ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="4_o6xl0"]
-[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bd0eglhac18dd" path="res://scenes/game_over_panel.tscn" id="6_o6xl0"]
 
 [node name="Main" type="Node2D" unique_id=1119833376]
 
@@ -174,36 +174,9 @@ text = "ROUND 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameOverMenu" type="Control" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=358739954]
-process_mode = 3
-visible = false
-anchors_preset = 0
-offset_left = 5.0
-offset_top = -700.0
-offset_right = 1500.0
-
-[node name="Label" type="Label" parent="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu" unique_id=1884650765]
-layout_mode = 0
-offset_left = 263.0
-offset_top = 119.0
-offset_right = 1192.0
-offset_bottom = 219.0
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_tbgi4")
-theme_override_font_sizes/font_size = 110
-text = "G A M E   O V E R"
-
-[node name="RestartButton" type="Button" parent="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu" unique_id=940561093]
-process_mode = 3
-layout_mode = 0
-offset_left = 455.0
-offset_top = 395.0
-offset_right = 963.0
-offset_bottom = 453.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("4_jyhfs")
-theme_override_font_sizes/font_size = 50
-text = "PLAY AGAIN"
+[node name="GameOverPanel" parent="CanvasLayer2/UIRoot" unique_id=2073413079 instance=ExtResource("6_o6xl0")]
+unique_name_in_owner = true
+layer = 10
 
 [node name="Board2D_1" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
 z_index = 6
@@ -212,5 +185,3 @@ position = Vector2(64, 64)
 [node name="Board2D_2" parent="." unique_id=438661248 instance=ExtResource("1_o5qli")]
 
 [node name="Board2D_3" parent="." unique_id=1668790293 instance=ExtResource("1_o5qli")]
-
-[connection signal="pressed" from="CanvasLayer2/UIRoot/ScoreInterface/GameOverMenu/RestartButton" to="CanvasLayer2/UIRoot/ScoreInterface" method="_on_restart_button_pressed"]

@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://bd0eglhac18dd"]
+
+[ext_resource type="Script" uid="uid://4pvf2sec1wsv" path="res://scenes/game_over_panel.gd" id="1_dme80"]
+[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="2_khxlv"]
+
+[node name="GameOverPanel" type="CanvasLayer" unique_id=2073413079]
+script = ExtResource("1_dme80")
+
+[node name="DarkBackground" type="ColorRect" parent="." unique_id=2069062042]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.627451)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=246932412]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -300.0
+offset_right = 250.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(250, 300)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=853335687]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1237715293]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.84313726, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 80
+
+[node name="MotifLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=65108313]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 50
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer" unique_id=500504290]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Points J1" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=1823669419]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 40
+
+[node name="Points J2" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=254541656]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 40
+
+[node name="Time J1" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=2014419702]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.10980392, 0.27058825, 1, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 40
+
+[node name="Time J2" type="Label" parent="PanelContainer/VBoxContainer/GridContainer" unique_id=461225488]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.10980392, 0.27058825, 1, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 40
+
+[node name="TimeManagementLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1055805160]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=310090210]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="RestartButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1155509188]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.8745098, 0.5803922, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 34
+
+[node name="MenuButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=749093745]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.8745098, 0.5803922, 0, 1)
+theme_override_fonts/font = ExtResource("2_khxlv")
+theme_override_font_sizes/font_size = 34

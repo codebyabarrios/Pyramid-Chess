@@ -1,2 +1,6 @@
-res://scenes/camera_2d.gd
+res://scenes/game_over_panel.gd
+res://scenes/pawn/pawn.tscn
+res://scenes/board.gd
+res://gamemanager.gd
+res://scenes/game_over_panel.tscn
 res://scenes/main.tscn

@@ -96,12 +96,37 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 				text_to_display = "FINISH!"
 				visual_color = Color("#ffd700")
 				
+				if rider_color == "white":
+					white_points = current_points
+				else:
+					black_points = current_points
+				
 				kings_captured_this_round += 1
 				
 				if kings_captured_this_round >= 2:
 					kings_captured_this_round = 0
-					is_changing_board = true 
 					
+					active_game = false
+						
+					if rider_color == "white":
+						white_points = current_points
+					else:
+						black_points = current_points
+						
+					var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
+					if score_interface:
+						if score_interface.has_method("update_score_labels"):
+							score_interface.update_score_labels()
+							
+						if text_to_display != "" and score_interface.has_method("add_operation_to_history"):
+							var formatted_history = text_to_display + " ->" + format_points(round(current_points))
+							score_interface.add_operation_to_history(rider_color, formatted_history, visual_color)
+							
+						if score_interface.has_method("trigger_game_over"):
+							score_interface.trigger_game_over("Kings Captured")
+					return
+					
+					is_changing_board = true
 					if current_board < MAX_BOARDS:
 						white_points = 10.0
 						black_points = 10.0
@@ -119,7 +144,6 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 						
 						_teleport_rider_to_next_board()
 						
-						var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 						if score_interface:
 							score_interface.set_process(true)
 							if score_interface.has_method("update_score_labels"):
@@ -131,13 +155,8 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 					
 					else:
 						active_game = false
-						var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
-						if score_interface:
-							var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
-							if game_over_menu:
-								get_tree().paused = true
-								game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
-								game_over_menu.visible = true
+						if score_interface and score_interface.has_method("trigger_game_over"):
+							score_interface.trigger_game_over("Kings Captured")
 	
 	if current_points < 0:
 		current_points = 0.0
@@ -189,9 +208,8 @@ func _trigger_victory_menu():
 	await get_tree().create_timer(1.5).timeout
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false) 
 	if score_interface:
-		var game_over_menu = score_interface.find_child("GameOverMenu", true, false)
-		if game_over_menu:
-			game_over_menu.visible = true
+		if score_interface.has_method("trigger_game_over"):
+			score_interface.trigger_game_over("Kings Captured")
 	
 	for i in range(1, 4):
 		var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(i))

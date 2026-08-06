@@ -7,6 +7,8 @@ extends Control
 @onready var white_history: VBoxContainer = $RightControl/WhiteHistory
 @onready var black_history: VBoxContainer = $RightControl/BlackHistory
 
+@onready var game_over_panel = %GameOverPanel
+
 var is_transitioning: bool = false
 
 var white_clock_label: Label = null
@@ -23,10 +25,13 @@ func _ready():
 	if game_over_menu != null:
 		game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 		game_over_menu.visible = false
-		
-	var restart_button = game_over_menu.get_node_or_null("RestartButton")
-	if restart_button and not restart_button.pressed.is_connected(_on_restart_button_pressed):
-		restart_button.pressed.connect(_on_restart_button_pressed)
+	
+	if game_over_panel != null:
+		game_over_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+		if not game_over_panel.restart_requested.is_connected(_on_next_round_pressed):
+			game_over_panel.restart_requested.connect(_on_next_round_pressed)
+		if not game_over_panel.menu_requested.is_connected(_on_menu_button_pressed):
+			game_over_panel.menu_requested.connect(_on_menu_button_pressed)
 	
 	white_clock_label = _create_ui_clock()
 	black_clock_label = _create_ui_clock()
@@ -98,10 +103,7 @@ func _process(_delta: float) -> void:
 					return
 				
 				else:
-					get_tree().paused = true
-					if game_over_menu != null:
-						game_over_menu.process_mode = Node.PROCESS_MODE_ALWAYS
-						game_over_menu.visible = true
+					trigger_game_over("Time Exhausted")
 		
 func update_score_labels() -> void:
 	if not is_instance_valid(white_score_label) or not is_instance_valid(black_score_label):
@@ -139,6 +141,18 @@ func add_operation_to_history(rider_color: String, operation_text: String, text_
 	if target_container.get_child_count() > 4:
 		target_container.get_child(target_container.get_child_count() - 1).queue_free()
 
+func trigger_game_over(reason: String = "Kings Captured"):
+	get_tree().paused = true
+	if game_over_panel != null:
+		var game_stats = {
+			"points_j1": Gamemanager.white_points,
+			"points_j2": Gamemanager.black_points,
+			"time_j1": Gamemanager.white_time_left,
+			"time_j2": Gamemanager.black_time_left,
+			"current_board": Gamemanager.current_board
+		}
+		game_over_panel.show_game_over("Winner Checked Fynamically", reason, game_stats)
+
 func show_end_game(attacking_rider: Node2D):
 	pass
 
@@ -146,6 +160,37 @@ func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
 	Gamemanager.reset_game()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func _on_next_round_pressed() -> void:
+	get_tree().paused = false
+	if game_over_panel != null:
+		game_over_panel.hide()
+	
+	Gamemanager.white_points = 10.0
+	Gamemanager.black_points = 10.0
+	Gamemanager.white_time_left = 180.0
+	Gamemanager.black_time_left = 180.0
+	Gamemanager.white_clock_active = true
+	Gamemanager.black_clock_active = true
+	Gamemanager.kings_captured_this_round = 0
+	Gamemanager.active_game = true
+	
+	var all_riders = get_tree().get_nodes_in_group("players")
+	for rider in all_riders:
+		if is_instance_valid(rider):
+			rider.has_finished = false
+			rider.is_riding_rank = false
+			rider.direction = 0
+	
+	set_process(false)
+	Gamemanager._teleport_rider_to_next_board()
+	update_score_labels()
+	set_process(true)
+	_reposition_clocks()
+
+func _on_menu_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 func _create_ui_clock() -> Label:
 	var label = Label.new()
