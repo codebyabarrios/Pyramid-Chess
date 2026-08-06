@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ldoc64csgcb1"]
 
 [ext_resource type="Script" uid="uid://i4pkh0t4khsx" path="res://scenes/rook/rook.gd" id="1_2bkxc"]
-[ext_resource type="Texture2D" uid="uid://dplf8eyo0braa" path="res://scenes/rook/white_rook.png" id="2_5jt6t"]
+[ext_resource type="Texture2D" uid="uid://b4wx70bxc4rcj" path="res://scenes/rook/white_tower.png" id="2_5jt6t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hshyq"]
 size = Vector2(26, 23)

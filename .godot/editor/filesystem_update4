@@ -1,6 +1,7 @@
-res://scenes/game_over_panel.gd
-res://scenes/pawn/pawn.tscn
+res://scenes/rook/rook.tscn
 res://scenes/board.gd
-res://gamemanager.gd
+res://scenes/pawn/pawn.tscn
+res://scenes/knight/knight.tscn
 res://scenes/game_over_panel.tscn
-res://scenes/main.tscn
+res://main_menu.gd
+res://scenes/score_interface.gd

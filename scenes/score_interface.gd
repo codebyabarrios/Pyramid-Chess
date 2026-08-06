@@ -191,7 +191,11 @@ func _on_next_round_pressed() -> void:
 func _on_menu_button_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
-
+	
+	Gamemanager.reset_game()
+	
+	get_tree().change_scene_to_file("res://MainMenu.tscn")
+	
 func _create_ui_clock() -> Label:
 	var label = Label.new()
 	label.text = "03:00"

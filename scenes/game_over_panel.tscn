@@ -57,7 +57,7 @@ size_flags_horizontal = 4
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.10980392, 0.27058825, 1, 1)
 theme_override_fonts/font = ExtResource("2_khxlv")
 theme_override_font_sizes/font_size = 40
 
@@ -65,7 +65,7 @@ theme_override_font_sizes/font_size = 40
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.10980392, 0.27058825, 1, 1)
 theme_override_fonts/font = ExtResource("2_khxlv")
 theme_override_font_sizes/font_size = 40
 

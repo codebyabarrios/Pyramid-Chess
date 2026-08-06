@@ -25,16 +25,16 @@ var board_color_side: String = "white"
 @onready var black_pawn_tex = "res://scenes/pawn/black_pawn.png"
 
 @onready var knight_scene = preload("res://scenes/knight/knight.tscn")
-@onready var black_knight_tex = "res://scenes/knight/black_knight.png"
-@onready var white_knight_tex = "res://scenes/knight/white_knight.png"
+@onready var black_knight_tex = "res://scenes/knight/black_horse.png"
+@onready var white_knight_tex = "res://scenes/knight/white_horse.png"
 
 @onready var bishop_scene = preload("res://scenes/bishop/bishop.tscn")
 @onready var white_bishop_tex = "res://scenes/bishop/white_bishop.png"
 @onready var black_bishop_tex = "res://scenes/bishop/black_bishop.png"
 
 @onready var rook_scene = preload("res://scenes/rook/rook.tscn")
-@onready var white_rook_tex = "res://scenes/rook/white_rook.png"
-@onready var black_rook_tex = "res://scenes/rook/black_rook.png"
+@onready var white_rook_tex = "res://scenes/rook/white_tower.png"
+@onready var black_rook_tex = "res://scenes/rook/black_tower.png"
 
 @onready var queen_scene = preload("res://scenes/queen/queen.tscn")
 @onready var white_queen_tex = "res://scenes/queen/white_queen.png"

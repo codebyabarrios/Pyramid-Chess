@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dplf8eyo0braa"
-path="res://.godot/imported/white_rook.png-fb3588be8cc240ee2d9a384836108429.ctex"
+uid="uid://b4wx70bxc4rcj"
+path="res://.godot/imported/white_tower.png-21e2b1089ebcc8e79d792f99232ad83a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/rook/white_rook.png"
-dest_files=["res://.godot/imported/white_rook.png-fb3588be8cc240ee2d9a384836108429.ctex"]
+source_file="res://scenes/rook/white_tower.png"
+dest_files=["res://.godot/imported/white_tower.png-21e2b1089ebcc8e79d792f99232ad83a.ctex"]
 
 [params]
 

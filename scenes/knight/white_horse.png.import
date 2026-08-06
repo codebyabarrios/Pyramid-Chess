@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bokwa8oo6cien"
-path="res://.godot/imported/black_knight.png-7650f251083ad20e799630a4872c3d6e.ctex"
+uid="uid://o2exms0yoy0t"
+path="res://.godot/imported/white_horse.png-1464651b22692b9d674d62485afefd40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/knight/black_knight.png"
-dest_files=["res://.godot/imported/black_knight.png-7650f251083ad20e799630a4872c3d6e.ctex"]
+source_file="res://scenes/knight/white_horse.png"
+dest_files=["res://.godot/imported/white_horse.png-1464651b22692b9d674d62485afefd40.ctex"]
 
 [params]
 

@@ -6,6 +6,16 @@ extends Control
 @onready var player_count_menu = $MenuQuantity
 @onready var side_selection_menu = $SideMenu
 
+func _ready() -> void:
+	if start_menu != null:
+		start_menu.show()
+	
+	if player_count_menu != null:
+		player_count_menu.hide()
+	
+	if side_selection_menu != null:
+		side_selection_menu.hide()
+
 
 func _on_play_button_pressed() -> void:
 	start_menu.visible = false

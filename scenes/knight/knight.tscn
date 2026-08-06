@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c8cm8e46ayus1"]
 
 [ext_resource type="Script" uid="uid://cj4wgvondgprr" path="res://scenes/knight/knight.gd" id="1_itplb"]
-[ext_resource type="Texture2D" uid="uid://bbpydma2nobao" path="res://scenes/knight/white_knight.png" id="2_itplb"]
+[ext_resource type="Texture2D" uid="uid://o2exms0yoy0t" path="res://scenes/knight/white_horse.png" id="2_itplb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_itplb"]
 size = Vector2(26, 15)

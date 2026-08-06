@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddmlm76nx3u3e"
-path="res://.godot/imported/black_rook.png-df46ec0325ca92a8942c270548410c96.ctex"
+uid="uid://u5wkfo6sf40p"
+path="res://.godot/imported/black_horse.png-0f1046b8e4fcf9b64b5042260ce69b7f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/rook/black_rook.png"
-dest_files=["res://.godot/imported/black_rook.png-df46ec0325ca92a8942c270548410c96.ctex"]
+source_file="res://scenes/knight/black_horse.png"
+dest_files=["res://.godot/imported/black_horse.png-0f1046b8e4fcf9b64b5042260ce69b7f.ctex"]
 
 [params]
 

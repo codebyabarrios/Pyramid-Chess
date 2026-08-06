@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c8u85kocrddi6"]
 
 [ext_resource type="Script" uid="uid://d0sddvsfh0t7i" path="res://scenes/pawn/pawn.gd" id="1_pcpcu"]
-[ext_resource type="Texture2D" uid="uid://6ooag6hjjn2v" path="res://scenes/pawn/white_pawn.png" id="2_pcpcu"]
+[ext_resource type="Texture2D" uid="uid://d2bo7vh46dp74" path="res://scenes/pawn/white_pawn.png" id="2_pcpcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcpcu"]
 size = Vector2(23, 26)
