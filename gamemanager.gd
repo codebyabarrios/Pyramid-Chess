@@ -199,8 +199,10 @@ func _teleport_rider_to_next_board(rider_color_target: String = ""):
 		if camera and camera.has_method("move_to_board"):
 			camera.move_to_board(current_board)
 		
-		if new_board.has_method("activate_piece_movement"):
-			new_board.activate_piece_movement()
+		if new_board:
+			new_board.set_process(false)
+			if "is_movement_active" in new_board:
+				new_board.is_movement_active = false
 		
 		new_board.set_process(true)
 

@@ -1,7 +1,4 @@
-res://scenes/rook/rook.tscn
-res://scenes/board.gd
-res://scenes/pawn/pawn.tscn
-res://scenes/knight/knight.tscn
-res://scenes/game_over_panel.tscn
-res://main_menu.gd
+res://scenes/game_over_panel.gd
+res://scenes/camera_2d.gd
 res://scenes/score_interface.gd
+res://gamemanager.gd

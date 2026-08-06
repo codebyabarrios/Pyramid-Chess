@@ -173,7 +173,8 @@ func _on_next_round_pressed() -> void:
 	Gamemanager.white_clock_active = true
 	Gamemanager.black_clock_active = true
 	Gamemanager.kings_captured_this_round = 0
-	Gamemanager.active_game = true
+	
+	Gamemanager.active_game = false
 	
 	var all_riders = get_tree().get_nodes_in_group("players")
 	for rider in all_riders:
@@ -183,10 +184,13 @@ func _on_next_round_pressed() -> void:
 			rider.direction = 0
 	
 	set_process(false)
+	
 	Gamemanager._teleport_rider_to_next_board()
 	update_score_labels()
 	set_process(true)
-	_reposition_clocks()
+	
+	if is_instance_valid(white_clock_label): white_clock_label.visible = false
+	if is_instance_valid(black_clock_label): black_clock_label.visible = false
 
 func _on_menu_button_pressed() -> void:
 	get_tree().paused = false

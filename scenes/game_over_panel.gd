@@ -59,8 +59,8 @@ func show_game_over(winner_name: String, reason: String, stats: Dictionary):
 		var t1_label = grid.get_child(2) as Label
 		var t2_label = grid.get_child(3) as Label
 		
-		if p1_label: p1_label.text = "P1 SCORE: %d PTS" % int(p1_pts)
-		if p2_label: p2_label.text = "P2 SCORE: %d PTS" % int(p2_pts)
+		if p1_label: p1_label.text = "P1 SCORE: %s PTS" % Gamemanager.format_points(p1_pts)
+		if p2_label: p2_label.text = "P2 SCORE: %s PTS" % Gamemanager.format_points(p2_pts)
 		if t1_label: t1_label.text = "P1 TIME: %s" % format_time(t1)
 		if t2_label: t2_label.text = "P2 TIME: %s" % format_time(t2)
 
