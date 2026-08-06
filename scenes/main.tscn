@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="4_jyhfs"]
 [ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bd0eglhac18dd" path="res://scenes/game_over_panel.tscn" id="6_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://ddfrfpibnqrat" path="res://scenes/final_winner_panel.tscn" id="7_tipki"]
 
 [node name="Main" type="Node2D" unique_id=1119833376]
 
@@ -177,6 +178,9 @@ vertical_alignment = 1
 [node name="GameOverPanel" parent="CanvasLayer2/UIRoot" unique_id=2073413079 instance=ExtResource("6_o6xl0")]
 unique_name_in_owner = true
 layer = 10
+
+[node name="FinalWinnerPanel" parent="CanvasLayer2/UIRoot" unique_id=301333720 instance=ExtResource("7_tipki")]
+unique_name_in_owner = true
 
 [node name="Board2D_1" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]
 z_index = 6

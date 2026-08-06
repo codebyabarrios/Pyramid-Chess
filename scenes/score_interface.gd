@@ -162,6 +162,27 @@ func _on_restart_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func _on_next_round_pressed() -> void:
+	if Gamemanager.current_board >= 3:
+		if game_over_panel != null:
+			game_over_panel.hide()
+		
+		var main_scene = get_tree().current_scene
+		var final_panel = main_scene.get_node_or_null("FinalWinnerPanel")
+		
+		if final_panel == null:
+			final_panel = main_scene.find_child("FinalWinnerPanel", true, false)
+		
+		if final_panel != null:
+			if not final_panel.menu_requested.is_connected(_on_menu_button_pressed):
+				final_panel.menu_requested.connect(_on_menu_button_pressed)
+			
+			final_panel.show_final_stats()
+			print("🏆 ÉXITO: El panel FinalWinnerPanel se ha invocado correctamente.")
+		else:
+			print("❌ ERROR CRÍTICO: No se pudo encontrar el nodo 'FinalWinnerPanel' en la escena principal.")
+		return
+	
+	
 	get_tree().paused = false
 	if game_over_panel != null:
 		game_over_panel.hide()

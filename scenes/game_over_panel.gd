@@ -63,7 +63,14 @@ func show_game_over(winner_name: String, reason: String, stats: Dictionary):
 		if p2_label: p2_label.text = "P2 SCORE: %s PTS" % Gamemanager.format_points(p2_pts)
 		if t1_label: t1_label.text = "P1 TIME: %s" % format_time(t1)
 		if t2_label: t2_label.text = "P2 TIME: %s" % format_time(t2)
-
+	
+	var current_board_num = stats.get("current_board", 1)
+	if is_instance_valid(restart_btn):
+		if current_board_num >= 3:
+			restart_btn.text = "SEE FINAL WINNER"
+		else:
+			restart_btn.text = "NEXT ROUND"
+	
 	show()
 	animate_entry()
 

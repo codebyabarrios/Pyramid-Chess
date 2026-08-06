@@ -19,6 +19,14 @@ var kings_captured_this_round: int = 0
 
 var is_changing_board: bool = false
 
+var total_points_p1: float = 0.0
+var total_points_p2: float = 0.0
+var rounds_won_p1: int = 0
+var rounds_won_p2: int = 0
+	
+var best_time_p1: float = 0.0
+var best_time_p2: float = 0.0
+
 func _ready() -> void:
 	pass
 
@@ -35,6 +43,14 @@ func reset_game() -> void:
 	
 	kings_captured_this_round = 0
 	is_changing_board = false
+	
+	total_points_p1 = 0.0
+	var total_points_p2 = 0.0
+	var rounds_won_p1 = 0
+	var rounds_won_p2 = 0
+	
+	var best_time_p1 = 0.0
+	var best_time_p2 = 0.0
 
 func process_capture(piece_type: String, same_color: bool, rider_color: String, rider_node: Node2D = null):
 	var current_points: float = white_points if rider_color == "white" else black_points
@@ -112,7 +128,18 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 						white_points = current_points
 					else:
 						black_points = current_points
-						
+					
+					total_points_p1 += white_points
+					total_points_p2 += black_points
+					
+					if white_points > black_points:
+						rounds_won_p1 += 1
+					elif black_points > white_points:
+						rounds_won_p2 += 1
+					
+					if white_time_left > best_time_p1: best_time_p1 = white_time_left
+					if black_time_left > best_time_p2: best_time_p2 = black_time_left
+					
 					var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 					if score_interface:
 						if score_interface.has_method("update_score_labels"):
