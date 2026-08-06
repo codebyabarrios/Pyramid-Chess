@@ -1,6 +1,1 @@
-res://scenes/main.tscn
-res://scenes/final_winner_panel.gd
-res://gamemanager.gd
-res://scenes/game_over_panel.gd
-res://scenes/final_winner_panel.tscn
-res://scenes/score_interface.gd
+res://scenes/camera_2d.gd

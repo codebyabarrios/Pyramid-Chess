@@ -255,6 +255,14 @@ func play_round_countdown(board_index: int) -> void:
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
 		
 		tween.tween_callback(func():
+			round_label.text = "1"
+			round_label.modulate.a = 0.0
+		)
+		tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
+		tween.tween_interval(0.8)
+		tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
+		
+		tween.tween_callback(func():
 			round_label.text = "PLAY!"
 			round_label.modulate.a = 0.0
 		)
@@ -277,6 +285,12 @@ func play_round_countdown(board_index: int) -> void:
 		
 		tween.tween_callback(func():
 			Gamemanager.active_game = true
+			
+			if is_instance_valid(score_interface):
+				if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label):
+					score_interface.white_clock_label.visible = true
+				if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label):
+					score_interface.black_clock_label.visible = true
 			
 			var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(board_index))
 			if board_node:

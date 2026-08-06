@@ -91,6 +91,7 @@ theme_override_font_sizes/font_size = 30
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1322001225]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="MenuButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1773786878]
 unique_name_in_owner = true
