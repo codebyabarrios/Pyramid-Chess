@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-signal menu_requested
-
 @onready var title_label = $PanelContainer/VBoxContainer/TitleLabel
 @onready var motif_label = $PanelContainer/VBoxContainer/MotifLabel
 @onready var time_record_label = $PanelContainer/VBoxContainer/TimeManagementLabel
@@ -14,14 +12,18 @@ signal menu_requested
 @onready var menu_btn = $PanelContainer/VBoxContainer/HBoxContainer/MenuButton
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	hide() 
 	
 	if is_instance_valid(menu_btn):
+		menu_btn.process_mode = Node.PROCESS_MODE_ALWAYS
 		menu_btn.text = "MAIN MENU"
 		if not menu_btn.pressed.is_connected(_on_menu_pressed):
 			menu_btn.pressed.connect(_on_menu_pressed)
 
 func show_final_stats():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	var panel = $PanelContainer
 	if is_instance_valid(panel):
 		panel.custom_minimum_size = Vector2(340, 240)
@@ -139,4 +141,4 @@ func animate_entry():
 		tween.tween_property(panel, "scale", Vector2(1.5, 1.5), 0.4)
 
 func _on_menu_pressed():
-	menu_requested.emit()
+	Gamemanager._on_menu_button_pressed()

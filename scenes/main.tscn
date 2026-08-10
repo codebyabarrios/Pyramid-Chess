@@ -175,11 +175,10 @@ text = "ROUND 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GameOverPanel" parent="CanvasLayer2/UIRoot" unique_id=2073413079 instance=ExtResource("6_o6xl0")]
+[node name="GameOverPanel" parent="CanvasLayer2" unique_id=2073413079 instance=ExtResource("6_o6xl0")]
 unique_name_in_owner = true
-layer = 10
 
-[node name="FinalWinnerPanel" parent="CanvasLayer2/UIRoot" unique_id=301333720 instance=ExtResource("7_tipki")]
+[node name="FinalWinnerPanel" parent="CanvasLayer2" unique_id=301333720 instance=ExtResource("7_tipki")]
 unique_name_in_owner = true
 
 [node name="Board2D_1" parent="." unique_id=649462161 instance=ExtResource("1_o5qli")]

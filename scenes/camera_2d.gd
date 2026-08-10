@@ -112,12 +112,6 @@ func _ready() -> void:
 			tween.tween_callback(func():
 				round_label.text = "3"
 				round_label.modulate.a = 0.0
-				round_label.horizontal_alignment = 1
-				round_label.vertical_alignment = 1
-				
-				round_label.anchors_preset = Control.PRESET_CENTER
-				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 			)
 			
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
@@ -127,12 +121,6 @@ func _ready() -> void:
 			tween.tween_callback(func():
 				round_label.text = "2"
 				round_label.modulate.a = 0.0
-				round_label.horizontal_alignment = 1
-				round_label.vertical_alignment = 1
-				
-				round_label.anchors_preset = Control.PRESET_CENTER
-				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 			)
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 			tween.tween_interval(0.8)
@@ -141,12 +129,6 @@ func _ready() -> void:
 			tween.tween_callback(func():
 				round_label.text = "1"
 				round_label.modulate.a = 0.0
-				round_label.horizontal_alignment = 1
-				round_label.vertical_alignment = 1
-				
-				round_label.anchors_preset = Control.PRESET_CENTER
-				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 			)
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 			tween.tween_interval(0.8)
@@ -155,12 +137,6 @@ func _ready() -> void:
 			tween.tween_callback(func():
 				round_label.text = "PLAY!"
 				round_label.modulate.a = 0.0
-				round_label.horizontal_alignment = 1
-				round_label.vertical_alignment = 1
-				
-				round_label.anchors_preset = Control.PRESET_CENTER
-				round_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-				round_label.grow_vertical = Control.GROW_DIRECTION_BOTH
 			)
 			tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 			tween.tween_interval(0.6)
@@ -181,6 +157,11 @@ func _ready() -> void:
 		
 		tween.tween_callback(func():
 			Gamemanager.active_game = true
+			
+			if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label):
+				score_interface.white_clock_label.visible = true
+			if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label):
+				score_interface.black_clock_label.visible = true
 			
 			var board_1 = get_tree().current_scene.get_node_or_null("Board2D_1")
 			if board_1:
@@ -215,10 +196,22 @@ func play_round_countdown(board_index: int) -> void:
 	if not score_interface:
 		return
 	
+	score_interface.visible = true
+	score_interface.modulate.a = 1.0
+	
 	var round_label = score_interface.find_child("RoundLabel", true, false)
 	var points_panel = score_interface.find_child("ControlDerecha", true, false)
 	if points_panel == null:
 		points_panel = score_interface.find_child("RightControl", true, false)
+	
+	if points_panel:
+		points_panel.visible = false
+		points_panel.modulate.a = 0.0
+		
+	if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label):
+		score_interface.white_clock_label.visible = false
+	if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label):
+		score_interface.black_clock_label.visible = false
 	
 	if round_label:
 		var tween = create_tween()
@@ -238,34 +231,22 @@ func play_round_countdown(board_index: int) -> void:
 		tween.tween_interval(1.5)
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
 		
-		tween.tween_callback(func():
-			round_label.text = "3"
-			round_label.modulate.a = 0.0
-		)
+		tween.tween_callback(func(): round_label.text = "3"; round_label.modulate.a = 0.0)
 		tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 		tween.tween_interval(0.8)
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
 		
-		tween.tween_callback(func():
-			round_label.text = "2"
-			round_label.modulate.a = 0.0
-		)
+		tween.tween_callback(func(): round_label.text = "2"; round_label.modulate.a = 0.0)
 		tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 		tween.tween_interval(0.8)
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
 		
-		tween.tween_callback(func():
-			round_label.text = "1"
-			round_label.modulate.a = 0.0
-		)
+		tween.tween_callback(func(): round_label.text = "1"; round_label.modulate.a = 0.0)
 		tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 		tween.tween_interval(0.8)
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.1)
 		
-		tween.tween_callback(func():
-			round_label.text = "PLAY!"
-			round_label.modulate.a = 0.0
-		)
+		tween.tween_callback(func(): round_label.text = "PLAY!"; round_label.modulate.a = 0.0)
 		tween.tween_property(round_label, "modulate:a", 1.0, 0.1)
 		tween.tween_interval(0.6)
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
@@ -273,7 +254,7 @@ func play_round_countdown(board_index: int) -> void:
 		
 		tween.tween_callback(func():
 			if score_interface.has_method("_reposition_clocks"):
-				score_interface._reposition_clocks
+				score_interface._reposition_clocks()
 		)
 		
 		if points_panel:
@@ -286,14 +267,14 @@ func play_round_countdown(board_index: int) -> void:
 		tween.tween_callback(func():
 			Gamemanager.active_game = true
 			
-			if is_instance_valid(score_interface):
-				if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label):
-					score_interface.white_clock_label.visible = true
-				if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label):
-					score_interface.black_clock_label.visible = true
+			if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label):
+				score_interface.white_clock_label.visible = true
+			if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label):
+				score_interface.black_clock_label.visible = true
 			
 			var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(board_index))
 			if board_node:
+				board_node.process_mode = Node.PROCESS_MODE_INHERIT
 				if "is_movement_active" in board_node:
 					board_node.is_movement_active = true
 				if board_node.has_method("activate_piece_movement"):
@@ -302,4 +283,3 @@ func play_round_countdown(board_index: int) -> void:
 			
 			score_interface.set_process(true)
 		)
-		
