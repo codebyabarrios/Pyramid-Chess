@@ -3,6 +3,9 @@ extends Node
 var white_points: float = 10.0
 var black_points: float = 10.0
 
+var tiempo_inicial_seleccionado: float = 180.0 
+var incremento_seleccionado: float = 0.0 
+
 var active_game: bool = false
 var current_board: int = 1
 const MAX_BOARDS: int = 3
@@ -95,6 +98,11 @@ func _time_ran_out() -> void:
 	_trigger_panel_display("Time Out!")
 
 func process_capture(piece_type: String, same_color: bool, rider_color: String, _rider_node: Node2D = null):
+	if rider_color == "white":
+		_tiempo_real_blancas += incremento_seleccionado
+	else:
+		_tiempo_real_negras += incremento_seleccionado
+
 	var current_points: float = white_points if rider_color == "white" else black_points
 	var text_to_display: String = ""
 	var visual_color = Color("#ffffff")
@@ -135,7 +143,10 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 					black_points = current_points; black_clock_active = false
 				
 				kings_captured_this_round += 1
-				if kings_captured_this_round >= 2:
+				
+				var required_captures = 1 if Global.total_players == 1 else 2
+				
+				if kings_captured_this_round >= required_captures:
 					kings_captured_this_round = 0
 					is_game_over_triggered = true
 					active_game = false
@@ -215,8 +226,10 @@ func _on_next_round_pressed() -> void:
 	active_game = false
 	white_points = 10.0
 	black_points = 10.0
-	_tiempo_real_blancas = 180.0
-	_tiempo_real_negras = 180.0
+	
+	_tiempo_real_blancas = tiempo_inicial_seleccionado
+	_tiempo_real_negras = tiempo_inicial_seleccionado
+	
 	white_clock_active = true
 	black_clock_active = true
 	kings_captured_this_round = 0 
@@ -263,15 +276,18 @@ func _teleport_rider_to_next_board(_rider_color_target: String = ""):
 				new_board.receive_rider(rider)
 				
 		var camera = main_scene.get_node_or_null("Camera2D")
-		if camera and camera.has_method("move_to_board"): camera.move_to_board(current_board)
+		if camera and camera.has_method("move_to_board"): 
+			camera.move_to_board(current_board)
 
 func reset_game() -> void:
 	white_points = 10.0
 	black_points = 10.0
 	active_game = false
 	current_board = 1
-	_tiempo_real_blancas = 180.0
-	_tiempo_real_negras = 180.0
+	
+	_tiempo_real_blancas = tiempo_inicial_seleccionado
+	_tiempo_real_negras = tiempo_inicial_seleccionado
+	
 	white_clock_active = true
 	black_clock_active = true
 	kings_captured_this_round = 0

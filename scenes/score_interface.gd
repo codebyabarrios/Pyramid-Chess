@@ -19,6 +19,7 @@ func _ready():
 
 	white_clock_label = _create_ui_clock()
 	black_clock_label = _create_ui_clock()
+	
 	add_child(white_clock_label)
 	add_child(black_clock_label)
 	
@@ -31,7 +32,7 @@ func _process(_delta: float) -> void:
 		var w_time = max(0, Gamemanager.white_time_left)
 		var w_min = int(w_time) / 60
 		var w_sec = int(w_time) % 60
-		white_clock_label.text = "W: %02d:%02d" % [w_min, w_sec]
+		white_clock_label.text = "TIME: %02d:%02d" % [w_min, w_sec]
 		
 		if w_time <= 0.0: white_clock_label.label_settings.font_color = Color("#ff0000")
 		elif w_time < 30.0: white_clock_label.label_settings.font_color = Color("#ff4d4d")
@@ -41,7 +42,7 @@ func _process(_delta: float) -> void:
 		var b_time = max(0, Gamemanager.black_time_left)
 		var b_min = int(b_time) / 60
 		var b_sec = int(b_time) % 60
-		black_clock_label.text = "B: %02d:%02d" % [b_min, b_sec]
+		black_clock_label.text = "TIME: %02d:%02d" % [b_min, b_sec]
 		
 		if b_time <= 0.0: black_clock_label.label_settings.font_color = Color("#ff0000")
 		elif b_time < 30.0: black_clock_label.label_settings.font_color = Color("#ff4d4d")
@@ -49,8 +50,8 @@ func _process(_delta: float) -> void:
 
 func update_score_labels() -> void:
 	if is_instance_valid(white_score_label) and is_instance_valid(black_score_label):
-		white_score_label.text = Gamemanager.format_points(Gamemanager.white_points) + " pts"
-		black_score_label.text = Gamemanager.format_points(Gamemanager.black_points) + " pts"
+		white_score_label.text = Gamemanager.format_points(Gamemanager.white_points) + " PTS"
+		black_score_label.text = Gamemanager.format_points(Gamemanager.black_points) + " PTS"
 
 func add_operation_to_history(rider_color: String, operation_text: String, text_color: Color) -> void:
 	var target = white_history if rider_color == "white" else black_history
@@ -81,23 +82,42 @@ func clear_history() -> void:
 
 func _create_ui_clock() -> Label:
 	var label = Label.new()
-	label.text = "03:00"
+	label.text = "TIME: 03:00"
 	label.process_mode = Node.PROCESS_MODE_ALWAYS
 	var settings = LabelSettings.new()
 	settings.font = load("res://PressStart2P.ttf")
-	settings.font_size = 22
+	settings.font_size = 18 
 	settings.font_color = Color.WHITE
-	settings.outline_size = 5
+	settings.outline_size = 4
 	settings.outline_color = Color.BLACK
 	label.label_settings = settings
 	return label
 
 func _reposition_clocks() -> void:
-	var margin_left = 35.0
-	var base_y = size.y - 120.0
-	if is_instance_valid(white_clock_label):
-		white_clock_label.position = Vector2(margin_left, base_y)
-		white_clock_label.visible = true
-	if is_instance_valid(black_clock_label):
-		black_clock_label.position = Vector2(margin_left, base_y + 40.0)
-		black_clock_label.visible = true
+	var clock_y = size.y - 80.0 
+
+	if Global.total_players == 1:
+		if Global.selected_side == "white":
+			if is_instance_valid(white_score_label) and is_instance_valid(white_clock_label):
+				var center_x = white_score_label.global_position.x + (white_score_label.size.x / 2.0)
+				white_clock_label.position = Vector2(center_x - 70.0, clock_y)
+				white_clock_label.visible = true
+			if is_instance_valid(black_clock_label):
+				black_clock_label.queue_free() 
+		else:
+			if is_instance_valid(black_score_label) and is_instance_valid(black_clock_label):
+				var center_x = black_score_label.global_position.x + (black_score_label.size.x / 2.0)
+				black_clock_label.position = Vector2(center_x - 70.0, clock_y)
+				black_clock_label.visible = true
+			if is_instance_valid(white_clock_label):
+				white_clock_label.queue_free() 
+	else:
+		if is_instance_valid(white_score_label) and is_instance_valid(white_clock_label):
+			var center_x1 = white_score_label.global_position.x + (white_score_label.size.x / 2.0)
+			white_clock_label.position = Vector2(center_x1 - 70.0, clock_y)
+			white_clock_label.visible = true
+			
+		if is_instance_valid(black_score_label) and is_instance_valid(black_clock_label):
+			var center_x2 = black_score_label.global_position.x + (black_score_label.size.x / 2.0)
+			black_clock_label.position = Vector2(center_x2 - 70.0, clock_y)
+			black_clock_label.visible = true
