@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bdge4cfu6fmbs"
+path="res://.godot/imported/riders jump.mp3-a583b55eaec90ecce0cc39d8e27bd208.mp3str"
+
+[deps]
+
+source_file="res://audio/riders jump.mp3"
+dest_files=["res://.godot/imported/riders jump.mp3-a583b55eaec90ecce0cc39d8e27bd208.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

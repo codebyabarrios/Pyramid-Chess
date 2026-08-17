@@ -21,32 +21,32 @@ var board_color_side: String = "white"
 @onready var black_tile_texture = preload("res://Game assets/tile_black.png")
 
 @onready var pawn_scene = preload("res://scenes/pawn/pawn.tscn")
-@onready var white_pawn_tex = "res://scenes/pawn/white_pawn.png"
-@onready var black_pawn_tex = "res://scenes/pawn/black_pawn.png"
+@onready var white_pawn_tex = "res://scenes/pawn/White Pawn.png"
+@onready var black_pawn_tex = "res://scenes/pawn/Black Pawn.png"
 
 @onready var knight_scene = preload("res://scenes/knight/knight.tscn")
-@onready var black_knight_tex = "res://scenes/knight/black_horse.png"
-@onready var white_knight_tex = "res://scenes/knight/white_horse.png"
+@onready var black_knight_tex = "res://scenes/knight/Black Knight.png"
+@onready var white_knight_tex = "res://scenes/knight/White Knight.png"
 
 @onready var bishop_scene = preload("res://scenes/bishop/bishop.tscn")
-@onready var white_bishop_tex = "res://scenes/bishop/white_bishop.png"
-@onready var black_bishop_tex = "res://scenes/bishop/black_bishop.png"
+@onready var white_bishop_tex = "res://scenes/bishop/White Bishop.png"
+@onready var black_bishop_tex = "res://scenes/bishop/Black Bishop.png"
 
 @onready var rook_scene = preload("res://scenes/rook/rook.tscn")
-@onready var white_rook_tex = "res://scenes/rook/white_tower.png"
-@onready var black_rook_tex = "res://scenes/rook/black_tower.png"
+@onready var white_rook_tex = "res://scenes/rook/White Rook.png"
+@onready var black_rook_tex = "res://scenes/rook/Black Rook.png"
 
 @onready var queen_scene = preload("res://scenes/queen/queen.tscn")
-@onready var white_queen_tex = "res://scenes/queen/white_queen.png"
-@onready var black_queen_tex = "res://scenes/queen/black_queen.png"
+@onready var white_queen_tex = "res://scenes/queen/White Queen.png"
+@onready var black_queen_tex = "res://scenes/queen/Black Queen.png"
 
 @onready var king_scene = preload("res://scenes/king/king.tscn")
-@onready var white_king_tex = "res://scenes/king/white_king.png"
-@onready var black_king_tex = "res://scenes/king/black_king.png"
+@onready var white_king_tex = "res://scenes/king/White King.png"
+@onready var black_king_tex = "res://scenes/king/Black King.png"
 
 @onready var main_character_scene = preload("res://scenes/main character/main character.tscn")
-@onready var white_main_character_tex = "res://scenes/main character/white-main_character.png"
-@onready var black_main_character_tex = "res://scenes/main character/black_main_character.png"
+@onready var white_main_character_tex = "res://scenes/main character/White Rider.png"
+@onready var black_main_character_tex = "res://scenes/main character/Black Rider.png"
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_INHERIT

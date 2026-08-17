@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bnb4rjjq6md4y"
+path="res://.godot/imported/Hard music level final.mp3-04b9384d5fb78910350ddc71eadca735.mp3str"
+
+[deps]
+
+source_file="res://audio/Hard music level final.mp3"
+dest_files=["res://.godot/imported/Hard music level final.mp3-04b9384d5fb78910350ddc71eadca735.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

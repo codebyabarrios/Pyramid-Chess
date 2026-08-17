@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c8v60cd8vjo0l"
+path="res://.godot/imported/round finished.mp3-8dc183769e65360fc4ff9783ced9f2d7.mp3str"
+
+[deps]
+
+source_file="res://audio/round finished.mp3"
+dest_files=["res://.godot/imported/round finished.mp3-8dc183769e65360fc4ff9783ced9f2d7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

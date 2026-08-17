@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b42ddwa4yn8dm"]
 
 [ext_resource type="Script" uid="uid://bakbia34mjche" path="res://scenes/queen/queen.gd" id="1_28cf0"]
-[ext_resource type="Texture2D" uid="uid://dmff63cllh765" path="res://scenes/queen/white_queen.png" id="2_1o2r3"]
+[ext_resource type="Texture2D" uid="uid://dip18ta4xn2ru" path="res://scenes/queen/White Queen.png" id="2_28cf0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_28cf0"]
 size = Vector2(22, 21)
@@ -11,7 +11,7 @@ z_index = 2
 script = ExtResource("1_28cf0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1744925915]
-texture = ExtResource("2_1o2r3")
+texture = ExtResource("2_28cf0")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1639577701]
 collision_mask = 0

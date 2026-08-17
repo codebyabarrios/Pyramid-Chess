@@ -46,6 +46,17 @@ func _process(delta):
 	if has_finished or is_frozen:
 		return
 		
+	var rider_color = "white" if is_white else "black"
+	
+	# 🔴 1. DRENAJE PASIVO (El GameManager decide si aplica según la dificultad elegida)
+	Gamemanager.apply_idle_drain(rider_color, delta)
+	
+	# 🔴 2. BLOQUEO DE MOVIMIENTO (Si el jinete está "Stunned" por quedarse sin energía, no lee inputs)
+	if not Gamemanager.can_rider_move(rider_color):
+		buffered_move_direction = Vector2.ZERO
+		is_waiting_for_input = false
+		return
+		
 	var key_pressed_this_frame = false
 	
 	if is_player_one:
@@ -128,6 +139,11 @@ func _process(delta):
 				
 				if allowed_movement:
 					if new_pos_y > min_limit_y and new_pos_y < max_limit_y:
+						
+						# 🔴 3. CONSUMO POR MOVIMIENTO (Avisa al GameManager que el jinete gastó estamina por moverse con éxito)
+						Gamemanager.consume_movement_energy(rider_color)
+						AudioManager.play_jump()
+						
 						if board_node and board_node.has_method("remove_rider_from_matrix"):
 							board_node.remove_rider_from_matrix(self)
 						
@@ -278,6 +294,7 @@ func _damage_piece(piece: Node) -> void:
 		"queen": max_health = 9.0
 	
 	piece.health -= 1
+	AudioManager.play_slash()
 	
 	if piece.health > 0:
 		var life_bar = piece.get_node_or_null("Area2D/VisualLife")
