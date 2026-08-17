@@ -1,15 +1,15 @@
-res://addons/godot_super-wakatime/api_key_prompt.tscn::a6988a5ba43d5aa92a08f216c1db28db::1785900473::res://.godot/exported/133200997/export-cd8705cb5e2533bd79c64579ac674dae-api_key_prompt.scn
-res://addons/godot_super-wakatime/counter.tscn::7f13ad35960e259f6de719f9785ce249::1785900473::res://.godot/exported/133200997/export-4af6c9115c1c285af5925fa1ce6a526e-counter.scn
-res://scenes/bishop/bishop.tscn::ed613bd7cf30b8a2ba59b6b83db594c6::1784177585::res://.godot/exported/133200997/export-eaa98fb626faf2c104950341a361e2e8-bishop.scn
-res://scenes/king/king.tscn::61f882a5e2da5cea944982a2f2bcbf73::1784177585::res://.godot/exported/133200997/export-cf7b196c4b05d69174661f57587d44df-king.scn
-res://scenes/knight/knight.tscn::52fc220537800443f4312c9422b676ea::1785982201::res://.godot/exported/133200997/export-54edfe3bb69f919e06880286f28f0fd3-knight.scn
-res://scenes/main character/main character.tscn::924525072cc25c0cc6c816fd46b4d397::1784844730::res://.godot/exported/133200997/export-84f8c5b42001312c8ed238d6b8983e1e-main character.scn
-res://scenes/pawn/pawn.tscn::852b1e418b079dd185d9f4fa9b8f62f9::1785982201::res://.godot/exported/133200997/export-d9689a97e04fb8303906176ea13d8e4b-pawn.scn
-res://scenes/queen/queen.tscn::1f61b49758bb168ff173628799764c26::1784177585::res://.godot/exported/133200997/export-c874ea00e93031de8ede7d5d9cf7c159-queen.scn
-res://scenes/rook/rook.tscn::9ae3960b28b29857116bebced065f4ef::1785982200::res://.godot/exported/133200997/export-426bfb342fb88fdfe383a0176c76713b-rook.scn
-res://scenes/final_winner_panel.tscn::2e2b36ff5ab4489038fd42a0c52cf589::1785992262::res://.godot/exported/133200997/export-1f295a238b0c6128c88814ff97784571-final_winner_panel.scn
-res://scenes/game_over_panel.tscn::756126283a77d986f61f2a32652b24eb::1785982302::res://.godot/exported/133200997/export-1f7e6e994f3502b5405881e6ac41c70f-game_over_panel.scn
-res://scenes/main.tscn::1968ea8226a01f06abb5c2ff1df61786::1785991016::res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
+res://addons/godot_super-wakatime/api_key_prompt.tscn::a6988a5ba43d5aa92a08f216c1db28db::1786307961::res://.godot/exported/133200997/export-cd8705cb5e2533bd79c64579ac674dae-api_key_prompt.scn
+res://addons/godot_super-wakatime/counter.tscn::7f13ad35960e259f6de719f9785ce249::1786307961::res://.godot/exported/133200997/export-4af6c9115c1c285af5925fa1ce6a526e-counter.scn
+res://scenes/bishop/bishop.tscn::346ab5b1fa06261449692e20e94aa8d8::1786946333::res://.godot/exported/133200997/export-eaa98fb626faf2c104950341a361e2e8-bishop.scn
+res://scenes/king/king.tscn::c101a4012aa0a7dd62d49b602529574d::1786946333::res://.godot/exported/133200997/export-cf7b196c4b05d69174661f57587d44df-king.scn
+res://scenes/knight/knight.tscn::fbb8b23b6279291a5e4f288a1ef94cf6::1786946333::res://.godot/exported/133200997/export-54edfe3bb69f919e06880286f28f0fd3-knight.scn
+res://scenes/main character/main character.tscn::bb516d0409bdcf51c27e3ca8ed887db0::1786939826::res://.godot/exported/133200997/export-84f8c5b42001312c8ed238d6b8983e1e-main character.scn
+res://scenes/pawn/pawn.tscn::7ab55a67eb29f238601db9cfa0292e34::1786661350::res://.godot/exported/133200997/export-d9689a97e04fb8303906176ea13d8e4b-pawn.scn
+res://scenes/queen/queen.tscn::fcc18687cba339f89eaec17c6aef2305::1786953359::res://.godot/exported/133200997/export-c874ea00e93031de8ede7d5d9cf7c159-queen.scn
+res://scenes/rook/rook.tscn::732975a875ffb21ee23bc26d98dde45e::1786946333::res://.godot/exported/133200997/export-426bfb342fb88fdfe383a0176c76713b-rook.scn
+res://scenes/final_winner_panel.tscn::f0f190606d6570de987e20957976d045::1786063319::res://.godot/exported/133200997/export-1f295a238b0c6128c88814ff97784571-final_winner_panel.scn
+res://scenes/game_over_panel.tscn::179e860ba697a2ada2fa2b966feda880::1786244241::res://.godot/exported/133200997/export-1f7e6e994f3502b5405881e6ac41c70f-game_over_panel.scn
+res://scenes/main.tscn::46f9e7d73adc631beff60a8f82a794b8::1786246303::res://.godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn
 res://board_2d.tscn::8790b9e59ae1ceba94bd2d8778a5d7b3::1783741650::res://.godot/exported/133200997/export-ffc9f8113f5d36ebcaba446f78f54d10-board_2d.scn
 res://FloatingText.tscn::ffaea0879f44206e6216d54a2db4fcd0::1783974183::res://.godot/exported/133200997/export-90b0b00a1b6b155e7a219f01b14c116d-FloatingText.scn
 res://MainMenu.tscn::cae567f068135ccb6d8f384fa94885c1::1785118474::res://.godot/exported/133200997/export-e20540a8a37e906f11cb1dae59cc6ed4-MainMenu.scn
