@@ -523,7 +523,7 @@ func _spawn_floating_text(text_to_display: String, visual_color: Color, rider_co
 	tween.tween_property(text_nodo, "global_position:y", text_nodo.global_position.y - 60, 0.8)
 	tween.tween_property(text_nodo, "modulate:a", 0.0, 0.8)
 	tween.chain().tween_callback(text_nodo.queue_free)
-
+	
 func format_points(points: float) -> String:
 	if is_nan(points) or points < 0.0: return "0"
 	if is_inf(points): return "MAX"

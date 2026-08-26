@@ -263,4 +263,18 @@ func play_round_countdown(board_index: int) -> void:
 			
 			score_interface.set_process(true)
 		)
-		
+
+func move_to_board(board_index: int) -> void:
+	var target_pos = Vector2.ZERO
+	if board_index == 2:
+		target_pos = Vector2(762.0, 310.0)
+	elif board_index == 3:
+		target_pos = Vector2(1272.0, 310.0)
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	
+	tween.tween_property(self, "global_position", target_pos, 1.5)
+	
+	tween.tween_callback(func(): play_round_countdown(board_index))
