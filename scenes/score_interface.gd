@@ -78,13 +78,11 @@ func _process(delta: float) -> void:
 		elif b_time < 30.0: black_clock_label.label_settings.font_color = Color("#ff4d4d")
 		else: black_clock_label.label_settings.font_color = Color("#ffd700")
 
-	# Animación fluida de las barras
 	smooth_white_energy = lerpf(smooth_white_energy, Gamemanager.white_energy, delta * 6.0)
 	smooth_black_energy = lerpf(smooth_black_energy, Gamemanager.black_energy, delta * 6.0)
 	
 	if is_instance_valid(white_energy_bar): 
 		white_energy_bar.value = smooth_white_energy
-		# 🔴 EFECTO VISUAL: Si está en Frenesí, la barra parpadea en modo dorado/brillante
 		if Global.difficulty == "easy" and Gamemanager.white_is_frenzy:
 			var fg = white_energy_bar.get_theme_stylebox("fill")
 			if fg:
@@ -99,7 +97,6 @@ func _process(delta: float) -> void:
 				var pulse = (sin(Time.get_ticks_msec() * 0.02) + 1.0) / 2.0
 				fg.bg_color = Color("#ffd700").lerp(Color("#ffffff"), pulse)
 
-	# Sistema de Notificaciones Inteligentes
 	_check_status_popups("white", Gamemanager.white_is_frenzy, Gamemanager.white_is_stunned, Gamemanager.white_energy, prev_w_frenzy, prev_w_stun, prev_w_energy)
 	_check_status_popups("black", Gamemanager.black_is_frenzy, Gamemanager.black_is_stunned, Gamemanager.black_energy, prev_b_frenzy, prev_b_stun, prev_b_energy)
 	
@@ -116,7 +113,6 @@ func _check_status_popups(side: String, is_frenzy: bool, is_stunned: bool, curre
 	
 	if diff == "easy":
 		if is_frenzy and not p_frenzy:
-			# 🔴 Mensaje ultra claro y llamativo informando el beneficio del multiplicador x2
 			_show_ui_popup("⚡ FRENZY ACTIVE! (2X PTS) ⚡", side, Color("#ffd700"))
 			
 	elif diff in ["medium", "hard"]:
@@ -136,7 +132,7 @@ func _show_ui_popup(msg: String, side: String, color: Color):
 	
 	var settings = LabelSettings.new()
 	settings.font = load("res://PressStart2P.ttf")
-	settings.font_size = 12 # Tamaño compacto ideal para que entre perfecto
+	settings.font_size = 12
 	settings.font_color = color
 	settings.outline_size = 4
 	settings.outline_color = Color.BLACK

@@ -1,17 +1,18 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1787702581
+::res://::1788020755
 ARCADECLASSIC.TTF::FontFile::3704573761839533179::1783895211::1785703809::1::::<><><>0<>0<>49b05b8bd7e4fc7cab7a13ab3a5e139f<>res://.godot/imported/ARCADECLASSIC.TTF-4aef9f254f11210c6b95362e3ee1751d.fontdata::
 AudioManager.gd::GDScript::8791802346638091956::1786953230::0::1::::<>Node<><>0<>0<><>::
 background_mosaic.png::CompressedTexture2D::3616278710867777593::1783729440::1785703809::1::::<><><>0<>0<>f9bf5e50be96940baddf2402c5aa545a<>res://.godot/imported/background_mosaic.png-ae748b1ec936ec284403e6f5a06fb63d.ctex::
 board_2d.tscn::PackedScene::5345570941739636764::1783741650::0::1::::<><><>0<>0<><>::uid://bpl6edmlvlpo1::::res://scenes/board.gd
-export_presets.cfg::TextFile::-1::1786954022::0::1::::<><><>0<>0<><>::
+export_presets.cfg::TextFile::-1::1787703576::0::1::::<><><>0<>0<><>::
 FloatingText.tscn::PackedScene::6224347219124777623::1783974183::0::1::::<><><>0<>0<><>::uid://b4rium32iel1i::::res://floating_text.gd<>uid://cw110uaky2h3e::::res://PressStart2P.ttf
 floating_text.gd::GDScript::4457513697607629352::1784772907::0::1::::<>Node2D<><>0<>0<><>::
-gamemanager.gd::GDScript::898665472287419826::1786953474::0::1::::<>Node<><>0<>0<><>::
-Global.gd::GDScript::1078787049191613963::1786755378::0::1::::<>Node<><>0<>0<><>::
+gamemanager.gd::GDScript::898665472287419826::1787875274::0::1::::<>Node<><>0<>0<><>::
+Global.gd::GDScript::1078787049191613963::1787760955::0::1::::<>Node<><>0<>0<><>::
 icon.svg::CompressedTexture2D::273730838333825194::1781649852::1785703809::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+Lightbulb.gd::GDScript::6698138465297017111::1787854241::0::1::::Lightbulb<>Area2D<><>0<>0<><>::
 MainMenu.tscn::PackedScene::1194549935003852262::1785118474::0::1::::<><><>0<>0<><>::uid://cax4flmuaghpn::::res://main_menu.gd<>uid://cikppdcbhcu68::::res://Game assets/background_mosaic.png<>uid://bs1r12vvjfutn::::res://ARCADECLASSIC.TTF<>uid://ddrqaayd8ok8m::::res://upheavtt.ttf<>uid://cw110uaky2h3e::::res://PressStart2P.ttf
-main_menu.gd::GDScript::4822092374692786391::1786942635::0::1::::<>Control<><>0<>0<><>::
+main_menu.gd::GDScript::4822092374692786391::1787760955::0::1::::<>Control<><>0<>0<><>::
 PressStart2P.ttf::FontFile::6372294086642518640::1783730435::1785703808::1::::<><><>0<>0<>04eb4d1150e1af30ec56000b1f148d31<>res://.godot/imported/PressStart2P.ttf-01b421b2059bc9d11e989c6910b33153.fontdata::
 README.md::TextFile::-1::1783892864::0::1::::<><><>0<>0<><>::
 upheavtt.ttf::FontFile::7405894512952954230::1783895743::1785703809::1::::<><><>0<>0<>574fff184e3bf67d82346ded4c022528<>res://.godot/imported/upheavtt.ttf-f6aa07cc53649615f14486efb10334aa.fontdata::
@@ -42,7 +43,7 @@ training mode.mp3::AudioStreamMP3::4492739283034702657::1786935709::1786938707::
 background_mosaic.png::CompressedTexture2D::5355933596545681199::1783729086::1785703809::1::::<><><>0<>0<>840a46dc33c9a327a9e47b2daf9b92ed<>res://.godot/imported/background_mosaic.png-bcda9956d160a385dd5b87ee5fbd5700.ctex::
 tile_black.png::CompressedTexture2D::6538759681154585038::1781738613::1785703809::1::::<><><>0<>0<>76844e133958caa8beeb5e257b5e8bb6<>res://.godot/imported/tile_black.png-67a675e132c22aec5129a167d4a31f43.ctex::
 tile_white.png::CompressedTexture2D::8425885692914577517::1781729731::1785703809::1::::<><><>0<>0<>04dd284c24f4a3c62eec57e540ffe93f<>res://.godot/imported/tile_white.png-2ab5065b87597175b4cbf61be9115666.ctex::
-::res://index.html/::1786954019
+::res://index.html/::1787703574
 ::res://index.html/Exportacion Web 3/::1785703809
 index.apple-touch-icon.png::CompressedTexture2D::8442279362181889514::1783547556::1785703809::1::::<><><>0<>0<>08b793868b93173968215368dd708191<>res://.godot/imported/index.apple-touch-icon.png-c7413f78e900331adb09c73f929ef497.ctex::
 index.icon.png::CompressedTexture2D::2595035363107436594::1783547556::1785703809::1::::<><><>0<>0<>732695c9e492a0bbdb23252ef1577452<>res://.godot/imported/index.icon.png-432d7ba6a9d60a1a8f893ebe8e24b62c.ctex::
@@ -115,6 +116,10 @@ index.png::CompressedTexture2D::2958366623790141503::1785992527::1786050144::1::
 index.apple-touch-icon.png::CompressedTexture2D::3976616924357050928::1786954021::1787604771::1::::<><><>0<>0<>2eaff1a12be1a1f586fcb03682cf3b77<>res://.godot/imported/index.apple-touch-icon.png-5633fe5a848c3374b7d55f3683b64285.ctex::
 index.icon.png::CompressedTexture2D::4666190082426641870::1786954021::1787604771::1::::<><><>0<>0<>223d96c72f83801daee7d4a3111cb6c6<>res://.godot/imported/index.icon.png-9788da200a99669db9cc2a652cddb2e3.ctex::
 index.png::CompressedTexture2D::5469587445304158791::1786954021::1787604771::1::::<><><>0<>0<>756d822a10bc7640b38d3bd681a694fb<>res://.godot/imported/index.png-f69d3b87f49ec960ec159e166c241626.ctex::
+::res://index.html/Exportacion Web 21/::1787778254
+index.apple-touch-icon.png::CompressedTexture2D::1757574836520487507::1787703576::1787703907::1::::<><><>0<>0<>6ed1acf124a8041fe966069942aa52bc<>res://.godot/imported/index.apple-touch-icon.png-06ba083bb26cbe5358221ce9d185df93.ctex::
+index.icon.png::CompressedTexture2D::378269924365076802::1787703576::1787703907::1::::<><><>0<>0<>1687e985a3497238b55f693c371b5e37<>res://.godot/imported/index.icon.png-921e5fc2f8c1116b54dfaf73230e3cbf.ctex::
+index.png::CompressedTexture2D::5678151723674879818::1787703576::1787703907::1::::<><><>0<>0<>3f442b0ddd61636632c1d4d04bbcca87<>res://.godot/imported/index.png-986f245d003e4fea932df5765022029d.ctex::
 ::res://index.html/ExportacionWeb/::1785703809
 index.apple-touch-icon.png::CompressedTexture2D::6166282414509085088::1783196694::1785703809::1::::<><><>0<>0<>2c14488ae5e215546d3e801bb30a7ea2<>res://.godot/imported/index.apple-touch-icon.png-38772f6cceb806a486488088174fb8a1.ctex::
 index.icon.png::CompressedTexture2D::4053130624343968319::1783196694::1785703809::1::::<><><>0<>0<>b26e7338a850ff474c8072b28ded82bd<>res://.godot/imported/index.icon.png-26c790a5ce6bf8d8431262906ceb6e02.ctex::
@@ -123,7 +128,7 @@ index.png::CompressedTexture2D::5992327802549035139::1783196694::1785703809::1::
 index.apple-touch-icon.png::CompressedTexture2D::4317840576328868892::1783373641::1785703809::1::::<><><>0<>0<>c0b7e6fa687476b1c47b97a6f816bff5<>res://.godot/imported/index.apple-touch-icon.png-4c9bea7fa33fa5bbd186dba0944b5af0.ctex::
 index.icon.png::CompressedTexture2D::2343987226212015929::1783373641::1785703809::1::::<><><>0<>0<>7419ea0a62de61d4f1a80b508934fdc4<>res://.godot/imported/index.icon.png-b2947b158ac19b950244b3ec1bd60a85.ctex::
 index.png::CompressedTexture2D::8337448504823278501::1783373641::1785703809::1::::<><><>0<>0<>1a2f514492586fee88ba6b22621bccbe<>res://.godot/imported/index.png-5436a4f5857555a17a01c5e6bdbb5c35.ctex::
-::res://scenes/::1787617967
+::res://scenes/::1787794323
 board.gd::GDScript::3463851040145630650::1786953359::0::1::::<>Node2D<><>0<>0<><>::
 board_2d_2.gd::GDScript::7117365213206585273::1784580052::0::1::::<>Node2D<><>0<>0<><>::
 board_2d_3.gd::GDScript::6254954612955906042::1784580052::0::1::::<>Node2D<><>0<>0<><>::
@@ -134,7 +139,7 @@ game_over_panel.gd::GDScript::2067727563753851713::1786328352::0::1::::<>CanvasL
 game_over_panel.tscn::PackedScene::2648850829767403165::1786244241::0::1::::<><><>0<>0<><>::uid://4pvf2sec1wsv::::res://scenes/game_over_panel.gd<>uid://ddrqaayd8ok8m::::res://upheavtt.ttf
 main.gd::GDScript::5563624347564721042::1784942969::0::1::::<>Node2D<><>0<>0<><>::
 main.tscn::PackedScene::946813486243275826::1786246303::0::1::::<><><>0<>0<><>::uid://cifo1i558nk3e::::res://board_2d.tscn<>uid://brr0t123mr6jd::::res://background_mosaic.png<>uid://dm7cwttgoiago::::res://scenes/score_interface.gd<>uid://dyqkvbg1r65b6::::res://scenes/camera_2d.gd<>uid://cw110uaky2h3e::::res://PressStart2P.ttf<>uid://bs1r12vvjfutn::::res://ARCADECLASSIC.TTF<>uid://bd0eglhac18dd::::res://scenes/game_over_panel.tscn<>uid://ddfrfpibnqrat::::res://scenes/final_winner_panel.tscn
-score_interface.gd::GDScript::8067750011903617786::1786931195::0::1::::<>Control<><>0<>0<><>::
+score_interface.gd::GDScript::8067750011903617786::1787794323::0::1::::<>Control<><>0<>0<><>::
 ::res://scenes/bishop/::1786946333
 bishop.gd::GDScript::2473326628692851384::1784248428::0::1::::<>Node2D<><>0<>0<><>::
 bishop.tscn::PackedScene::6568724864599697914::1786946333::0::1::::<><><>0<>0<><>::uid://bbidlfoih354w::::res://scenes/bishop/bishop.gd<>uid://dg0qr82aigfvm::::res://scenes/bishop/White Bishop.png
@@ -150,10 +155,10 @@ Black Knight.png::CompressedTexture2D::1079616192057837501::1786714538::17869461
 knight.gd::GDScript::5465755528813056783::1784248428::0::1::::<>Node2D<><>0<>0<><>::
 knight.tscn::PackedScene::7093989754363643310::1786946333::0::1::::<><><>0<>0<><>::uid://cj4wgvondgprr::::res://scenes/knight/knight.gd<>uid://dmrkbofouyfs7::::res://scenes/knight/White Knight.png
 White Knight.png::CompressedTexture2D::8037232295990973976::1786687181::1786946181::1::::<><><>0<>0<>a5367dc5b2c0031df8411b4ba5b98f81<>res://.godot/imported/White Knight.png-e4033995894c02d50d110ba48dacbeee.ctex::
-::res://scenes/main character/::1786939827
+::res://scenes/main character/::1787874892
 Black Rider.png::CompressedTexture2D::4008897354821103836::1786652112::1786661125::1::::<><><>0<>0<>2dfc5003a72f124b3a25d346e203249a<>res://.godot/imported/Black Rider.png-a801fd6e046f485471b5bd0427f837af.ctex::
 main character.tscn::PackedScene::6179730098071991820::1786939826::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://wrfncl1r6jgs::::res://scenes/main character/White Rider.png
-main_character.gd::GDScript::4035469817133263474::1786939827::0::1::::<>Node2D<><>0<>0<><>::
+main_character.gd::GDScript::4035469817133263474::1787874892::0::1::::<>Node2D<><>0<>0<><>::
 White Rider.png::CompressedTexture2D::1579575905385141258::1786651499::1786661119::1::::<><><>0<>0<>6d272829e07d369d1fcc50511225c1e8<>res://.godot/imported/White Rider.png-3d40d8f5308e283751bf421f2267aa19.ctex::
 ::res://scenes/pawn/::1786661350
 Black Pawn.png::CompressedTexture2D::6042330331643786216::1786134657::1786661142::1::::<><><>0<>0<>a74946be619518840095fa390a485a20<>res://.godot/imported/Black Pawn.png-b0d2a28f43d654f6aa595094e4bce5ae.ctex::

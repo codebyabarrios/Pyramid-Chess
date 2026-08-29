@@ -222,6 +222,22 @@ func _build_time_selection_ui():
 	_add_time_button(grid, "10 MIN", "RAPID", 600.0, 0.0, Color("#00ff00"))
 	_add_time_button(grid, "30 MIN", "CLASSIC", 1800.0, 0.0, Color("#00ffff"))
 	
+	var dark_mode_btn = CheckButton.new()
+	dark_mode_btn.text = "DARK MODE"
+	dark_mode_btn.button_pressed = Global.is_dark_mode_active
+	var dm_settings = LabelSettings.new()
+	dm_settings.font = load("res://PressStart2P.ttf")
+	
+	var temp_label = Label.new()
+	temp_label.label_settings = dm_settings
+	dark_mode_btn.add_theme_font_override("font", temp_label.label_settings.font)
+	dark_mode_btn.add_theme_font_size_override("font_size", 18)
+	
+	dark_mode_btn.toggled.connect(func(toggled_on: bool):
+		Global.is_dark_mode_active = toggled_on
+	)
+	vbox.add_child(dark_mode_btn)
+	
 	var back_btn = Button.new()
 	back_btn.text = "BACK"
 	back_btn.custom_minimum_size = Vector2(160, 40)

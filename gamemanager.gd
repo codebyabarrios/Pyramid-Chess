@@ -17,12 +17,12 @@ var black_frenzy_timer: float = 0.0
 
 var white_is_stunned: bool = false
 var black_is_stunned: bool = false
-var stun_duration: float = 2.0 
+var stun_duration: float = 2.0
 var white_stun_timer: float = 0.0
 var black_stun_timer: float = 0.0
 
-var tiempo_inicial_seleccionado: float = 180.0 
-var incremento_seleccionado: float = 0.0 
+var tiempo_inicial_seleccionado: float = 180.0
+var incremento_seleccionado: float = 0.0
 
 var active_game: bool = false
 var current_board: int = 1
@@ -33,7 +33,7 @@ var _tiempo_real_negras: float = 180.0
 
 var white_time_left: float:
 	get: return _tiempo_real_blancas
-	set(_val): pass 
+	set(_val): pass
 
 var black_time_left: float:
 	get: return _tiempo_real_negras
@@ -49,63 +49,49 @@ var is_game_over_triggered: bool = false
 var total_points_p1: float = 0.0
 var total_points_p2: float = 0.0
 var rounds_won_p1: int = 0
-var rounds_won_p2: int = 0	
+var rounds_won_p2: int = 0
 var best_time_p1: float = 0.0
 var best_time_p2: float = 0.0
 
 var _timer_acumulador: float = 0.0
-var _training_music_started: bool = false 
+var _training_music_started: bool = false
+var _dark_mode_setup_done: bool = false
 
 func _ready() -> void:
 	if get_parent() != get_tree().root:
 		queue_free()
 		return
-		
 	for child in get_children():
-		if child is Timer:
-			child.queue_free()
+		if child is Timer: child.queue_free()
 	_reset_energy_by_difficulty()
 
 func _process(delta: float) -> void:
-	if active_game and not _training_music_started:
-		_training_music_started = true
-		
-		if Global.difficulty == "easy":
-			AudioManager.play_easy()
-		elif Global.difficulty == "medium":
-			AudioManager.play_medium()
-		elif Global.difficulty == "hard":
-			AudioManager.play_hard()
-		else:
-			AudioManager.play_training()
-
+	if active_game and not _dark_mode_setup_done:
+		_setup_dark_mode()
+		_dark_mode_setup_done = true
+	
+	_process_dark_mode(delta)
+	
 	if not active_game or is_game_over_triggered:
 		_timer_acumulador = 0.0
 		return
-		
+	
 	_process_energy_timers(delta)
-		
+	
 	_timer_acumulador += delta
 	if _timer_acumulador >= 1.0:
-		_timer_acumulador -= 1.0 
-		
+		_timer_acumulador -= 1.0
 		var time_ended = false
 		if white_clock_active and _tiempo_real_blancas > 0:
 			_tiempo_real_blancas -= 1.0
 			if _tiempo_real_blancas <= 0:
-				_tiempo_real_blancas = 0
-				white_clock_active = false
-				time_ended = true
-
+				_tiempo_real_blancas = 0; white_clock_active = false; time_ended = true
 		if black_clock_active and _tiempo_real_negras > 0:
 			_tiempo_real_negras -= 1.0
 			if _tiempo_real_negras <= 0:
-				_tiempo_real_negras = 0
-				black_clock_active = false
-				time_ended = true
-
-		if time_ended and not is_game_over_triggered:
-			_time_ran_out()
+				_tiempo_real_negras = 0; black_clock_active = false; time_ended = true
+		
+		if time_ended and not is_game_over_triggered: _time_ran_out()
 
 func _process_energy_timers(delta: float):
 	if Global.difficulty == "medium":
@@ -114,33 +100,25 @@ func _process_energy_timers(delta: float):
 	
 	if white_is_frenzy:
 		white_frenzy_timer -= delta
-		if white_frenzy_timer <= 0:
-			white_is_frenzy = false
-			white_energy = 0.0 
+		if white_frenzy_timer <= 0: white_is_frenzy = false; white_energy = 0.0
 	
 	if black_is_frenzy:
 		black_frenzy_timer -= delta
-		if black_frenzy_timer <= 0:
-			black_is_frenzy = false
-			black_energy = 0.0
-			
+		if black_frenzy_timer <= 0: black_is_frenzy = false; black_energy = 0.0
+	
 	if white_is_stunned:
 		white_stun_timer -= delta
-		if white_stun_timer <= 0:
-			white_is_stunned = false
-			white_energy = max_energy if Global.difficulty != "easy" else 0.0
-			
+		if white_stun_timer <= 0: white_is_stunned = false; white_energy = max_energy if Global.difficulty != "easy" else 0.0
+	
 	if black_is_stunned:
 		black_stun_timer -= delta
-		if black_stun_timer <= 0:
-			black_is_stunned = false
-			black_energy = max_energy if Global.difficulty != "easy" else 0.0
+		if black_stun_timer <= 0: black_is_stunned = false; black_energy = max_energy if Global.difficulty != "easy" else 0.0
 
 func _time_ran_out() -> void:
 	if is_game_over_triggered: return
 	is_game_over_triggered = true
 	active_game = false
-	AudioManager.play_round_finish() 
+	AudioManager.play_round_finish()
 	AudioManager.stop_music()
 	
 	for i in range(1, 4):
@@ -155,16 +133,14 @@ func _time_ran_out() -> void:
 	
 	if _tiempo_real_blancas > best_time_p1: best_time_p1 = _tiempo_real_blancas
 	if _tiempo_real_negras > best_time_p2: best_time_p2 = _tiempo_real_negras
-	
 	total_points_p1 += white_points
 	total_points_p2 += black_points
-	
 	_trigger_panel_display("Time Out!")
 
 func process_capture(piece_type: String, same_color: bool, rider_color: String, _rider_node: Node2D = null):
 	if rider_color == "white": _tiempo_real_blancas += incremento_seleccionado
 	else: _tiempo_real_negras += incremento_seleccionado
-
+	
 	var old_points: float = white_points if rider_color == "white" else black_points
 	var current_points: float = old_points
 	var text_to_display: String = ""
@@ -174,42 +150,30 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 	match piece_type:
 		"pawn":
 			energy_gain = 10.0
-			if not same_color: 
-				current_points += 1; text_to_display = "+1"; visual_color = Color("#00ff00")
-			else:
-				current_points -= 1; text_to_display = "-1"; visual_color = Color("#ff4d4d")
+			if not same_color: current_points += 1; text_to_display = "+1"; visual_color = Color("#00ff00")
+			else: current_points -= 1; text_to_display = "-1"; visual_color = Color("#ff4d4d")
 		"knight":
 			energy_gain = 20.0
-			if not same_color:
-				current_points *= 2; text_to_display = "x2"; visual_color = Color("#00ffff")
-			else:
-				current_points /= 2; text_to_display = "÷2"; visual_color = Color("#ff4d4d") 
+			if not same_color: current_points *= 2; text_to_display = "x2"; visual_color = Color("#00ffff")
+			else: current_points /= 2; text_to_display = "÷2"; visual_color = Color("#ff4d4d")
 		"bishop":
 			energy_gain = 30.0
-			if not same_color:
-				current_points *= 3; text_to_display = "x3"; visual_color = Color("#e2925b")
-			else:
-				current_points /= 3; text_to_display = "÷3"; visual_color = Color("#ff4d4d")
+			if not same_color: current_points *= 3; text_to_display = "x3"; visual_color = Color("#e2925b")
+			else: current_points /= 3; text_to_display = "÷3"; visual_color = Color("#ff4d4d")
 		"rook":
 			energy_gain = 40.0
-			if not same_color:
-				current_points = pow(current_points, 2); text_to_display = "X²"; visual_color = Color("#ffd700")
-			else:
-				current_points = sqrt(current_points); text_to_display = "√"; visual_color = Color("#ff00ff")
+			if not same_color: current_points = pow(current_points, 2); text_to_display = "X²"; visual_color = Color("#ffd700")
+			else: current_points = sqrt(current_points); text_to_display = "√"; visual_color = Color("#ff00ff") 
 		"queen":
 			energy_gain = 50.0
-			if not same_color:
-				current_points = pow(current_points, 3); text_to_display = "X³"; visual_color = Color("#ffd700")
-			else:
-				current_points = pow(current_points, 1.0 / 3.0); text_to_display = "³√"; visual_color = Color("#ff00ff")
+			if not same_color: current_points = pow(current_points, 3); text_to_display = "X³"; visual_color = Color("#ffd700")
+			else: current_points = pow(current_points, 1.0 / 3.0); text_to_display = "³√"; visual_color = Color("#ff00ff")
 		"king":
 			if not same_color:
 				if is_changing_board or is_game_over_triggered: return
 				current_points += 100; text_to_display = "FINISH!"; visual_color = Color("#ffd700")
-				if rider_color == "white":
-					white_points = current_points; white_clock_active = false
-				else:
-					black_points = current_points; black_clock_active = false
+				if rider_color == "white": white_points = current_points; white_clock_active = false
+				else: black_points = current_points; black_clock_active = false
 				
 				kings_captured_this_round += 1
 				var required_captures = 1 if Global.total_players == 1 else 2
@@ -218,7 +182,7 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 					kings_captured_this_round = 0
 					is_game_over_triggered = true
 					active_game = false
-					AudioManager.play_round_finish() 
+					AudioManager.play_round_finish()
 					AudioManager.stop_music()
 					total_points_p1 += white_points
 					total_points_p2 += black_points
@@ -238,48 +202,44 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 					
 					_trigger_panel_display("Kings Captured")
 					return
-
+	
 	if not same_color and piece_type != "king":
-		AudioManager.play_killed() 
+		AudioManager.play_killed()
 		if Global.difficulty == "easy": _add_energy(rider_color, energy_gain)
-		elif Global.difficulty == "medium": _add_energy(rider_color, energy_gain * 0.5) 
+		elif Global.difficulty == "medium": _add_energy(rider_color, energy_gain * 0.5)
 		elif Global.difficulty == "hard": _add_energy(rider_color, energy_gain * 0.8)
-
+		
 		var multiplier = 1.0
 		if rider_color == "white" and white_is_frenzy: multiplier = 2.0
 		elif rider_color == "black" and black_is_frenzy: multiplier = 2.0
-		
 		if multiplier > 1.0:
 			var point_diff = current_points - old_points
 			if point_diff > 0:
 				current_points = old_points + (point_diff * multiplier)
 				text_to_display += " (x2)"
 				visual_color = Color("#00ffff")
-
+	
 	if current_points < 0: current_points = 0.0
 	if rider_color == "white": white_points = current_points
 	else: black_points = current_points
 	
 	if same_color:
-		AudioManager.play_error() 
+		AudioManager.play_error()
 		if rider_color == "white": white_health -= 1
 		else: black_health -= 1
 		
 		var s_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
-		if s_interface and s_interface.has_method("update_hearts"):
-			s_interface.update_hearts()
-			
+		if s_interface and s_interface.has_method("update_hearts"): s_interface.update_hearts()
+		
 		if white_health <= 0 or black_health <= 0:
 			is_game_over_triggered = true
 			active_game = false
-			AudioManager.play_game_over() 
+			AudioManager.play_game_over()
 			
 			if white_health <= 0: rounds_won_p2 += 1
 			else: rounds_won_p1 += 1
 			
-			total_points_p1 += white_points
-			total_points_p2 += black_points
-			
+			total_points_p1 += white_points; total_points_p2 += black_points
 			if _tiempo_real_blancas > best_time_p1: best_time_p1 = _tiempo_real_blancas
 			if _tiempo_real_negras > best_time_p2: best_time_p2 = _tiempo_real_negras
 			
@@ -290,7 +250,7 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 			var loser_name = "Player 1" if white_health <= 0 else "Player 2"
 			_trigger_panel_display(loser_name + " Died!")
 			return
-
+	
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 	if score_interface and score_interface.has_method("update_score_labels"):
 		score_interface.update_score_labels()
@@ -301,138 +261,93 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 	
 	if text_to_display != "": _spawn_floating_text(text_to_display, visual_color, rider_color)
 
-
 func can_rider_move(rider_color: String) -> bool:
 	if rider_color == "white": return not white_is_stunned
 	return not black_is_stunned
 
 func consume_movement_energy(rider_color: String):
-	if Global.difficulty == "medium":
-		_add_energy(rider_color, -15.0) 
-	elif Global.difficulty == "hard":
-		_add_energy(rider_color, 4.0) 
+	if Global.difficulty == "medium": _add_energy(rider_color, -15.0)
+	elif Global.difficulty == "hard": _add_energy(rider_color, 4.0)
 
 func apply_idle_drain(rider_color: String, delta: float):
-	if Global.difficulty == "hard":
-		_add_energy(rider_color, -25.0 * delta) 
+	if Global.difficulty == "hard": _add_energy(rider_color, -25.0 * delta)
 
 func _add_energy(rider_color: String, amount: float):
 	if rider_color == "white":
 		if white_is_frenzy: return
 		white_energy = clamp(white_energy + amount, 0.0, max_energy)
-		
 		if white_energy >= max_energy and Global.difficulty == "easy":
-			white_is_frenzy = true
-			white_frenzy_timer = frenzy_duration
-			_spawn_floating_text("FRENZY!", Color("#00ffff"), "white")
-			
+			white_is_frenzy = true; white_frenzy_timer = frenzy_duration
+			_spawn_floating_text("FREMZY!", Color("#00ffff"), "white")
 		elif white_energy <= 0.0 and Global.difficulty in ["medium", "hard"] and not white_is_stunned:
-			white_is_stunned = true
-			white_stun_timer = stun_duration
+			white_is_stunned = true; white_stun_timer = stun_duration
 			_spawn_floating_text("STUNNED!", Color("#ff0000"), "white")
 	else:
 		if black_is_frenzy: return
 		black_energy = clamp(black_energy + amount, 0.0, max_energy)
-		
 		if black_energy >= max_energy and Global.difficulty == "easy":
-			black_is_frenzy = true
-			black_frenzy_timer = frenzy_duration
+			black_is_frenzy = true; black_frenzy_timer = frenzy_duration
 			_spawn_floating_text("FRENZY!", Color("#ff9900"), "black")
-			
 		elif black_energy <= 0.0 and Global.difficulty in ["medium", "hard"] and not black_is_stunned:
-			black_is_stunned = true
-			black_stun_timer = stun_duration
+			black_is_stunned = true; black_stun_timer = stun_duration
 			_spawn_floating_text("STUNNED!", Color("#ff0000"), "black")
 
 func _trigger_panel_display(reason: String):
 	var main_scene = get_tree().current_scene
 	var panel = main_scene.find_child("*GameOverPan*", true, false)
-	
 	if panel != null:
 		var winner_text = "Tiebreak Victory!"
 		if white_points > black_points: winner_text = "Winner: White (By Points)"
 		elif black_points > white_points: winner_text = "Winner: Black (By Points)"
-		
 		if white_health <= 0: winner_text = "Winner: Black (Last Stand)"
 		elif black_health <= 0: winner_text = "Winner: White (Last Stand)"
-		
-		var stats = {
-			"points_j1": white_points, "points_j2": black_points,
-			"time_j1": _tiempo_real_blancas, "time_j2": _tiempo_real_negras,
-			"current_board": current_board
-		}
-		
+		var stats = { "points_j1": white_points, "points_j2": black_points, "time_j1": _tiempo_real_blancas, "time_j2": _tiempo_real_negras, "current_board": current_board }
 		panel.process_mode = Node.PROCESS_MODE_ALWAYS
 		panel.visible = true
-		if panel.has_method("show_game_over"):
-			panel.show_game_over(winner_text, reason, stats)
+		if panel.has_method("show_game_over"): panel.show_game_over(winner_text, reason, stats)
 	get_tree().paused = true
 
 func _on_next_round_pressed() -> void:
 	get_tree().paused = false
-	
 	var main_scene = get_tree().current_scene
 	var panel = main_scene.find_child("*GameOverPan*", true, false)
-	if panel != null:
-		panel.hide()
+	if panel != null: panel.hide()
 	
 	if current_board >= MAX_BOARDS:
-		AudioManager.play_final_round() 
+		AudioManager.play_final_round()
 		var final_panel = main_scene.find_child("*FinalWinnerPan*", true, false)
 		if final_panel:
-			final_panel.process_mode = Node.PROCESS_MODE_ALWAYS
-			final_panel.visible = true
-			if final_panel.has_method("show_final_stats"):
-				final_panel.show_final_stats()
+			final_panel.process_mode = Node.PROCESS_MODE_ALWAYS; final_panel.visible = true
+			if final_panel.has_method("show_final_stats"): final_panel.show_final_stats()
 			get_tree().paused = true
 		return
 	
-	is_changing_board = true
-	active_game = false
-	white_points = 10.0
-	black_points = 10.0
-	
-	white_health = 3
-	black_health = 3
+	is_changing_board = true; active_game = false
+	white_points = 10.0; black_points = 10.0
+	white_health = 3; black_health = 3
 	_reset_energy_by_difficulty()
+	_tiempo_real_blancas = tiempo_inicial_seleccionado; _tiempo_real_negras = tiempo_inicial_seleccionado
+	white_clock_active = true; black_clock_active = true
+	kings_captured_this_round = 0; _timer_acumulador = 0.0
 	
-	_tiempo_real_blancas = tiempo_inicial_seleccionado
-	_tiempo_real_negras = tiempo_inicial_seleccionado
-	
-	white_clock_active = true
-	black_clock_active = true
-	kings_captured_this_round = 0 
-	_timer_acumulador = 0.0
-	
-	_training_music_started = false 
+	_training_music_started = false
+	_dark_mode_setup_done = false
 	
 	var all_riders = get_tree().get_nodes_in_group("players")
 	for rider in all_riders:
-		if is_instance_valid(rider):
-			rider.has_finished = false
-			rider.is_riding_rank = false
-			rider.direction = 0
-			
+		if is_instance_valid(rider): rider.has_finished = false; rider.is_riding_rank = false; rider.direction = 0
+	
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 	if is_instance_valid(score_interface):
-		if score_interface.has_method("clear_history"):
-			score_interface.clear_history()
-		if score_interface.has_method("update_score_labels"):
-			score_interface.update_score_labels()
-		if score_interface.has_method("update_hearts"):
-			score_interface.update_hearts() 
-			
-	_teleport_rider_to_next_board()
+		if score_interface.has_method("clear_history"): score_interface.clear_history()
+		if score_interface.has_method("update_score_labels"): score_interface.update_score_labels()
+		if score_interface.has_method("update_hearts"): score_interface.update_hearts()
 	
-	get_tree().create_timer(0.5).timeout.connect(func():
-		is_changing_board = false
-		is_game_over_triggered = false
-	)
+	_teleport_rider_to_next_board()
+	get_tree().create_timer(0.5).timeout.connect(func(): is_changing_board = false; is_game_over_triggered = false)
 
 func _on_menu_button_pressed() -> void:
-	get_tree().paused = false
-	AudioManager.stop_music()
-	reset_game()
+	get_tree().paused = false; AudioManager.stop_music(); reset_game()
 	get_tree().change_scene_to_file("res://MainMenu.tscn")
 
 func _teleport_rider_to_next_board(_rider_color_target: String = ""):
@@ -446,92 +361,167 @@ func _teleport_rider_to_next_board(_rider_color_target: String = ""):
 		for rider in riders:
 			if is_instance_valid(rider) and rider.get_parent() == old_board:
 				if old_board.has_method("remove_rider_from_matrix"): old_board.remove_rider_from_matrix(rider)
-				rider.reparent(new_board)
+				rider.reparent(new_board) 
 				new_board.receive_rider(rider)
-				
+		
 		var camera = main_scene.get_node_or_null("Camera2D")
-		if camera and camera.has_method("move_to_board"): 
-			camera.move_to_board(current_board)
+		if camera and camera.has_method("move_to_board"): camera.move_to_board(current_board)
 
 func reset_game() -> void:
-	white_points = 10.0
-	black_points = 10.0
-	active_game = false
-	current_board = 1
-	
-	white_health = 3
-	black_health = 3
+	white_points = 10.0; black_points = 10.0
+	active_game = false; current_board = 1
+	white_health = 3; black_health = 3
 	_reset_energy_by_difficulty()
-	
-	_tiempo_real_blancas = tiempo_inicial_seleccionado
-	_tiempo_real_negras = tiempo_inicial_seleccionado
-	
-	white_clock_active = true
-	black_clock_active = true
-	kings_captured_this_round = 0
-	is_changing_board = false
-	is_game_over_triggered = false
-	total_points_p1 = 0.0
-	total_points_p2 = 0.0
-	rounds_won_p1 = 0
-	rounds_won_p2 = 0
-	best_time_p1 = 0.0
-	best_time_p2 = 0.0
-	_timer_acumulador = 0.0
-	_training_music_started = false
+	_tiempo_real_blancas = tiempo_inicial_seleccionado; _tiempo_real_negras = tiempo_inicial_seleccionado
+	white_clock_active = true; black_clock_active = true
+	kings_captured_this_round = 0; is_changing_board = false; is_game_over_triggered = false
+	total_points_p1 = 0.0; total_points_p2 = 0.0
+	rounds_won_p1 = 0; rounds_won_p2 = 0; best_time_p1 = 0.0; best_time_p2 = 0.0
+	_timer_acumulador = 0.0; _training_music_started = false
+	_dark_mode_setup_done = false
 
 func _reset_energy_by_difficulty():
-	white_is_frenzy = false
-	black_is_frenzy = false
-	white_is_stunned = false
-	black_is_stunned = false
-	
-	if Global.difficulty == "easy":
-		white_energy = 0.0
-		black_energy = 0.0
-	else:
-		white_energy = max_energy
-		black_energy = max_energy
+	white_is_frenzy = false; black_is_frenzy = false
+	white_is_stunned = false; black_is_stunned = false
+	if Global.difficulty == "easy": white_energy = 0.0; black_energy = 0.0
+	else: white_energy = max_energy; black_energy = max_energy
 
 func restart_game_scene():
-	get_tree().paused = false
-	reset_game()
-	get_tree().reload_current_scene()
+	get_tree().paused = false; reset_game(); get_tree().reload_current_scene()
 
 func _spawn_floating_text(text_to_display: String, visual_color: Color, rider_color: String):
 	var players = get_tree().get_nodes_in_group("players")
 	var spawn_position = Vector2.ZERO
 	for player in players:
 		if "is_white" in player and player.is_white == (rider_color == "white"):
-			spawn_position = player.global_position
-			break
+			spawn_position = player.global_position; break
 	var text_nodo = Label.new()
-	text_nodo.text = text_to_display
-	text_nodo.modulate = visual_color
+	text_nodo.text = text_to_display; text_nodo.modulate = visual_color
 	var settings = LabelSettings.new()
-	settings.font = load("res://PressStart2P.ttf")
-	settings.font_size = 30
-	settings.font_color = visual_color
-	settings.outline_size = 6
-	settings.outline_color = Color(0, 0, 0)
-	text_nodo.label_settings = settings
-	text_nodo.top_level = true
-	text_nodo.z_index = 100
+	settings.font = load("res://PressStart2P.ttf"); settings.font_size = 30
+	settings.font_color = visual_color; settings.outline_size = 6; settings.outline_color = Color(0, 0, 0)
+	text_nodo.label_settings = settings; text_nodo.top_level = true; text_nodo.z_index = 100
 	text_nodo.global_position = spawn_position + Vector2(-50, -40)
 	get_tree().current_scene.add_child(text_nodo)
 	var tween = get_tree().create_tween().set_parallel(true)
 	tween.tween_property(text_nodo, "global_position:y", text_nodo.global_position.y - 60, 0.8)
 	tween.tween_property(text_nodo, "modulate:a", 0.0, 0.8)
 	tween.chain().tween_callback(text_nodo.queue_free)
-	
+
 func format_points(points: float) -> String:
 	if is_nan(points) or points < 0.0: return "0"
 	if is_inf(points): return "MAX"
 	if points < 1000.0: return str(int(points))
 	var suffixes = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"]
-	var index_suffix = 0
-	var reduced_value = points
+	var index_suffix = 0; var reduced_value = points
 	while reduced_value >= 1000.0 and index_suffix < suffixes.size() - 1:
-		reduced_value /= 1000.0
-		index_suffix += 1
+		reduced_value /= 1000.0; index_suffix += 1
 	return "%.1f" % reduced_value + suffixes[index_suffix]
+
+var current_darkness: CanvasModulate = null
+var is_board_dark: bool = false
+var dark_event_timer: float = 0.0
+var hard_bulbs_spawned: int = 0
+var next_event_threshold: float = 0.0
+
+func _setup_dark_mode():
+	if not Global.is_dark_mode_active: return
+	
+	var current_board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(current_board))
+	if current_board_node:
+		if current_darkness != null and is_instance_valid(current_darkness): current_darkness.queue_free()
+		current_darkness = CanvasModulate.new()
+		current_board_node.add_child(current_darkness)
+	
+	is_board_dark = false
+	dark_event_timer = 0.0
+	hard_bulbs_spawned = 0
+	
+	if Global.difficulty == "hard":
+		is_board_dark = true
+		if current_darkness: current_darkness.color = Color("#050510")
+		next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.25, 0.40)
+	elif Global.difficulty == "medium":
+		if current_darkness: current_darkness.color = Color.WHITE
+		next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.05, 0.15)
+	else:
+		if current_darkness: current_darkness.color = Color.WHITE
+		next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.10, 0.20)
+
+func _process_dark_mode(delta: float):
+	if not Global.is_dark_mode_active or not active_game or is_game_over_triggered: return
+	
+	if get_tree().get_nodes_in_group("lightbulbs").size() > 0:
+		return
+	
+	dark_event_timer += delta
+	if dark_event_timer >= next_event_threshold:
+		dark_event_timer = 0.0
+		
+		match Global.difficulty:
+			"easy":
+				next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.15, 0.25)
+				if not is_board_dark: _spawn_lightbulb(false, true)
+				else: _spawn_lightbulb(true, true)
+			"medium":
+				if not is_board_dark:
+					_fade_board_to_darkness()
+					next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.10, 0.20)
+				else:
+					_spawn_lightbulb(true, false)
+					next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.10, 0.25)
+			"hard":
+				if hard_bulbs_spawned < 2:
+					next_event_threshold = tiempo_inicial_seleccionado * randf_range(0.30, 0.45)
+					_spawn_lightbulb(true, false)
+					hard_bulbs_spawned += 1
+
+func _fade_board_to_darkness():
+	_spawn_floating_text("POWER FAILING...", Color.RED, "black")
+	is_board_dark = true
+	
+	if current_darkness:
+		var tween = create_tween()
+		tween.tween_property(current_darkness, "color", Color("#050510"), 5.0)
+
+func _spawn_lightbulb(on: bool, moving: bool):
+	var board_node = get_tree().current_scene.get_node_or_null("Board2D_" + str(current_board))
+	if not board_node: return
+	
+	var free_spots = [] 
+	for x in range(8):
+		for y in range(8):
+			if "board" in board_node and board_node.board[y][x] == null:
+				free_spots.append(Vector2i(x, y))
+	
+	if free_spots.size() > 0:
+		var pos = free_spots[randi() % free_spots.size()]
+		var bulb = Lightbulb.new()
+		bulb.is_on = on
+		bulb.is_moving = moving
+		bulb.grid_position = pos
+		bulb.position = Vector2((pos.x * 64) + 32, (pos.y * 64) + 32)
+		board_node.add_child(bulb)
+		AudioManager.play_jump()
+
+func eat_lightbulb(was_on: bool):
+	AudioManager.play_slash()
+	var tween = create_tween()
+	
+	if was_on:
+		_spawn_floating_text("LIGHT RESTORED!", Color.YELLOW, "white")
+		is_board_dark = false
+		
+		if current_darkness:
+			tween.tween_property(current_darkness, "color", Color.WHITE, 1.0) 
+			
+		if Global.difficulty == "hard":
+			tween.tween_interval(5.0)
+			if current_darkness:
+				tween.tween_property(current_darkness, "color", Color("#050510"), 2.0)
+			tween.tween_callback(func(): is_board_dark = true)
+	else:
+		_spawn_floating_text("BLACKOUT!", Color.PURPLE, "black")
+		is_board_dark = true
+		if current_darkness:
+			tween.tween_property(current_darkness, "color", Color("#050510"), 1.0)
