@@ -125,51 +125,52 @@ text = "TRAINING MODE"
 [node name="SideMenu" type="Control" parent="MainMenu" unique_id=1864275522]
 visible = false
 anchors_preset = 0
+offset_top = -4.0
 offset_right = 1500.0
-offset_bottom = 700.0
+offset_bottom = 696.0
 
 [node name="Label" type="Label" parent="MainMenu/SideMenu" unique_id=1635652581]
 layout_mode = 0
-offset_left = 76.0
-offset_top = 105.0
-offset_right = 1436.0
-offset_bottom = 185.0
+offset_left = 235.0
+offset_top = 130.0
+offset_right = 1595.0
+offset_bottom = 210.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_iwfq2")
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 60
 text = "Choose your Rider"
 
 [node name="BtnWhiteRider" type="Button" parent="MainMenu/SideMenu" unique_id=117028647]
 layout_mode = 0
-offset_left = 532.0
-offset_top = 304.0
-offset_right = 966.0
-offset_bottom = 373.0
+offset_left = 537.0
+offset_top = 294.0
+offset_right = 939.0
+offset_bottom = 360.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 56
 text = "W H I T E    R I D E R"
 
 [node name="BtnBlackRider" type="Button" parent="MainMenu/SideMenu" unique_id=277011042]
 layout_mode = 0
-offset_left = 532.0
-offset_top = 420.0
-offset_right = 958.0
-offset_bottom = 489.0
+offset_left = 531.0
+offset_top = 451.0
+offset_right = 933.0
+offset_bottom = 517.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 56
 text = "B L A C K    R I D E R"
 
 [node name="BtnBack" type="Button" parent="MainMenu/SideMenu" unique_id=1938994199]
 layout_mode = 0
-offset_left = 651.0
-offset_top = 578.0
-offset_right = 815.0
+offset_left = 642.0
+offset_top = 581.0
+offset_right = 795.0
 offset_bottom = 647.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_h7a2f")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 56
 text = "B A C K"
 
 [connection signal="pressed" from="MainMenu/HomeMenu/HomeLayout/Button Container/PlayButton" to="MainMenu" method="_on_play_button_pressed"]

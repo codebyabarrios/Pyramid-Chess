@@ -278,3 +278,7 @@ func move_to_board(board_index: int) -> void:
 	tween.tween_property(self, "global_position", target_pos, 1.5)
 	
 	tween.tween_callback(func(): play_round_countdown(board_index))
+
+
+func _on_pause_menu_2_pressed() -> void:
+	pass # Replace with function body.

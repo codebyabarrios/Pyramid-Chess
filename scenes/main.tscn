@@ -6,8 +6,10 @@
 [ext_resource type="Script" uid="uid://dyqkvbg1r65b6" path="res://scenes/camera_2d.gd" id="2_tefeu"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="4_jyhfs"]
 [ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="4_o6xl0"]
+[ext_resource type="Script" uid="uid://b4ob1g7f0ilkr" path="res://scenes/pause_menu.gd" id="6_choun"]
 [ext_resource type="PackedScene" uid="uid://bd0eglhac18dd" path="res://scenes/game_over_panel.tscn" id="6_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://ddfrfpibnqrat" path="res://scenes/final_winner_panel.tscn" id="7_tipki"]
+[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="7_ya4ey"]
 
 [node name="Main" type="Node2D" unique_id=1119833376]
 
@@ -175,6 +177,83 @@ text = "ROUND 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer2/UIRoot/ScoreInterface" unique_id=1759031667]
+layout_mode = 0
+offset_left = 1169.0
+offset_top = 70.5
+offset_right = 1437.0
+offset_bottom = 114.5
+theme_override_fonts/font = ExtResource("4_o6xl0")
+theme_override_font_sizes/font_size = 35
+text = "Guide  Arrows"
+
+[node name="PauseMenu" type="CanvasLayer" parent="CanvasLayer2/UIRoot" unique_id=1171434910]
+process_mode = 3
+script = ExtResource("6_choun")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/UIRoot/PauseMenu" unique_id=2072166698]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="Label" type="Label" parent="CanvasLayer2/UIRoot/PauseMenu/ColorRect" unique_id=1969986250]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 140.0
+offset_right = 130.0
+offset_bottom = 204.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 70
+text = "PAUSED"
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer2/UIRoot/PauseMenu/ColorRect" unique_id=1232657594]
+layout_mode = 0
+offset_left = 643.0
+offset_top = 535.0
+offset_right = 836.0
+offset_bottom = 589.0
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 50
+text = "RESUME"
+
+[node name="AudioButton" type="Button" parent="CanvasLayer2/UIRoot/PauseMenu/ColorRect" unique_id=1105410958]
+layout_mode = 0
+offset_left = 666.0
+offset_top = 285.0
+offset_right = 822.0
+offset_bottom = 339.0
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 50
+text = "AUDIO"
+
+[node name="MenuButton" type="Button" parent="CanvasLayer2/UIRoot/PauseMenu/ColorRect" unique_id=654181585]
+layout_mode = 0
+offset_left = 608.0
+offset_top = 391.0
+offset_right = 882.0
+offset_bottom = 445.0
+theme_override_fonts/font = ExtResource("7_ya4ey")
+theme_override_font_sizes/font_size = 50
+text = "MAIN MENU"
+
+[node name="PauseMenu2" type="Button" parent="CanvasLayer2/UIRoot" unique_id=1329772183]
+process_mode = 3
+layout_mode = 0
+offset_left = -4.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("4_o6xl0")
+theme_override_font_sizes/font_size = 36
+text = "⏸ "
+
 [node name="GameOverPanel" parent="CanvasLayer2" unique_id=2073413079 instance=ExtResource("6_o6xl0")]
 unique_name_in_owner = true
 
@@ -188,3 +267,9 @@ position = Vector2(64, 64)
 [node name="Board2D_2" parent="." unique_id=438661248 instance=ExtResource("1_o5qli")]
 
 [node name="Board2D_3" parent="." unique_id=1668790293 instance=ExtResource("1_o5qli")]
+
+[connection signal="toggled" from="CanvasLayer2/UIRoot/ScoreInterface/CheckButton" to="CanvasLayer2/UIRoot/ScoreInterface" method="_on_check_button_toggled"]
+[connection signal="pressed" from="CanvasLayer2/UIRoot/PauseMenu/ColorRect/ResumeButton" to="CanvasLayer2/UIRoot/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="toggled" from="CanvasLayer2/UIRoot/PauseMenu/ColorRect/AudioButton" to="CanvasLayer2/UIRoot/PauseMenu" method="_on_audio_button_toggled"]
+[connection signal="pressed" from="CanvasLayer2/UIRoot/PauseMenu/ColorRect/MenuButton" to="CanvasLayer2/UIRoot/PauseMenu" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer2/UIRoot/PauseMenu2" to="CanvasLayer2/UIRoot/PauseMenu" method="_on_pause_menu_2_pressed"]

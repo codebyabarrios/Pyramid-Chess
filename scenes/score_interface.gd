@@ -207,8 +207,21 @@ func _create_ui_hearts() -> HBoxContainer:
 	return box
 
 func update_hearts():
-	_update_heart_box(white_hearts_box, Gamemanager.white_health)
-	_update_heart_box(black_hearts_box, Gamemanager.black_health)
+	var p2_exists = false
+	
+	for p in get_tree().get_nodes_in_group("players"):
+		if "is_white" in p and not p.is_white:
+			p2_exists = true
+	
+	if has_node("HeartContainerP1"):
+		_update_heart_box($HeartContainerP1, Gamemanager.white_health)
+	
+	if has_node("HeartContainerP2"):
+		if p2_exists:
+			$HeartContainerP2.visible = true
+			_update_heart_box($HeartContainerP2, Gamemanager.black_health)
+		else:
+			$HeartContainerP2.visible = false
 
 func _update_heart_box(box: HBoxContainer, health: int):
 	if not is_instance_valid(box): return
@@ -344,3 +357,7 @@ func _reposition_ui() -> void:
 				var half_bar2 = black_energy_bar.custom_minimum_size.x / 2.0
 				black_energy_bar.position = Vector2(center_x2 - half_bar2, black_score_label.global_position.y - energy_offset_y)
 				black_energy_bar.visible = true
+
+
+func _on_check_button_toggled(toggled_on: bool):
+	Global.show_guide_arrows = toggled_on

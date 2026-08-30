@@ -7,6 +7,8 @@
 size = Vector2(23, 26)
 
 [node name="Pawn_tscn" type="Node2D" unique_id=710072714]
+z_index = 60
+z_as_relative = false
 script = ExtResource("1_pcpcu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=955054553]

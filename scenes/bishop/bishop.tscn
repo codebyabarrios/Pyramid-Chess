@@ -7,7 +7,8 @@
 size = Vector2(19, 20)
 
 [node name="Bishop" type="Node2D" unique_id=1334100779]
-z_index = 2
+z_index = 60
+z_as_relative = false
 script = ExtResource("1_os63u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1285889952]

@@ -7,7 +7,8 @@
 size = Vector2(26, 15)
 
 [node name="Knight" type="Node2D" unique_id=1786993282]
-z_index = 2
+z_index = 60
+z_as_relative = false
 script = ExtResource("1_itplb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=721530982]

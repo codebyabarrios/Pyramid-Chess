@@ -1,9 +1,12 @@
-Label
 Button
+Label
+ColorRect
+CanvasLayer
+CheckButton
+CheckBox
+Control
+Node2D
 HBoxContainer
 GridContainer
 VBoxContainer
 PanelContainer
-ColorRect
-CanvasLayer
-Control
