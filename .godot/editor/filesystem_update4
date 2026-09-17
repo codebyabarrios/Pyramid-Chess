@@ -1,6 +1,2 @@
-res://row_indicators.gd
-res://scenes/score_interface.gd
 res://MainMenu.tscn
-res://scenes/pause_menu.gd
-res://scenes/camera_2d.gd
-res://scenes/main.tscn
+res://scenes/board.gd

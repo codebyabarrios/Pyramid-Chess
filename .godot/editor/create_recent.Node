@@ -1,10 +1,12 @@
+TextureRect
+TextEdit
 Button
+Control
 Label
 ColorRect
 CanvasLayer
 CheckButton
 CheckBox
-Control
 Node2D
 HBoxContainer
 GridContainer

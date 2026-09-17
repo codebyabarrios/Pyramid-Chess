@@ -19,7 +19,6 @@ func _ready():
 	if boton_menu and not boton_menu.pressed.is_connected(_on_menu_button_pressed):
 		boton_menu.pressed.connect(_on_menu_button_pressed)
 
-
 func _on_pause_button_pressed():
 	show()
 	get_tree().paused = true

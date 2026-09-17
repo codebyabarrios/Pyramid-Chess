@@ -28,3 +28,7 @@ func _initialize_health() -> void:
 func set_side(white: bool, texture_path: String) -> void:
 	is_white = white
 	$Sprite2D.texture = load(texture_path)
+
+func _exit_tree() -> void:
+	print("¡PIEZA ELIMINADA! Tipo: ", type_piece, " en la posición: ", global_position)
+	print_stack()

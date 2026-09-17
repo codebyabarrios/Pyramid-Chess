@@ -28,7 +28,7 @@ func _ready() -> void:
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
 	if score_interface:
 		score_interface.visible = false
-		score_interface.modulate.a = 0.0 
+		score_interface.modulate.a = 0.0
 		
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel == null: points_panel = score_interface.find_child("RightControl", true, false)
@@ -65,7 +65,7 @@ func _ready() -> void:
 	else:
 		tween.tween_property(self, "global_position", board_1_pos, 1.2)
 		tween.parallel().tween_property(self, "zoom", close_zoom, 1.2)
-		
+	
 	if score_interface:
 		var points_panel = score_interface.find_child("ControlDerecha", true, false)
 		if points_panel == null: points_panel = score_interface.find_child("RightControl", true, false)
@@ -102,7 +102,7 @@ func _ready() -> void:
 			tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
 			
 			tween.tween_callback(func():
-				AudioManager.play_countdown() 
+				AudioManager.play_countdown()
 				round_label.text = "3"
 				round_label.modulate.a = 0.0
 			)
@@ -152,7 +152,7 @@ func _ready() -> void:
 			if "white_hearts_box" in score_interface and is_instance_valid(score_interface.white_hearts_box): score_interface.white_hearts_box.visible = true
 			if "black_hearts_box" in score_interface and is_instance_valid(score_interface.black_hearts_box): score_interface.black_hearts_box.visible = true
 			if "white_energy_bar" in score_interface and is_instance_valid(score_interface.white_energy_bar): score_interface.white_energy_bar.visible = true
-			if "black_energy_bar" in score_interface and is_instance_valid(score_interface.black_energy_bar): score_interface.black_energy_bar.visible = true
+			if "black_energy_bar" in score_interface and is_instance_valid(score_interface.white_energy_bar): score_interface.black_energy_bar.visible = true
 			
 			var board_1 = get_tree().current_scene.get_node_or_null("Board2D_1")
 			if board_1:
@@ -176,7 +176,7 @@ func play_round_countdown(board_index: int) -> void:
 	if points_panel:
 		points_panel.visible = false
 		points_panel.modulate.a = 0.0
-		
+	
 	if "white_clock_label" in score_interface and is_instance_valid(score_interface.white_clock_label): score_interface.white_clock_label.visible = false
 	if "black_clock_label" in score_interface and is_instance_valid(score_interface.black_clock_label): score_interface.black_clock_label.visible = false
 	if "white_hearts_box" in score_interface and is_instance_valid(score_interface.white_hearts_box): score_interface.white_hearts_box.visible = false
@@ -202,7 +202,7 @@ func play_round_countdown(board_index: int) -> void:
 		tween.tween_property(round_label, "modulate:a", 0.0, 0.2)
 		
 		tween.tween_callback(func():
-			AudioManager.play_countdown() 
+			AudioManager.play_countdown()
 			round_label.text = "3"
 			round_label.modulate.a = 0.0
 		)
@@ -235,7 +235,7 @@ func play_round_countdown(board_index: int) -> void:
 				points_panel.visible = true
 				points_panel.modulate.a = 0.0
 			)
-			tween.tween_property(points_panel, "modulate:a", 1.0,  0.5)
+			tween.tween_property(points_panel, "modulate:a", 1.0, 0.5)
 		
 		tween.tween_callback(func():
 			Gamemanager.active_game = true
@@ -279,6 +279,5 @@ func move_to_board(board_index: int) -> void:
 	
 	tween.tween_callback(func(): play_round_countdown(board_index))
 
-
 func _on_pause_menu_2_pressed() -> void:
-	pass # Replace with function body.
+	pass

@@ -41,6 +41,6 @@ func mark_as_captured() -> bool:
 		remove_from_group("chess_pieces")
 	return true
 	
-
 func _exit_tree() -> void:
-	pass
+	print("¡PIEZA ELIMINADA! Tipo: ", type_piece, " en la posición: ", global_position)
+	print_stack()

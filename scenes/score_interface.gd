@@ -213,15 +213,15 @@ func update_hearts():
 		if "is_white" in p and not p.is_white:
 			p2_exists = true
 	
-	if has_node("HeartContainerP1"):
-		_update_heart_box($HeartContainerP1, Gamemanager.white_health)
+	if is_instance_valid(white_hearts_box):
+		_update_heart_box(white_hearts_box, Gamemanager.white_health)
 	
-	if has_node("HeartContainerP2"):
+	if is_instance_valid(black_hearts_box):
 		if p2_exists:
-			$HeartContainerP2.visible = true
-			_update_heart_box($HeartContainerP2, Gamemanager.black_health)
+			black_hearts_box.visible = true
+			_update_heart_box(black_hearts_box, Gamemanager.black_health)
 		else:
-			$HeartContainerP2.visible = false
+			black_hearts_box.visible = false
 
 func _update_heart_box(box: HBoxContainer, health: int):
 	if not is_instance_valid(box): return

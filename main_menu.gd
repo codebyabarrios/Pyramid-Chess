@@ -5,10 +5,11 @@ extends Control
 @onready var start_menu = $HomeMenu
 @onready var player_count_menu = $MenuQuantity
 @onready var side_selection_menu = $SideMenu
+@onready var set_selection_menu = $SetSelectionPanel
 
 var time_menu: CenterContainer
-var difficulty_menu: CenterContainer # 🔴 Nuevo contenedor para la dificultad
-var pixel_font = preload("res://PressStart2P.ttf") 
+var difficulty_menu: CenterContainer
+var pixel_font = preload("res://PressStart2P.ttf")
 
 func _ready() -> void:
 	AudioManager.play_main_menu()
@@ -16,8 +17,9 @@ func _ready() -> void:
 	if start_menu != null: start_menu.show()
 	if player_count_menu != null: player_count_menu.hide()
 	if side_selection_menu != null: side_selection_menu.hide()
-		
-	_build_difficulty_ui() # 🔴 Construimos el nuevo menú
+	if set_selection_menu != null: set_selection_menu.hide()
+	
+	_build_difficulty_ui()
 	_build_time_selection_ui()
 
 func _on_play_button_pressed() -> void:
@@ -29,7 +31,6 @@ func _on_exit_button_pressed() -> void:
 
 func _on_btn_2_players_pressed() -> void:
 	Global.total_players = 2
-	# 🔴 Ahora 2 Jugadores te lleva primero a la dificultad
 	_show_difficulty_menu(player_count_menu) 
 
 func _on_btn_1_player_pressed() -> void:
@@ -39,18 +40,15 @@ func _on_btn_1_player_pressed() -> void:
 
 func _on_btn_white_rider_pressed() -> void:
 	Global.selected_side = "white"
-	_show_time_menu(side_selection_menu) 
+	_show_set_selection_menu(side_selection_menu) 
 
 func _on_btn_black_rider_pressed() -> void:
 	Global.selected_side = "black"
-	_show_time_menu(side_selection_menu)
+	_show_set_selection_menu(side_selection_menu) 
 
 func _on_btn_back_pressed() -> void:
 	side_selection_menu.visible = false
 	player_count_menu.visible = true
-
-
-# --- MENÚ DE DIFICULTAD ---
 
 func _show_difficulty_menu(menu_to_hide: Control) -> void:
 	if menu_to_hide: menu_to_hide.visible = false
@@ -90,7 +88,7 @@ func _build_difficulty_ui():
 	title_settings.font_size = 22
 	title_settings.font_color = Color("#ffffff")
 	title_settings.outline_size = 4
-	title_settings.outline_color = Color(0,0,0)
+	title_settings.outline_color = Color(0, 0, 0)
 	title.label_settings = title_settings
 	vbox.add_child(title)
 	
@@ -120,11 +118,11 @@ func _build_difficulty_ui():
 	var back_hover = back_style.duplicate()
 	back_hover.bg_color = Color("#333333")
 	back_hover.border_color = Color("#666666")
-	back_btn.add_theme_stylebox_override("hover", back_hover)
+	back_btn.add_theme_stylebox_override("normal", back_style)
 	
 	back_btn.pressed.connect(func():
 		difficulty_menu.hide()
-		player_count_menu.show() 
+		player_count_menu.show()
 	)
 	vbox.add_child(back_btn)
 
@@ -158,10 +156,29 @@ func _add_difficulty_button(container: HBoxContainer, diff_label: String, subtit
 	
 	btn.pressed.connect(func():
 		Global.difficulty = level_value
-		_show_time_menu(difficulty_menu)
+		_show_set_selection_menu(difficulty_menu)
 	)
 	container.add_child(btn)
 
+func _show_set_selection_menu(menu_to_hide: Control) -> void:
+	if menu_to_hide: menu_to_hide.visible = false
+	set_selection_menu.visible = true
+
+func _on_btn_set_comun_pressed() -> void:
+	Global.current_set_name = "comun"
+	_show_time_menu(set_selection_menu) 
+
+func _on_btn_set_beige_pressed() -> void:
+	Global.current_set_name = "beige"
+	_show_time_menu(set_selection_menu) 
+
+func _on_btn_set_warhol_pressed() -> void:
+	Global.current_set_name = "warhol"
+	_show_time_menu(set_selection_menu) 
+
+func _on_btn_set_retro_pressed() -> void:
+	Global.current_set_name = "retro"
+	_show_time_menu(set_selection_menu)
 
 func _show_time_menu(menu_to_hide: Control) -> void:
 	if menu_to_hide: menu_to_hide.visible = false
@@ -259,11 +276,7 @@ func _build_time_selection_ui():
 	
 	back_btn.pressed.connect(func():
 		time_menu.hide()
-		# 🔴 Volvemos al menú correcto dependiendo del modo
-		if Global.total_players == 1:
-			side_selection_menu.show()
-		else:
-			difficulty_menu.show() 
+		set_selection_menu.show() 
 	)
 	vbox.add_child(back_btn)
 

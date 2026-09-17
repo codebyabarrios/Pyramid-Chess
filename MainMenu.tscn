@@ -5,6 +5,14 @@
 [ext_resource type="FontFile" uid="uid://bs1r12vvjfutn" path="res://ARCADECLASSIC.TTF" id="2_h7a2f"]
 [ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="3_h7a2f"]
 [ext_resource type="FontFile" uid="uid://cw110uaky2h3e" path="res://PressStart2P.ttf" id="5_iwfq2"]
+[ext_resource type="Texture2D" uid="uid://86j4bf7hyab0" path="res://White Rider Beige Target.png" id="6_qie43"]
+[ext_resource type="Texture2D" uid="uid://dc3m3p2masdnj" path="res://Black Rider Beige Target.png" id="7_61cf8"]
+[ext_resource type="Texture2D" uid="uid://b1bn0xlcnpl7h" path="res://White Rider B&W Target.png" id="8_rnncn"]
+[ext_resource type="Texture2D" uid="uid://nqd36ltuimjg" path="res://Black Rider B&W Target.png" id="9_3fnrj"]
+[ext_resource type="Texture2D" uid="uid://cahwqwjaro6oh" path="res://White Rider Retro Target.png" id="10_m04lp"]
+[ext_resource type="Texture2D" uid="uid://caj0rbxeotack" path="res://Black Rider Retro Target.png" id="11_1thib"]
+[ext_resource type="Texture2D" uid="uid://d1m65pynohb1o" path="res://White Rider Warhol Target.png" id="12_iht1c"]
+[ext_resource type="Texture2D" uid="uid://ba3l4bvnuptj5" path="res://Black Rider Warhol Target.png" id="13_l1t4j"]
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1343380221]
 
@@ -34,7 +42,8 @@ offset_bottom = 40.0
 
 [node name="HomeMenu" type="Control" parent="MainMenu" unique_id=627027259]
 anchors_preset = 0
-offset_right = 1500.0
+offset_left = 1.0
+offset_right = 1501.0
 offset_bottom = 700.0
 
 [node name="HomeLayout" type="Control" parent="MainMenu/HomeMenu" unique_id=1383977718]
@@ -173,6 +182,116 @@ theme_override_fonts/font = ExtResource("2_h7a2f")
 theme_override_font_sizes/font_size = 56
 text = "B A C K"
 
+[node name="SetSelectionPanel" type="Control" parent="MainMenu" unique_id=752224111]
+visible = false
+anchors_preset = 0
+offset_right = 1507.0
+offset_bottom = 700.0
+
+[node name="BtnSetB&W" type="Button" parent="MainMenu/SetSelectionPanel" unique_id=363315630]
+layout_mode = 0
+offset_left = 385.0
+offset_top = 304.0
+offset_right = 701.0
+offset_bottom = 336.0
+theme_override_fonts/font = ExtResource("5_iwfq2")
+theme_override_font_sizes/font_size = 24
+text = "BTN SET B&W"
+
+[node name="BtnSetBeige" type="Button" parent="MainMenu/SetSelectionPanel" unique_id=145239256]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 606.0
+offset_right = 386.0
+offset_bottom = 651.0
+theme_override_fonts/font = ExtResource("5_iwfq2")
+theme_override_font_sizes/font_size = 24
+text = "BTN SET BEIGE"
+
+[node name="BtnSetWarhol" type="Button" parent="MainMenu/SetSelectionPanel" unique_id=621369777]
+layout_mode = 0
+offset_left = 1087.0
+offset_top = 309.0
+offset_right = 1431.0
+offset_bottom = 341.0
+theme_override_fonts/font = ExtResource("5_iwfq2")
+theme_override_font_sizes/font_size = 24
+text = "BTN SET WARHOL"
+
+[node name="BtnSetRetro" type="Button" parent="MainMenu/SetSelectionPanel" unique_id=687333791]
+layout_mode = 0
+offset_left = 708.0
+offset_top = 630.0
+offset_right = 1028.0
+offset_bottom = 662.0
+theme_override_fonts/font = ExtResource("5_iwfq2")
+theme_override_font_sizes/font_size = 24
+text = "BTN SET RETRO"
+
+[node name="White Rider Beige Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1074681324]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 448.0
+offset_right = 191.0
+offset_bottom = 575.0
+texture = ExtResource("6_qie43")
+
+[node name="Black Rider Beige Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=571968534]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 448.0
+offset_right = 384.0
+offset_bottom = 576.0
+texture = ExtResource("7_61cf8")
+
+[node name="White Rider B&W Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1105051474]
+layout_mode = 0
+offset_left = 385.0
+offset_top = 127.0
+offset_right = 512.0
+offset_bottom = 255.0
+texture = ExtResource("8_rnncn")
+
+[node name="Black Rider B&W Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1611809253]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 127.0
+offset_right = 703.0
+offset_bottom = 255.0
+texture = ExtResource("9_3fnrj")
+
+[node name="White Rider Retro Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1995420286]
+layout_mode = 0
+offset_left = 705.0
+offset_top = 445.0
+offset_right = 838.0
+offset_bottom = 576.0
+texture = ExtResource("10_m04lp")
+
+[node name="Black Rider Retro Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=100333571]
+layout_mode = 0
+offset_left = 895.0
+offset_top = 450.0
+offset_right = 1023.0
+offset_bottom = 579.0
+texture = ExtResource("11_1thib")
+
+[node name="White Rider Warhol Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1111798897]
+layout_mode = 0
+offset_left = 1089.0
+offset_top = 130.0
+offset_right = 1215.0
+offset_bottom = 257.0
+texture = ExtResource("12_iht1c")
+
+[node name="Black Rider Warhol Target" type="TextureRect" parent="MainMenu/SetSelectionPanel" unique_id=1743501939]
+layout_mode = 0
+offset_left = 1279.0
+offset_top = 128.0
+offset_right = 1407.0
+offset_bottom = 255.0
+texture = ExtResource("13_l1t4j")
+
 [connection signal="pressed" from="MainMenu/HomeMenu/HomeLayout/Button Container/PlayButton" to="MainMenu" method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenu/HomeMenu/HomeLayout/Button Container/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="MainMenu/MenuQuantity/Btn2Players" to="MainMenu" method="_on_btn_2_players_pressed"]
@@ -180,3 +299,7 @@ text = "B A C K"
 [connection signal="pressed" from="MainMenu/SideMenu/BtnWhiteRider" to="MainMenu" method="_on_btn_white_rider_pressed"]
 [connection signal="pressed" from="MainMenu/SideMenu/BtnBlackRider" to="MainMenu" method="_on_btn_black_rider_pressed"]
 [connection signal="pressed" from="MainMenu/SideMenu/BtnBack" to="MainMenu" method="_on_btn_back_pressed"]
+[connection signal="pressed" from="MainMenu/SetSelectionPanel/BtnSetB&W" to="MainMenu" method="_on_btn_set_comun_pressed"]
+[connection signal="pressed" from="MainMenu/SetSelectionPanel/BtnSetBeige" to="MainMenu" method="_on_btn_set_beige_pressed"]
+[connection signal="pressed" from="MainMenu/SetSelectionPanel/BtnSetWarhol" to="MainMenu" method="_on_btn_set_warhol_pressed"]
+[connection signal="pressed" from="MainMenu/SetSelectionPanel/BtnSetRetro" to="MainMenu" method="_on_btn_set_retro_pressed"]
