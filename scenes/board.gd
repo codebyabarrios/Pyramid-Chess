@@ -7,6 +7,7 @@ const TOTAL_BOARD_PIXELS_WITH_BORDERS = 592.0
 const BORDER_OFFSET = 40.0
 const PortalScript = preload("res://portal.gd")
 const STEP_DELAY = 0.75
+const KING_ROW := 0
 
 var movement_speed = 100.0
 var board = []
@@ -236,33 +237,86 @@ func _has_portal_at_cell(col: int, row: int) -> bool:
 			return true
 	return false
 
+func _is_finished_rider_in_king_row(col: int, row: int, mover_node: Node) -> bool:
+	if row != KING_ROW:
+		return false
+	var target_cell := Vector2i(wrapi(col, 0, BOARD_SIZE), row)
+	for player in get_tree().get_nodes_in_group("players"):
+		if not is_instance_valid(player) or player.is_queued_for_deletion():
+			continue
+		if player == mover_node or player.get_parent() != self:
+			continue
+		var rider_cell: Vector2i = player.grid_position if "grid_position" in player else _pos_to_grid(player.position)
+		if rider_cell == target_cell:
+			var finished: bool = player.has_finished if "has_finished" in player else (not player.is_riding_rank and player.direction == 0)
+			if finished:
+				return true
+	return false
+
+func _has_rider_at_cell(col: int, row: int, mover_node: Node) -> bool:
+	var target_cell := Vector2i(wrapi(col, 0, BOARD_SIZE), clampi(row, 0, BOARD_SIZE - 1))
+	for player in get_tree().get_nodes_in_group("players"):
+		if not is_instance_valid(player) or player.is_queued_for_deletion():
+			continue
+		if player == mover_node or player.get_parent() != self:
+			continue
+		var rider_cell: Vector2i = player.grid_position if "grid_position" in player else _pos_to_grid(player.position)
+		if rider_cell == target_cell:
+			if _is_finished_rider_in_king_row(col, row, mover_node):
+				return false
+			return true
+	return false
+
+func _has_blocking_rider_at_cell(col: int, row: int, mover_node: Node) -> bool:
+	var target_cell := Vector2i(wrapi(col, 0, BOARD_SIZE), clampi(row, 0, BOARD_SIZE -1))
+	for player in get_tree().get_nodes_in_group("players"):
+		if not is_instance_valid(player) or player.is_queued_for_deletion():
+			continue
+		if player == mover_node or player.get_parent() != self:
+			continue
+		var rider_cell: Vector2i = player.grid_position if "grid_position" in player else _pos_to_grid(player.position)
+		if rider_cell == target_cell:
+			var riding: bool = player.is_riding_rank if "is_riding_rank" in player else false
+			var finished: bool = player.has_finished if "has_finished" in player else false
+			if riding and not finished and row != KING_ROW:
+				return false
+			return true
+	return false
+
+func _is_cell_blocked_for_mover(mover_node: Node, col: int, row: int) -> bool:
+	return _has_portal_at_cell(col, row) or _has_blocking_rider_at_cell(col, row, mover_node)
+
 func _step_horizontal_movement() -> void:
 	var movers: Array = []
+	
+	for player in get_tree().get_nodes_in_group("players"):
+		if is_instance_valid(player) and not player.is_queued_for_deletion() and player.get_parent() == self:
+			var finished: bool = player.has_finished if "has_finished" in player else false
+			if not finished and "is_riding_rank" in player and player.is_riding_rank:
+				var cell_y := _pos_to_grid(player.position).y
+				if cell_y != KING_ROW and "direction" in player and player.direction != 0 and not movers.has(player):
+					movers.append(player)
+	
 	for child in get_children():
 		if is_instance_valid(child) and not child.is_queued_for_deletion():
 			if "type_piece" in child and not child.is_in_group("players"):
 				if "direction" in child and child.direction != 0 and not movers.has(child):
 					movers.append(child)
-
-	for player in get_tree().get_nodes_in_group("players"):
-		if is_instance_valid(player) and player.get_parent() == self:
-			if "is_riding_rank" in player and player.is_riding_rank:
-				if "direction" in player and player.direction != 0 and not movers.has(player):
-					movers.append(player)
-
+	
 	var desired_cells := {}
+	
 	for mover in movers:
 		var cell := _pos_to_grid(mover.position)
 		var dir: int = 1 if mover.direction > 0 else -1
 		var target_col := wrapi(cell.x + dir, 0, BOARD_SIZE)
-
+		
 		var safety := 0
-		while _has_portal_at_cell(target_col, cell.y) and safety < BOARD_SIZE:
+		while _is_cell_blocked_for_mover(mover, target_col, cell.y) and safety < BOARD_SIZE:
 			target_col = wrapi(target_col + dir, 0, BOARD_SIZE)
 			safety += 1
-
+		
 		desired_cells[mover] = Vector2i(target_col, cell.y)
-
+	
 	var occupied_targets := {}
 	var final_cells := {}
 	for mover in movers:
@@ -274,12 +328,12 @@ func _step_horizontal_movement() -> void:
 		else:
 			occupied_targets[current_cell] = true
 			final_cells[mover] = current_cell
-
+	
 	for mover in movers:
 		var old_cell := _pos_to_grid(mover.position)
 		var new_cell: Vector2i = final_cells[mover]
 		var is_player: bool = mover.is_in_group("players")
-
+		
 		if is_player:
 			remove_rider_from_matrix(mover)
 			if "previous_move_position" in mover:
@@ -287,11 +341,11 @@ func _step_horizontal_movement() -> void:
 		elif old_cell.y >= 0 and old_cell.y < BOARD_SIZE and old_cell.x >= 0 and old_cell.x < BOARD_SIZE:
 			if board[old_cell.y][old_cell.x] == mover:
 				board[old_cell.y][old_cell.x] = null
-
+		
 		mover.position = _grid_to_pos(new_cell.x, new_cell.y)
 		if "grid_position" in mover:
 			mover.grid_position = new_cell
-
+		
 		if is_player:
 			register_rider_in_matrix(mover, new_cell.x, new_cell.y)
 		else:
@@ -566,3 +620,33 @@ func _is_portal_at(pos_x: float, pos_y: float) -> bool:
 			if abs(p.position.x - pos_x) < 15.0 and abs(p.position.y - pos_y) < 15.0:
 				return true
 	return false
+
+func get_rank_direction(row: int) -> int:
+	var r := clampi(row, 0, BOARD_SIZE - 1)
+	for x in range(BOARD_SIZE):
+		var piece = board[r][x]
+		if is_instance_valid(piece) and not piece.is_queued_for_deletion():
+			if "type_piece" in piece and not piece.is_in_group("players"):
+				if "direction" in piece and piece.direction != 0:
+					return 1 if piece.direction > 0 else -1
+	return -1 if (r % 2 != 0) else 1
+
+func attach_rider_to_rank(rider_node: Node2D, row: int, captured_king: bool = false) -> void:
+	if not is_instance_valid(rider_node):
+		return
+	var r := clampi(row, 0, BOARD_SIZE - 1)
+	if "grid_position" in rider_node:
+		rider_node.grid_position.y = r
+	
+	if r == KING_ROW or captured_king:
+		if "is_riding_rank" in rider_node:
+			rider_node.is_riding_rank = false
+		if "direction" in rider_node:
+			rider_node.direction = 0
+		return
+	
+	var rank_dir := get_rank_direction(r)
+	if "is_riding_rank" in rider_node:
+		rider_node.is_riding_rank = true
+	if "direction" in rider_node:
+		rider_node.direction = rank_dir

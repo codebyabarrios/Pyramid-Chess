@@ -58,8 +58,18 @@ func set_side(white: bool, texture_path: String):
 	is_player_one = !white
 	$Sprite2D.texture = load(texture_path)
 
+func _get_rank_dir_for_row(row_y: int, board_node: Node) -> int:
+	if row_y == 0:
+		return 0
+	if board_node and board_node.has_method("get_rank_direction"):
+		var dir_from_board: int = board_node.get_rank_direction(row_y)
+		if dir_from_board != 0:
+			return 1 if dir_from_board > 0 else -1
+	return -1 if (row_y % 2 != 0) else 1
+
 func _process(delta):
-	if has_finished or is_frozen: return
+	if has_finished or is_frozen:
+		return
 		
 	var rider_color = "white" if is_white else "black"
 	Gamemanager.apply_idle_drain(rider_color, delta)
@@ -101,12 +111,18 @@ func _process(delta):
 				var new_pos_x = position.x + (buffered_move_direction.x * TILE_SIZE)
 				var new_pos_y = position.y + (buffered_move_direction.y * TILE_SIZE)
 				
-				var min_limit_x = 0; var max_limit_x = 8 * TILE_SIZE
-				var min_limit_y = 0; var max_limit_y = 8 * TILE_SIZE
+				var min_limit_x = 0
+				var max_limit_x = 8 * TILE_SIZE
+				var min_limit_y = 0
+				var max_limit_y = 8 * TILE_SIZE
 				var is_border_jump = false
 				
-				if new_pos_x > max_limit_x: new_pos_x = (0 * TILE_SIZE) + (TILE_SIZE / 2); is_border_jump = true
-				elif new_pos_x < min_limit_x: new_pos_x = (7 * TILE_SIZE) + (TILE_SIZE / 2); is_border_jump = true
+				if new_pos_x > max_limit_x:
+					new_pos_x = (0 * TILE_SIZE) + (TILE_SIZE / 2)
+					is_border_jump = true
+				elif new_pos_x < min_limit_x:
+					new_pos_x = (7 * TILE_SIZE) + (TILE_SIZE / 2)
+					is_border_jump = true
 				
 				var allowed_movement = true
 				var real_target_global_pos = global_position + (buffered_move_direction * TILE_SIZE * global_scale.x)
@@ -136,63 +152,76 @@ func _process(delta):
 						Gamemanager.consume_movement_energy(rider_color)
 						AudioManager.play_jump() 
 						
-						if board_node and board_node.has_method("remove_rider_from_matrix"): board_node.remove_rider_from_matrix(self)
-						if is_border_jump: $Area2D.monitoring = false
+						if board_node and board_node.has_method("remove_rider_from_matrix"):
+							board_node.remove_rider_from_matrix(self)
+						if is_border_jump:
+							$Area2D.monitoring = false
 						
 						previous_move_position = position
 						has_captured_this_turn = false 
 						position.x = new_pos_x
 						position.y = new_pos_y
+						grid_position = Vector2i(clamp(int(position.x / TILE_SIZE), 0, 7), clamp(int(position.y / TILE_SIZE), 0, 7))
 						
 						if is_border_jump:
 							await get_tree().physics_frame
 							$Area2D.monitoring = true
 						
 						is_riding_rank = false
+						direction = 0
 						var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
 						
 						if current_grid_y == 0:
 							var spawn_pos = global_position
 							if is_inside_tree():
 								get_tree().create_timer(0.05).timeout.connect(func():
-									if has_finished: return
+									if has_finished:
+										return
 									if not has_captured_this_turn and is_instance_valid(self):
 										if FLOATING_TEXT_SCENE:
 											var text_instance = FLOATING_TEXT_SCENE.instantiate()
 											if board_node:
 												board_node.add_child(text_instance)
 												text_instance.global_position = spawn_pos
-												if text_instance.has_method("start"): text_instance.start("Coming Back!", Color.ORANGE)
+												if text_instance.has_method("start"):
+													text_instance.start("Coming Back!", Color.ORANGE)
 												elif "label" in text_instance and text_instance.label != null:
 													text_instance.label.text = "Coming Back!"
 													text_instance.label.self_modulate = Color.ORANGE
-										if board_node and board_node.has_method("remove_rider_from_matrix"): board_node.remove_rider_from_matrix(self)
-										is_riding_rank = false; direction = 0
+										if board_node and board_node.has_method("remove_rider_from_matrix"):
+											board_node.remove_rider_from_matrix(self)
+										is_riding_rank = false
+										direction = 0
 										if is_white:
-											position = initial_position_e1; grid_position = Vector2i(4, 7)
-											if board_node and board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 4, 7)
+											position = initial_position_e1
+											grid_position = Vector2i(4, 7)
+											if board_node and board_node.has_method("register_rider_in_matrix"):
+												board_node.register_rider_in_matrix(self, 4, 7)
 										else:
-											position = initial_position_d1; grid_position = Vector2i(3, 7)
-											if board_node and board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 3, 7)
+											position = initial_position_d1
+											grid_position = Vector2i(3, 7)
+											if board_node and board_node.has_method("register_rider_in_matrix"):
+												board_node.register_rider_in_matrix(self, 3, 7)
 								)
-						
-						var has_pieces_in_rank = false
-						for child in get_tree().get_nodes_in_group("chess_pieces"):
-							if is_instance_valid(child) and not child.is_queued_for_deletion():
-								if abs(child.position.y - position.y) < 10.0:
-									has_pieces_in_rank = true
-									break
-						
-						if has_pieces_in_rank:
-							is_riding_rank = true
-							direction = -1 if (current_grid_y % 2 != 0) else 1
+						else:
+							var has_pieces_in_rank = false
+							for child in get_tree().get_nodes_in_group("chess_pieces"):
+								if is_instance_valid(child) and not child.is_queued_for_deletion():
+									if abs(child.position.y - position.y) < 10.0:
+										has_pieces_in_rank = true
+										break
+							
+							if has_pieces_in_rank:
+								is_riding_rank = true
+								direction = _get_rank_dir_for_row(current_grid_y, board_node)
 					
 					buffered_move_direction = Vector2.ZERO
 				else:
 					buffered_move_direction = Vector2.ZERO
 
 func _on_area_entered(touched_area: Area2D) -> void:
-	if "has_finished" in self and has_finished: return
+	if "has_finished" in self and has_finished:
+		return
 	
 	if "type_piece" in touched_area:
 		if touched_area.type_piece == "lightbulb":
@@ -200,47 +229,62 @@ func _on_area_entered(touched_area: Area2D) -> void:
 			touched_area.queue_free()
 			return
 		if touched_area.type_piece == "portal":
-			if touched_area.has_method("trigger_teleport"): touched_area.trigger_teleport(self)
+			if touched_area.has_method("trigger_teleport"):
+				touched_area.trigger_teleport(self)
 			return
 	
 	var piece = touched_area.get_parent()
-	if piece != null:
-		if not "type_piece" in piece: return
-		if piece.type_piece == "king":
-			if "is_white" in piece and piece.is_white != is_white:
-				$Area2D.monitoring = false
-				$Area2D.monitorable = false
-				has_captured_this_turn = true
-				if has_method("_handle_piece_destruction"): _handle_piece_destruction(piece)
-				return
-			if "color" in piece and my_color == piece.color:
-				call_deferred("_damage_piece", piece)
-				return
-		if "is_white" in piece:
-			if piece.is_white == is_white:
-				var board_node = get_parent()
-				var rider_color = "white" if is_white else "black"
-				Gamemanager.process_capture(piece.type_piece, true, rider_color)
-				if board_node and board_node.has_method("remove_rider_from_matrix"): board_node.remove_rider_from_matrix(self)
-				is_riding_rank = false; direction = 0
-				if is_white:
-					position = initial_position_e1; grid_position = Vector2i(4, 7)
-					if board_node and board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 4, 7)
-				else:
-					position = initial_position_d1; grid_position = Vector2i(3, 7)
-					if board_node and board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 3, 7)
-				_check_capture_penalty()
-				return
-		call_deferred("_damage_piece", piece)
+	if piece == null or not ("type_piece" in piece):
+		return
+	if not is_instance_valid(piece) or piece.is_queued_for_deletion():
+		return
+	
+	if piece.type_piece == "king":
+		if "is_white" in piece and piece.is_white != is_white:
+			$Area2D.monitoring = false
+			$Area2D.monitorable = false
+			has_captured_this_turn = true
+			_handle_piece_destruction(piece)
+			return
+		if "color" in piece and my_color == piece.color:
+			call_deferred("_damage_piece", piece)
+			return
+	
+	if "is_white" in piece and piece.is_white == is_white:
+		var board_node = get_parent()
+		var rider_color = "white" if is_white else "black"
+		Gamemanager.process_capture(piece.type_piece, true, rider_color)
+		if board_node and board_node.has_method("remove_rider_from_matrix"):
+			board_node.remove_rider_from_matrix(self)
+		is_riding_rank = false
+		direction = 0
+		if is_white:
+			position = initial_position_e1
+			grid_position = Vector2i(4, 7)
+			if board_node and board_node.has_method("register_rider_in_matrix"):
+				board_node.register_rider_in_matrix(self, 4, 7)
+		else:
+			position = initial_position_d1
+			grid_position = Vector2i(3, 7)
+			if board_node and board_node.has_method("register_rider_in_matrix"):
+				board_node.register_rider_in_matrix(self, 3, 7)
+		_check_capture_penalty()
+		return
+	
+	call_deferred("_damage_piece", piece)
 
 func _damage_piece(piece: Node) -> void:
+	if not is_instance_valid(piece) or piece.is_queued_for_deletion():
+		return
 	var board_node = get_parent()
 	if piece.type_piece == "king":
 		if piece.is_white == is_white:
-			if _check_capture_penalty(): return
+			if _check_capture_penalty():
+				return
 			_check_capture_penalty()
 			var origin_rank = clamp(int(previous_move_position.y / TILE_SIZE), 0, 7)
-			if board_node and board_node.has_method("pause_rank"): board_node.pause_rank(origin_rank, 0.15)
+			if board_node and board_node.has_method("pause_rank"):
+				board_node.pause_rank(origin_rank, 0.15)
 			position = previous_move_position
 			_recalculate_rank_movement()
 			return
@@ -260,11 +304,14 @@ func _damage_piece(piece: Node) -> void:
 	AudioManager.play_slash()
 	if piece.health > 0:
 		var life_bar = piece.get_node_or_null("Area2D/VisualLife")
-		if life_bar != null: _update_life_bar(life_bar, piece.health, max_health)
+		if life_bar != null:
+			_update_life_bar(life_bar, piece.health, max_health)
 		if piece.is_white == is_white:
-			if _check_capture_penalty(): return
+			if _check_capture_penalty():
+				return
 		var origin_rank = clamp(int(previous_move_position.y / TILE_SIZE), 0, 7)
-		if board_node and board_node.has_method("pause_rank"): board_node.pause_rank(origin_rank, 0.15)
+		if board_node and board_node.has_method("pause_rank"):
+			board_node.pause_rank(origin_rank, 0.15)
 		position = previous_move_position
 		_recalculate_rank_movement()
 	else:
@@ -272,9 +319,18 @@ func _damage_piece(piece: Node) -> void:
 
 func _recalculate_rank_movement() -> void:
 	if has_finished:
-		is_riding_rank = false; direction = 0; return
-	is_riding_rank = false
+		is_riding_rank = false
+		direction = 0
+		return
 	var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
+	if current_grid_y == 0:
+		is_riding_rank = false
+		direction = 0
+		return
+	var board_node = get_parent()
+	if is_riding_rank:
+		direction = _get_rank_dir_for_row(current_grid_y, board_node)
+		return
 	var has_pieces_in_rank = false
 	for child in get_tree().get_nodes_in_group("chess_pieces"):
 		if is_instance_valid(child) and not child.is_queued_for_deletion():
@@ -283,15 +339,17 @@ func _recalculate_rank_movement() -> void:
 				break
 	if has_pieces_in_rank:
 		is_riding_rank = true
-		direction = -1 if (current_grid_y % 2 != 0) else 1
-		var board_node = get_parent()
+		direction = _get_rank_dir_for_row(current_grid_y, board_node)
 		if board_node and "movement_timer" in board_node:
 			auto_movement_timer = board_node.movement_timer
 		else:
 			auto_movement_timer = 0.0
 
 func _handle_piece_destruction(piece: Node) -> void:
-	if has_finished: return
+	if has_finished:
+		return
+	if not is_instance_valid(piece) or piece.is_queued_for_deletion():
+		return
 	var board_node = get_parent()
 	var rider_color = "white" if is_white else "black"
 	
@@ -299,30 +357,55 @@ func _handle_piece_destruction(piece: Node) -> void:
 		if piece.is_white != is_white:
 			if piece.has_method("mark_as_captured"):
 				var is_first_capture = piece.mark_as_captured()
-				if not is_first_capture: return 
-			position = piece.position 
-			has_finished = true; is_riding_rank = false; direction = 0
-			if has_node("Area2D"): $Area2D.monitoring = false; $Area2D.monitorable = false
-			if is_white: Gamemanager.white_clock_active = false
-			else: Gamemanager.black_clock_active = false
-			if board_node and board_node.has_method("register_frozen_rider"): board_node.register_frozen_rider(self)
-			if board_node and board_node.has_method("remove_rider_from_matrix"): board_node.remove_rider_from_matrix(self)
+				if not is_first_capture:
+					return
+			position = piece.position
+			grid_position = piece.grid_position if "grid_position" in piece else Vector2i(clamp(int(position.x / TILE_SIZE), 0, 7), clamp(int(position.y / TILE_SIZE), 0, 7))
+			has_finished = true
+			is_riding_rank = false
+			direction = 0
+			if has_node("Area2D"):
+				$Area2D.monitoring = false
+				$Area2D.monitorable = false
+			if is_white:
+				Gamemanager.white_clock_active = false
+			else:
+				Gamemanager.black_clock_active = false
+			if board_node and board_node.has_method("register_frozen_rider"):
+				board_node.register_frozen_rider(self)
+			if board_node and board_node.has_method("remove_rider_from_matrix"):
+				board_node.remove_rider_from_matrix(self)
 			Gamemanager.process_capture(piece.type_piece, false, rider_color, self)
-			piece.queue_free() 
+			piece.queue_free()
 			return
 	
 	if piece.is_white == is_white:
 		var reset_triggered = _check_capture_penalty()
 		capture_pieces(piece, rider_color)
-		if reset_triggered: return
+		if reset_triggered:
+			return
 	else:
-		capture_pieces(piece, rider_color)
-		position = piece.position
-		if "grid_position" in piece: grid_position = piece.grid_position
+		has_captured_this_turn = true
+		buffered_move_direction = Vector2.ZERO
+		is_waiting_for_input = false
 		
-		var current_grid_y = clamp(int(position.y / TILE_SIZE), 0, 7)
-		direction = -1 if (current_grid_y % 2 != 0) else 1
-		is_riding_rank = true
+		var target_pos = piece.position
+		var target_grid = piece.grid_position if "grid_position" in piece else Vector2i(clamp(int(target_pos.x / TILE_SIZE), 0, 7), clamp(int(target_pos.y / TILE_SIZE), 0, 7))
+		var current_grid_y = clamp(int(target_pos.y / TILE_SIZE), 0, 7)
+		
+		var inherited_dir := _get_rank_dir_for_row(current_grid_y, board_node)
+		
+		capture_pieces(piece, rider_color)
+		position = target_pos
+		grid_position = target_grid
+		previous_move_position = position
+		
+		if current_grid_y == 0:
+			is_riding_rank = false
+			direction = 0
+		else:
+			is_riding_rank = true
+			direction = inherited_dir
 		
 		if board_node and "movement_timer" in board_node:
 			auto_movement_timer = board_node.movement_timer
@@ -333,30 +416,38 @@ func _handle_piece_destruction(piece: Node) -> void:
 			board_node.register_rider_in_matrix(self, grid_position.x, grid_position.y)
 
 func _check_capture_penalty() -> bool:
-	if has_finished: return false
+	if has_finished:
+		return false
 	cont_same_color += 1
 	if cont_same_color >= 3:
 		var board_node = get_parent()
 		if not board_node:
-			cont_same_color = 0; return true
+			cont_same_color = 0
+			return true
 		for child in board_node.get_children():
 			if is_instance_valid(child) and not child.is_queued_for_deletion() and "grid_position" in child:
 				if (child.grid_position.x == 3 or child.grid_position.x == 4) and child.grid_position.y == 7:
 					if not ("is_player_one" in child):
-						if board_node.has_method("remove_piece_from_matrix"): board_node.remove_piece_from_matrix(child)
+						if board_node.has_method("remove_piece_from_matrix"):
+							board_node.remove_piece_from_matrix(child)
 						child.queue_free()
-		if board_node.has_method("remove_rider_from_matrix"): board_node.remove_rider_from_matrix(self)
+		if board_node.has_method("remove_rider_from_matrix"):
+			board_node.remove_rider_from_matrix(self)
 		is_riding_rank = false
 		direction = 0
 		buffered_move_direction = Vector2.ZERO
 		is_waiting_for_input = false
 		has_captured_this_turn = false
 		if is_white:
-			position = initial_position_e1; grid_position = Vector2i(4, 7)
-			if board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 4, 7)
+			position = initial_position_e1
+			grid_position = Vector2i(4, 7)
+			if board_node.has_method("register_rider_in_matrix"):
+				board_node.register_rider_in_matrix(self, 4, 7)
 		else:
-			position = initial_position_d1; grid_position = Vector2i(3, 7)
-			if board_node.has_method("register_rider_in_matrix"): board_node.register_rider_in_matrix(self, 3, 7)
+			position = initial_position_d1
+			grid_position = Vector2i(3, 7)
+			if board_node.has_method("register_rider_in_matrix"):
+				board_node.register_rider_in_matrix(self, 3, 7)
 		previous_move_position = position
 		cont_same_color = 0
 		return true
