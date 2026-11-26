@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://tagfcr7sqktk"]
+
+[ext_resource type="Script" uid="uid://b4ob1g7f0ilkr" path="res://scenes/pause_menu.gd" id="1_etnfi"]
+[ext_resource type="FontFile" uid="uid://ddrqaayd8ok8m" path="res://upheavtt.ttf" id="1_nov15"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nov15"]
+bg_color = Color(0.078431375, 0.078431375, 0.09411765, 1)
+
+[node name="PauseMenu_tscn" type="CanvasLayer" unique_id=1699930732]
+script = ExtResource("1_etnfi")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=50167005]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72156864)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1247916824]
+custom_minimum_size = Vector2(260, 320)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -81.5
+offset_right = 52.0
+offset_bottom = 81.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nov15")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=131226539]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer" unique_id=1839954494]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nov15")
+theme_override_font_sizes/font_size = 24
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer" unique_id=388276931]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nov15")
+theme_override_font_sizes/font_size = 24
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="Panel/VBoxContainer" unique_id=1786263976]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nov15")
+theme_override_font_sizes/font_size = 24
+text = "RESTART"
+
+[node name="AudioButton" type="Button" parent="Panel/VBoxContainer" unique_id=2044331109]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nov15")
+theme_override_font_sizes/font_size = 24
+text = "AUDIO: ON"
+
+[node name="MenuButton" type="Button" parent="Panel/VBoxContainer" unique_id=292613325]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_nov15")
+theme_override_font_sizes/font_size = 24
+text = "MAIN MENU"

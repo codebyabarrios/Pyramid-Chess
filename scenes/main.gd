@@ -18,6 +18,6 @@ func _ready():
 	Gamemanager.game_active = true
 
 func _on_window_resized():
-	await get_tree().process_frame
+	await get_tree().process_framess
 	
 	viewport.size = container.size
