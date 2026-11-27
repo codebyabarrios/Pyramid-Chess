@@ -1,7 +1,7 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1795727823
+::res://::1795803338
 ARCADECLASSIC.TTF::FontFile::3704573761839533179::1783895211::1785703809::1::::<><><>0<>0<>49b05b8bd7e4fc7cab7a13ab3a5e139f<>res://.godot/imported/ARCADECLASSIC.TTF-4aef9f254f11210c6b95362e3ee1751d.fontdata::
-AudioManager.gd::GDScript::8791802346638091956::1786953230::0::1::::<>Node<><>0<>0<><>::
+AudioManager.gd::GDScript::8791802346638091956::1795743358::0::1::::<>Node<><>0<>0<><>::
 background_mosaic.png::CompressedTexture2D::3616278710867777593::1783729440::1785703809::1::::<><><>0<>0<>f9bf5e50be96940baddf2402c5aa545a<>res://.godot/imported/background_mosaic.png-ae748b1ec936ec284403e6f5a06fb63d.ctex::
 Black Rider B&W Target.png::CompressedTexture2D::945718810674045320::1789622310::1789622324::1::::<><><>0<>0<>0bbb137576614c5a944df122979e43c1<>res://.godot/imported/Black Rider B&W Target.png-04f1eabb9c322a40de4f80e43b8f5413.ctex::
 Black Rider Beige Target.png::CompressedTexture2D::7358221751717484191::1789622019::1789622020::1::::<><><>0<>0<>6d2aa925f63d252fc6a497e096bf8297<>res://.godot/imported/Black Rider Beige Target.png-c0ddc065d1315c17e8b9be247a5aa2d1.ctex::
@@ -11,7 +11,7 @@ board_2d.tscn::PackedScene::5345570941739636764::1788026668::0::1::::<><><>0<>0<
 export_presets.cfg::TextFile::-1::1789626509::0::1::::<><><>0<>0<><>::
 FloatingText.tscn::PackedScene::6224347219124777623::1783974183::0::1::::<><><>0<>0<><>::uid://b4rium32iel1i::::res://floating_text.gd<>uid://cw110uaky2h3e::::res://PressStart2P.ttf
 floating_text.gd::GDScript::4457513697607629352::1784772907::0::1::::<>Node2D<><>0<>0<><>::
-gamemanager.gd::GDScript::898665472287419826::1795554094::0::1::::<>Node<><>0<>0<><>::
+gamemanager.gd::GDScript::898665472287419826::1795749636::0::1::::<>Node<><>0<>0<><>::
 Global.gd::GDScript::1078787049191613963::1789598481::0::1::::<>Node<><>0<>0<><>::
 icon.svg::CompressedTexture2D::273730838333825194::1781649852::1785703809::1::::<><><>0<>0<>334706025345ffa95d161913ceeb143d<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 Lightbulb.gd::GDScript::6698138465297017111::1787854241::0::1::::Lightbulb<>Area2D<><>0<>0<><>::
@@ -36,13 +36,15 @@ godot_super-wakatime.gd::GDScript::6277149880384411866::1786307961::0::1::::<>Ed
 plugin.cfg::TextFile::-1::1786307962::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1786307961::0::1::::<><><>0<>0<><>::
 utils.gd::GDScript::5251015809120159908::1786307962::0::1::::<>RefCounted<><>0<>0<><>::
-::res://audio/::1786942146
+::res://audio/::1795733670
 Countdown.mp3::AudioStreamMP3::452851163950341516::1786942135::1786942146::1::::<><><>0<>0<>5ed97dc82479c193ed6a9aae047da232<>res://.godot/imported/Countdown.mp3-a4324aee705778f294c90af64d764011.mp3str::
 Easy music level final.mp3::AudioStreamMP3::8311642599516413539::1786938180::1786938707::1::::<><><>0<>0<>ab1d804c9f1c51f6c5ba9efc1addb01e<>res://.godot/imported/Easy music level final.mp3-703978a68a97410308b7639f1bd2ec4b.mp3str::
 error.mp3::AudioStreamMP3::37894090779333700::1786938259::1786938707::1::::<><><>0<>0<>c4e9c5c8c97bad2d68b503fb871b1b9f<>res://.godot/imported/error.mp3-e904d198a343e1da5de4876587f3ccef.mp3str::
 final-round.mp3::AudioStreamMP3::8495164896088522862::1786938556::1786938707::1::::<><><>0<>0<>e4e1bfc0350c9c6aa7e5f071f96cfc94<>res://.godot/imported/final-round.mp3-b2a658c766f7aa6fa7f6582c9c7f71b0.mp3str::
 game-over.mp3::AudioStreamMP3::326746999064769793::1786938584::1786938707::1::::<><><>0<>0<>389207082737929053c25c506e25c359<>res://.godot/imported/game-over.mp3-fe7942b616f89fb0737d793d3a0e258c.mp3str::
 Hard music level final.mp3::AudioStreamMP3::3302731667410452878::1786938166::1786938707::1::::<><><>0<>0<>5cfddb4d2925177a83aa45ba0f7dd2b3<>res://.godot/imported/Hard music level final.mp3-04b9384d5fb78910350ddc71eadca735.mp3str::
+health_critical.wav::AudioStreamWAV::6107520999059910188::1795733259::1795733670::1::::<><><>0<>0<>11014d5439aa9d58ed6ccccdc34d492e<>res://.godot/imported/health_critical.wav-d02e2e0a06d30d7794e389a37d882f4c.sample::
+health_hurt.wav::AudioStreamWAV::6702200282535758739::1795733253::1795733670::1::::<><><>0<>0<>0ad227df35dee197c071f8e0f55b6c46<>res://.godot/imported/health_hurt.wav-729010f1af3c3ae5bcb7de218ff82c0b.sample::
 Main Menu.mp3::AudioStreamMP3::3652135502555963561::1786668098::1786938707::1::::<><><>0<>0<>12d952ebccfd4b89c12c9864713e0d88<>res://.godot/imported/Main Menu.mp3-569227874168dc01f2d66ef01cf47b1e.mp3str::
 Medium music level final.mp3::AudioStreamMP3::476289577526715540::1786938173::1786938707::1::::<><><>0<>0<>09d0759a73b77e5d81d766eb6f5c0978<>res://.godot/imported/Medium music level final.mp3-7b777c1cb2fcb31fc63a056be2e4870a.mp3str::
 pieces killed.mp3::AudioStreamMP3::4898859850850332691::1786938324::1786938707::1::::<><><>0<>0<>cb6fc1f4407d84153de2fc27eb620a02<>res://.godot/imported/pieces killed.mp3-741737ff69cb71b47733d0a7ca16099c.mp3str::
@@ -149,7 +151,7 @@ index.png::CompressedTexture2D::5992327802549035139::1783196694::1785703809::1::
 index.apple-touch-icon.png::CompressedTexture2D::4317840576328868892::1783373641::1785703809::1::::<><><>0<>0<>c0b7e6fa687476b1c47b97a6f816bff5<>res://.godot/imported/index.apple-touch-icon.png-4c9bea7fa33fa5bbd186dba0944b5af0.ctex::
 index.icon.png::CompressedTexture2D::2343987226212015929::1783373641::1785703809::1::::<><><>0<>0<>7419ea0a62de61d4f1a80b508934fdc4<>res://.godot/imported/index.icon.png-b2947b158ac19b950244b3ec1bd60a85.ctex::
 index.png::CompressedTexture2D::8337448504823278501::1783373641::1785703809::1::::<><><>0<>0<>1a2f514492586fee88ba6b22621bccbe<>res://.godot/imported/index.png-5436a4f5857555a17a01c5e6bdbb5c35.ctex::
-::res://scenes/::1795727812
+::res://scenes/::1795750863
 board.gd::GDScript::3463851040145630650::1795639521::0::1::::<>Node2D<><>0<>0<><>::
 camera_2d.gd::GDScript::8877469077054172801::1795473450::0::1::::<>Camera2D<><>0<>0<><>::
 final_winner_panel.gd::GDScript::8816875822945425135::1786328352::0::1::::<>CanvasLayer<><>0<>0<><>::
@@ -159,7 +161,7 @@ game_over_panel.tscn::PackedScene::2648850829767403165::1786244241::0::1::::<><>
 main.gd::GDScript::5563624347564721042::1795721445::0::1::::<>Node2D<><>0<>0<><>::
 main.tscn::PackedScene::946813486243275826::1795722115::0::1::::<><><>0<>0<><>::uid://cifo1i558nk3e::::res://board_2d.tscn<>uid://brr0t123mr6jd::::res://background_mosaic.png<>uid://dm7cwttgoiago::::res://scenes/score_interface.gd<>uid://dyqkvbg1r65b6::::res://scenes/camera_2d.gd<>uid://cw110uaky2h3e::::res://PressStart2P.ttf<>uid://bs1r12vvjfutn::::res://ARCADECLASSIC.TTF<>uid://bd0eglhac18dd::::res://scenes/game_over_panel.tscn<>uid://ddfrfpibnqrat::::res://scenes/final_winner_panel.tscn<>uid://tagfcr7sqktk::::res://PauseMenu.tscn
 pause_menu.gd::GDScript::4450905950221926017::1795727812::0::1::::<>CanvasLayer<><>0<>0<><>::
-score_interface.gd::GDScript::8067750011903617786::1788411766::0::1::::<>Control<><>0<>0<><>::
+score_interface.gd::GDScript::8067750011903617786::1795750863::0::1::::<>Control<><>0<>0<><>::
 ::res://scenes/bishop/::1789614092
 bishop.gd::GDScript::2473326628692851384::1789614092::0::1::::<>Node2D<><>0<>0<><>::
 bishop.tscn::PackedScene::6568724864599697914::1788027005::0::1::::<><><>0<>0<><>::uid://bbidlfoih354w::::res://scenes/bishop/bishop.gd<>uid://dg0qr82aigfvm::::res://scenes/bishop/White Bishop.png
@@ -193,13 +195,13 @@ White Knight Beige.png::CompressedTexture2D::3505945059807414322::1789319951::17
 White Knight Retro.png::CompressedTexture2D::6779581209829260902::1789597583::1789597593::1::::<><><>0<>0<>932c437475bd47f0234ab20c4a8606a1<>res://.godot/imported/White Knight Retro.png-9e3cf58636adddc684fca66cb6752760.ctex::
 White Knight Warhol.png::CompressedTexture2D::5741810633342409263::1789320287::1789320299::1::::<><><>0<>0<>0386f1b44c8d0f06c26602ae52fb6ea1<>res://.godot/imported/White Knight Warhol.png-11608e64d2972a84a6e40b50c3d2b99d.ctex::
 White Knight.png::CompressedTexture2D::8037232295990973976::1786687181::1786946181::1::::<><><>0<>0<>a5367dc5b2c0031df8411b4ba5b98f81<>res://.godot/imported/White Knight.png-e4033995894c02d50d110ba48dacbeee.ctex::
-::res://scenes/main character/::1795637999
+::res://scenes/main character/::1795743358
 Black Rider Beige.png::CompressedTexture2D::4466224052672412476::1789320000::1789320010::1::::<><><>0<>0<>587f893a8c0bbfb3006a8fb3c4f53dca<>res://.godot/imported/Black Rider Beige.png-d4812c6471fb8968b678a2e288b7a69c.ctex::
 Black Rider Retro.png::CompressedTexture2D::7459571326161711790::1789597733::1789597743::1::::<><><>0<>0<>84d25c3e283fec0d3949bd2afb56ffbd<>res://.godot/imported/Black Rider Retro.png-eeb2c56373861e598f5dd319a12fbc20.ctex::
 Black Rider Warhol.png::CompressedTexture2D::4970295903934708859::1789320330::1789320339::1::::<><><>0<>0<>3f0fa1aa1a161189e89adb1213903881<>res://.godot/imported/Black Rider Warhol.png-0003395b3ecea506c97542eb7baa61bc.ctex::
 Black Rider.png::CompressedTexture2D::4008897354821103836::1786652112::1786661125::1::::<><><>0<>0<>2dfc5003a72f124b3a25d346e203249a<>res://.godot/imported/Black Rider.png-a801fd6e046f485471b5bd0427f837af.ctex::
 main character.tscn::PackedScene::6179730098071991820::1788026973::0::1::::<><><>0<>0<><>::uid://bxq2ulvsbtdfu::::res://scenes/main character/main_character.gd<>uid://wrfncl1r6jgs::::res://scenes/main character/White Rider.png
-main_character.gd::GDScript::4035469817133263474::1795637999::0::1::::<>Node2D<><>0<>0<><>::
+main_character.gd::GDScript::4035469817133263474::1795743358::0::1::::<>Node2D<><>0<>0<><>::
 White Rider Beige Target.png::CompressedTexture2D::2718899617978876183::1789621940::1789621940::1::::<><><>0<>0<>46e3b7e5685af3ec24e394be1c8848f4<>res://.godot/imported/White Rider Beige Target.png-aa7249495ac8c6208852bfad12a7b08b.ctex::
 White Rider Beige.png::CompressedTexture2D::2499354078585526460::1789319987::1789319996::1::::<><><>0<>0<>1722b9f90c3645acd6b3ee811fdf0df8<>res://.godot/imported/White Rider Beige.png-de9fd318b31f04e56c5697a269ba5e6d.ctex::
 White Rider Retro.png::CompressedTexture2D::2929867541089106287::1789597718::1789597732::1::::<><><>0<>0<>2b4eb018112243c14da627fafdc09848<>res://.godot/imported/White Rider Retro.png-1c34a93eaa578b94417e319f8c1ca36a.ctex::

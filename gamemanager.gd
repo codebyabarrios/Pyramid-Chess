@@ -302,15 +302,7 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 		black_points = current_points
 	
 	if same_color:
-		AudioManager.play_error()
-		if rider_color == "white":
-			white_health -= 1
-		else:
-			black_health -= 1
-		
-		var s_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
-		if s_interface and s_interface.has_method("update_hearts"):
-			s_interface.update_hearts()
+		_handle_player_damage(rider_color)
 		
 		if white_health <= 0 or black_health <= 0:
 			is_game_over_triggered = true
@@ -331,7 +323,7 @@ func process_capture(piece_type: String, same_color: bool, rider_color: String, 
 			
 			_disable_all_boards_processing()
 			var loser_name = "Player 1" if white_health <= 0 else "Player 2"
-			_trigger_panel_display(loser_name + " Died!")
+			_trigger_panel_display(loser_name + "Died!")
 			return
 	
 	var score_interface = get_tree().current_scene.find_child("ScoreInterface", true, false)
@@ -413,6 +405,14 @@ func _trigger_panel_display(reason: String):
 	get_tree().paused = true
 
 func _on_next_round_pressed() -> void:
+	AudioManager.stop_heartbeat_sound()
+	for rider in get_tree().get_nodes_in_group("players"):
+		if is_instance_valid(rider) and rider.has_method("stop_critical_pulse"):
+			rider.stop_critical_pulse()
+	var s_ui := get_tree().current_scene.find_child("ScoreInterface", true, false) if get_tree().current_scene else null
+	if s_ui and s_ui.has_method("stop_all_critical_hud"):
+		s_ui.stop_all_critical_hud()
+		
 	get_tree().paused = false
 	var main_scene = get_tree().current_scene
 	if not main_scene:
@@ -688,3 +688,69 @@ func eat_lightbulb(was_on: bool):
 		is_board_dark = true
 		if current_darkness:
 			tween.tween_property(current_darkness, "color", Color("#050510"), 1.0)
+
+func _handle_player_damage(rider_color: String) -> void:
+	var remaining: int = 0
+	if rider_color == "white":
+		white_health = max(white_health -1, 0)
+		remaining = white_health
+	else:
+		black_health = max(black_health - 1, 0)
+		remaining = black_health
+	
+	if remaining == 2:
+		AudioManager.play_health_hurt()
+	elif remaining == 1:
+		AudioManager.play_health_critical_sfx()
+	else:
+		AudioManager.play_error()
+	
+	var target_rider := _find_rider_by_color(rider_color)
+	if target_rider != null and target_rider.has_method("spawn_broken_heart"):
+		target_rider.spawn_broken_heart()
+	
+	var s_interface := get_tree().current_scene.find_child("ScoreInterface", true, false)
+	if s_interface:
+		if s_interface.has_method("flash_hud_panel"):
+			s_interface.flash_hud_panel()
+		if s_interface.has_method("on_player_lost_health"):
+			s_interface.on_player_lost_health(rider_color, remaining)
+		elif s_interface.has_method("update_hearts"):
+			s_interface.update_hearts()
+	
+	if remaining == 1:
+		if target_rider != null and target_rider.has_method("start_critical_pulse"):
+			target_rider.start_critical_pulse()
+	elif remaining <= 0:
+		if target_rider != null and target_rider.has_method("stop_critical_pulse"):
+			target_rider.stop_critical_pulse()
+	
+	_do_hitstop_and_shake(0.06, 5.0)
+
+func _find_rider_by_color(rider_color: String) -> Node:
+	var want_white := (rider_color == "white")
+	for p in get_tree().get_nodes_in_group("players"):
+		if is_instance_valid(p) and "is_white" in p and p.is_white == want_white:
+			return p
+	return null
+
+func _do_hitstop_and_shake(freeze_seconds: float = 0.06, shake_px: float = 5.0) -> void:
+	Engine.time_scale = 0.05
+	await get_tree().create_timer(freeze_seconds, true, false, true).timeout
+	Engine.time_scale = 1.0
+	
+	var board := _get_main_board()
+	if board == null or not is_instance_valid(board):
+		return
+	
+	var base_pos: Vector2 = board.position
+	var t := create_tween()
+	t.tween_property(board, "position", base_pos + Vector2(shake_px, -shake_px * 0.5), 0.035)
+	t.tween_property(board, "position", base_pos + Vector2(-shake_px * 0.8, shake_px * 0.5), 0.035)
+	t.tween_property(board, "position", base_pos + Vector2(shake_px * 0.4, 0.0), 0.035)
+	t.tween_property(board, "position", base_pos, 0.04)
+	t.chain().tween_callback(func():
+		var s_ui := get_tree().current_scene.find_child("ScoreInterface", true, false) if get_tree().current_scene else null
+		if s_ui and s_ui.has_method("ensure_hud_visible"):
+			s_ui.ensure_hud_visible()
+	)

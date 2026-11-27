@@ -30,6 +30,9 @@ var previous_move_position = Vector2.ZERO
 var has_captured_this_turn: bool = false
 var has_finished: bool = false
 
+var _broken_heart_texture: Texture2D = null
+var _critical_pulse_tween: Tween = null
+
 func _ready() -> void:
 	$Area2D.area_entered.connect(_on_area_entered)
 	add_to_group("players")
@@ -537,3 +540,85 @@ func _show_finish_banner() -> void:
 	canvas.add_child(label)
 	await get_tree().create_timer(2.5).timeout
 	canvas.queue_free()
+
+func start_critical_pulse() -> void:
+	if not has_node("Sprite2D"):
+		return
+	var spr := $Sprite2D as CanvasItem
+	stop_critical_pulse()
+	
+	_critical_pulse_tween = create_tween()
+	_critical_pulse_tween.set_loops()
+	_critical_pulse_tween.tween_property(spr, "modulate", Color(1.0, 0.5, 0.5, 1.0), 1.0)
+	_critical_pulse_tween.tween_property(spr, "modulate", Color.WHITE, 1.0)
+
+func stop_critical_pulse() -> void:
+	if _critical_pulse_tween != null and _critical_pulse_tween.is_valid():
+		_critical_pulse_tween.kill()
+	_critical_pulse_tween = null
+	if has_node("Sprite2D"):
+		$Sprite2D.modulate = Color.WHITE
+
+func _get_or_create_broken_heart_texture() -> Texture2D:
+	if _broken_heart_texture != null:
+		return _broken_heart_texture
+	
+	var size := 24
+	var img := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	
+	var fill_color := Color(1.0, 0.15, 0.25, 1.0)
+	var border_color := Color(0.12, 0.02, 0.05, 1.0)
+	
+	for py in range(size):
+		for px in range(size):
+			var nx := (float(px) / float(size - 1)) * 2.6 - 1.3
+			var ny := -((float(py) / float(size - 1)) * 2.6 - 1.2)
+			
+			var a := nx * nx + ny * ny - 1.0
+			var inside := (a * a * a) - (nx * nx * ny * ny * ny) <= 0.0
+			
+			if inside:
+				var gap_x := 0
+				if absf(nx) < 0.08:
+					continue
+				if nx < 0.0:
+					gap_x = -1
+				else:
+					gap_x = 1
+				
+				var target_x := clampi(px + gap_x, 0, size - 1)
+				img.set_pixel(target_x, py, fill_color)
+	
+	for py in range(1, size - 1):
+		for px in range(1, size -1):
+			if img.get_pixel(px, py).a == 0.0:
+				var near_heart := (
+					img.get_pixel(px - 1, py).a > 0.0
+					or img.get_pixel(px + 1, py).a > 0.0
+					or img.get_pixel(px, py - 1).a > 0.0
+					or img.get_pixel(px, py + 1).a > 0.0
+				)
+				if near_heart:
+					img.set_pixel(px, py, border_color)
+	
+	_broken_heart_texture = ImageTexture.create_from_image(img)
+	return _broken_heart_texture
+
+func spawn_broken_heart() -> void:
+	var parent_board := get_parent()
+	if parent_board == null:
+		return
+	
+	var broken := Sprite2D.new()
+	broken.texture = _get_or_create_broken_heart_texture()
+	broken.global_position = global_position + Vector2(0, -28)
+	broken.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	broken.z_index = 90
+	parent_board.add_child(broken)
+	
+	var t := create_tween()
+	t.set_parallel(true)
+	t.tween_property(broken, "position:y", broken.position.y - 20.0, 0.6)
+	t.tween_property(broken, "modulate:a", 0.0, 0.6)
+	t.chain().tween_callback(broken.queue_free)

@@ -22,6 +22,12 @@ var prev_b_stun: bool = false
 var prev_w_energy: float = 100.0
 var prev_b_energy: float = 100.0
 
+var white_pulse_tween: Tween = null
+var black_pulse_tween: Tween = null
+var panel_flash_tween: Tween = null
+var right_panel_node: Control = null
+var right_panel_original_modulate: Color = Color.WHITE
+
 func _ready():
 	self.process_mode = Node.PROCESS_MODE_ALWAYS
 	self.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -30,7 +36,13 @@ func _ready():
 	black_score_label = find_child("BlackPoints", true, false)
 	white_history = find_child("WhiteHistory", true, false)
 	black_history = find_child("BlackHistory", true, false)
-
+	
+	right_panel_node = find_child("ControlDerecha", true, false)
+	if right_panel_node == null:
+		right_panel_node = find_child("RightControl", true, false)
+	if right_panel_node != null:
+		right_panel_original_modulate = right_panel_node.modulate
+	
 	white_clock_label = _create_ui_clock()
 	black_clock_label = _create_ui_clock()
 	white_hearts_box = _create_ui_hearts()
@@ -159,8 +171,11 @@ func _show_ui_popup(msg: String, side: String, color: Color):
 	tween.chain().tween_callback(lbl.queue_free)
 
 func update_score_labels() -> void:
-	if is_instance_valid(white_score_label) and is_instance_valid(black_score_label):
+	if is_instance_valid(white_score_label):
+		white_score_label.visible = true
 		white_score_label.text = Gamemanager.format_points(Gamemanager.white_points) + " PTS"
+	if is_instance_valid(black_score_label):
+		black_score_label.visible = true
 		black_score_label.text = Gamemanager.format_points(Gamemanager.black_points) + " PTS"
 
 func add_operation_to_history(rider_color: String, operation_text: String, text_color: Color) -> void:
@@ -196,12 +211,15 @@ func _create_ui_hearts() -> HBoxContainer:
 	for i in range(3):
 		var heart = Label.new()
 		heart.text = "♥" 
+		heart.custom_minimum_size = Vector2(28, 28)
+		heart.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		heart.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		var settings = LabelSettings.new()
 		settings.font = load("res://PressStart2P.ttf")
 		settings.font_size = 22
-		settings.font_color = Color("#ff2222") 
-		settings.outline_size = 4
-		settings.outline_color = Color.BLACK
+		settings.font_color = Color("#ff2222")
+		settings.outline_size = 5
+		settings.outline_color = Color(0.75, 0.75, 0.75, 0.75)
 		heart.label_settings = settings
 		box.add_child(heart)
 	return box
@@ -224,11 +242,137 @@ func update_hearts():
 			black_hearts_box.visible = false
 
 func _update_heart_box(box: HBoxContainer, health: int):
-	if not is_instance_valid(box): return
+	if not is_instance_valid(box):
+		return
 	for i in range(box.get_child_count()):
-		var heart = box.get_child(i) as Label
-		if i < health: heart.modulate = Color(1.0, 1.0, 1.0, 1.0) 
-		else: heart.modulate = Color(0.2, 0.2, 0.2, 1.0) 
+		var heart = box.get_child(i) as Control
+		if heart == null:
+			continue
+		heart.custom_minimum_size = Vector2(28, 28)
+		if i < health:
+			heart.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			if health != 1 or i != 0:
+				heart.scale = Vector2.ONE
+		else:
+			heart.scale = Vector2.ONE
+			heart.modulate = Color(0.45, 0.45, 0.45, 0.55)
+
+func ensure_hud_visible() -> void:
+	if is_instance_valid(white_score_label):
+		white_score_label.visible = true
+		white_score_label.modulate = Color.WHITE
+	if is_instance_valid(black_score_label):
+		black_score_label.visible = true
+		black_score_label.modulate = Color.WHITE
+	if is_instance_valid(white_clock_label):
+		white_clock_label.visible = true
+		white_clock_label.modulate = Color.WHITE
+	if is_instance_valid(black_clock_label):
+		black_clock_label.visible = true
+		black_clock_label.modulate = Color.WHITE
+	_reposition_ui()
+
+func flash_hud_panel() -> void:
+	var targets: Array[CanvasItem] = []
+	if is_instance_valid(white_hearts_box):
+		targets.append(white_hearts_box)
+	if is_instance_valid(black_hearts_box) and black_hearts_box.visible:
+		targets.append(black_hearts_box)
+	
+	for item in targets:
+		item.modulate = Color(1.6, 0.3, 0.3, 1.0)
+		var t := create_tween()
+		t.tween_property(item, "modulate", Color.WHITE, 0.3)
+
+func on_player_lost_health(side: String, new_health: int) -> void:
+	var box := white_hearts_box if side == "white" else black_hearts_box
+	if not is_instance_valid(box):
+		ensure_hud_visible()
+		return
+	
+	update_hearts()
+	_refresh_critical_heartbeat()
+	
+	var lost_index := clampi(new_health, 0, box.get_child_count() - 1)
+	var heart := box.get_child(lost_index) as Control
+	if is_instance_valid(heart):
+		var pivot := heart.get_combined_minimum_size() * 0.5
+		heart.pivot_offset = pivot
+		heart.modulate = Color(1.8, 1.8, 1.8, 1.0)
+		heart.scale = Vector2(1.3, 1.3)
+		var t := create_tween()
+		t.set_parallel(true)
+		t.tween_property(heart, "scale", Vector2.ONE, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		t.tween_property(heart, "modulate", Color(0.45, 0.45, 0.45, 0.55), 0.25)
+	
+	ensure_hud_visible()
+
+func _refresh_critical_heartbeat() -> void:
+	var white_crit := (Gamemanager.white_health == 1 and Gamemanager.active_game and not Gamemanager.is_game_over_triggered)
+	var black_crit := (Gamemanager.black_health == 1 and Gamemanager.active_game and not Gamemanager.is_game_over_triggered)
+	
+	if white_crit:
+		_start_heart_loop("white")
+	else:
+		_stop_heart_loop("white")
+	
+	if black_crit:
+		_start_heart_loop("black")
+	else:
+		_stop_heart_loop("black")
+	
+	if not white_crit and not black_crit:
+		AudioManager.stop_heartbeat_sound()
+
+func _start_heart_loop(side: String) -> void:
+	var box := white_hearts_box if side == "white" else black_hearts_box
+	if not is_instance_valid(box) or not box.visible or box.get_child_count() == 0:
+		return
+	
+	var last_heart := box.get_child(0) as Control
+	if not is_instance_valid(last_heart):
+		return
+	
+	_stop_heart_loop(side)
+	last_heart.pivot_offset = last_heart.get_combined_minimum_size() * 0.5
+	
+	var beat_len := AudioManager.get_critical_duration()
+	var half_beat := beat_len * 0.5
+	
+	var tween := create_tween()
+	tween.set_loops()
+	tween.tween_callback(func():
+		if Gamemanager.active_game and not Gamemanager.is_game_over_triggered:
+			AudioManager.play_heartbeat_beat()
+	)
+	tween.tween_property(last_heart, "scale", Vector2(1.25, 1.25), half_beat)
+	tween.tween_property(last_heart, "scale", Vector2(1.0, 1.0), half_beat)
+	
+	if side == "white":
+		white_pulse_tween = tween
+	else:
+		black_pulse_tween = tween
+
+func _stop_heart_loop(side: String) -> void:
+	var box := white_hearts_box if side == "white" else black_hearts_box
+	if side == "white":
+		if white_pulse_tween != null and white_pulse_tween.is_valid():
+			white_pulse_tween.kill()
+		white_pulse_tween = null
+	else:
+		if black_pulse_tween != null and black_pulse_tween.is_valid():
+			black_pulse_tween.kill()
+		black_pulse_tween = null
+	
+	if is_instance_valid(box) and box.get_child_count() > 0:
+		var last_heart := box.get_child(0) as Control
+		if is_instance_valid(last_heart):
+			last_heart.scale = Vector2.ONE
+
+func stop_all_critical_hud() -> void:
+	_stop_heart_loop("white")
+	_stop_heart_loop("black")
+	AudioManager.stop_heartbeat_sound()
 
 func _create_ui_clock() -> Label:
 	var label = Label.new()
@@ -288,76 +432,79 @@ func _update_energy_bar_colors():
 		black_energy_bar.add_theme_stylebox_override("fill", fg)
 
 func _reposition_ui() -> void:
-	var clock_y = size.y - 80.0 
-	var hearts_offset_y = 100.0 
-	var energy_offset_y = 145.0 
+	var clock_y = size.y - 80.0
+	var hearts_offset_y = 100.0
+	var energy_offset_y = 145.0
 
 	if Global.total_players == 1:
 		if Global.selected_side == "white":
 			if is_instance_valid(white_score_label):
+				white_score_label.visible = true
 				var center_x = white_score_label.global_position.x + (white_score_label.size.x / 2.0)
 				if is_instance_valid(white_clock_label):
-					white_clock_label.position = Vector2(center_x - 70.0, clock_y)
+					white_clock_label.global_position = Vector2(center_x - 70.0, clock_y)
 					white_clock_label.visible = true
 				if is_instance_valid(white_hearts_box):
 					var half_w = white_hearts_box.get_minimum_size().x / 2.0
-					white_hearts_box.position = Vector2(center_x - half_w, white_score_label.global_position.y - hearts_offset_y)
+					white_hearts_box.global_position = Vector2(center_x - half_w, white_score_label.global_position.y - hearts_offset_y)
 					white_hearts_box.visible = true
 				if is_instance_valid(white_energy_bar):
 					var half_bar = white_energy_bar.custom_minimum_size.x / 2.0
-					white_energy_bar.position = Vector2(center_x - half_bar, white_score_label.global_position.y - energy_offset_y)
+					white_energy_bar.global_position = Vector2(center_x - half_bar, white_score_label.global_position.y - energy_offset_y)
 					white_energy_bar.visible = true
-					
-			if is_instance_valid(black_clock_label): black_clock_label.queue_free() 
-			if is_instance_valid(black_hearts_box): black_hearts_box.queue_free() 
+
+			if is_instance_valid(black_clock_label): black_clock_label.queue_free()
+			if is_instance_valid(black_hearts_box): black_hearts_box.queue_free()
 			if is_instance_valid(black_energy_bar): black_energy_bar.queue_free()
 		else:
 			if is_instance_valid(black_score_label):
+				black_score_label.visible = true
 				var center_x = black_score_label.global_position.x + (black_score_label.size.x / 2.0)
 				if is_instance_valid(black_clock_label):
-					black_clock_label.position = Vector2(center_x - 70.0, clock_y)
+					black_clock_label.global_position = Vector2(center_x - 70.0, clock_y)
 					black_clock_label.visible = true
 				if is_instance_valid(black_hearts_box):
 					var half_w = black_hearts_box.get_minimum_size().x / 2.0
-					black_hearts_box.position = Vector2(center_x - half_w, black_score_label.global_position.y - hearts_offset_y)
+					black_hearts_box.global_position = Vector2(center_x - half_w, black_score_label.global_position.y - hearts_offset_y)
 					black_hearts_box.visible = true
 				if is_instance_valid(black_energy_bar):
 					var half_bar = black_energy_bar.custom_minimum_size.x / 2.0
-					black_energy_bar.position = Vector2(center_x - half_bar, black_score_label.global_position.y - energy_offset_y)
+					black_energy_bar.global_position = Vector2(center_x - half_bar, black_score_label.global_position.y - energy_offset_y)
 					black_energy_bar.visible = true
-					
-			if is_instance_valid(white_clock_label): white_clock_label.queue_free() 
-			if is_instance_valid(white_hearts_box): white_hearts_box.queue_free() 
-			if is_instance_valid(white_energy_bar): white_energy_bar.queue_free() 
+
+			if is_instance_valid(white_clock_label): white_clock_label.queue_free()
+			if is_instance_valid(white_hearts_box): white_hearts_box.queue_free()
+			if is_instance_valid(white_energy_bar): white_energy_bar.queue_free()
 	else:
 		if is_instance_valid(white_score_label):
+			white_score_label.visible = true
 			var center_x1 = white_score_label.global_position.x + (white_score_label.size.x / 2.0)
 			if is_instance_valid(white_clock_label):
-				white_clock_label.position = Vector2(center_x1 - 70.0, clock_y)
+				white_clock_label.global_position = Vector2(center_x1 - 70.0, clock_y)
 				white_clock_label.visible = true
 			if is_instance_valid(white_hearts_box):
 				var half_w1 = white_hearts_box.get_minimum_size().x / 2.0
-				white_hearts_box.position = Vector2(center_x1 - half_w1, white_score_label.global_position.y - hearts_offset_y)
+				white_hearts_box.global_position = Vector2(center_x1 - half_w1, white_score_label.global_position.y - hearts_offset_y)
 				white_hearts_box.visible = true
 			if is_instance_valid(white_energy_bar):
 				var half_bar1 = white_energy_bar.custom_minimum_size.x / 2.0
-				white_energy_bar.position = Vector2(center_x1 - half_bar1, white_score_label.global_position.y - energy_offset_y)
+				white_energy_bar.global_position = Vector2(center_x1 - half_bar1, white_score_label.global_position.y - energy_offset_y)
 				white_energy_bar.visible = true
-			
+
 		if is_instance_valid(black_score_label):
+			black_score_label.visible = true
 			var center_x2 = black_score_label.global_position.x + (black_score_label.size.x / 2.0)
 			if is_instance_valid(black_clock_label):
-				black_clock_label.position = Vector2(center_x2 - 70.0, clock_y)
+				black_clock_label.global_position = Vector2(center_x2 - 70.0, clock_y)
 				black_clock_label.visible = true
 			if is_instance_valid(black_hearts_box):
 				var half_w2 = black_hearts_box.get_minimum_size().x / 2.0
-				black_hearts_box.position = Vector2(center_x2 - half_w2, black_score_label.global_position.y - hearts_offset_y)
+				black_hearts_box.global_position = Vector2(center_x2 - half_w2, black_score_label.global_position.y - hearts_offset_y)
 				black_hearts_box.visible = true
 			if is_instance_valid(black_energy_bar):
 				var half_bar2 = black_energy_bar.custom_minimum_size.x / 2.0
-				black_energy_bar.position = Vector2(center_x2 - half_bar2, black_score_label.global_position.y - energy_offset_y)
+				black_energy_bar.global_position = Vector2(center_x2 - half_bar2, black_score_label.global_position.y - energy_offset_y)
 				black_energy_bar.visible = true
-
 
 func _on_check_button_toggled(toggled_on: bool):
 	Global.show_guide_arrows = toggled_on

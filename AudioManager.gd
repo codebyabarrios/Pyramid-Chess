@@ -5,6 +5,9 @@ var sfx_piece_killed = "res://audio/pieces killed.mp3"
 var sfx_jump = "res://audio/riders jump.mp3"
 var sfx_round_finished = "res://audio/round finished.mp3"
 var sfx_slash = "res://audio/sword slash.mp3"
+var sfx_health_hurt = "res://audio/health_hurt.wav"
+var sfx_health_critical = "res://audio/health_critical.wav"
+var heartbeat_player = AudioStreamPlayer.new()
 
 var music_main_menu = "res://audio/Main Menu.mp3"
 var music_training = "res://audio/training mode.mp3"
@@ -29,6 +32,9 @@ func _ready():
 		p.bus = "Master"
 		add_child(p)
 		sfx_players.append(p)
+	
+	heartbeat_player.bus = "Master"
+	add_child(heartbeat_player)
 
 func play_music(music_stream):
 	if music_stream == null: return
@@ -77,8 +83,41 @@ func play_sfx(sfx_stream):
 	sfx_players[0].stream = actual_stream
 	sfx_players[0].play()
 
-func play_error(): play_sfx(sfx_error)
-func play_killed(): play_sfx(sfx_piece_killed)
-func play_jump(): play_sfx(sfx_jump)
-func play_slash(): play_sfx(sfx_slash)
-func play_round_finish(): play_sfx(sfx_round_finished)
+func play_error(): 
+	play_sfx(sfx_error)
+	
+func play_killed(): 
+	
+	play_sfx(sfx_piece_killed)
+	
+func play_jump(): 
+	play_sfx(sfx_jump)
+	
+func play_slash(): 
+	play_sfx(sfx_slash)
+	
+func play_round_finish(): 
+	play_sfx(sfx_round_finished)
+
+func play_health_hurt():
+	play_sfx(sfx_health_hurt)
+
+func play_health_critical_sfx():
+	play_sfx(sfx_health_critical)
+
+func play_heartbeat_beat():
+	var stream = load(sfx_health_critical) if sfx_health_critical is String else sfx_health_critical
+	if stream == null:
+		return
+	heartbeat_player.stream = stream
+	heartbeat_player.play()
+
+func stop_heartbeat_sound():
+	if heartbeat_player.playing:
+		heartbeat_player.stop()
+
+func get_critical_duration() -> float:
+	var stream = load(sfx_health_critical) if sfx_health_critical is String else sfx_health_critical
+	if stream != null and stream.get_length() > 0.0:
+		return stream.get_length()
+	return 0.6
